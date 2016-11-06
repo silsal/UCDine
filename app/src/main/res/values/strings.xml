@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">UCDFood</string>
+    <string name="findertitle">Looking for a certain recipe, or just not sure what to make? Use our recipe finder!</string>
+    <string name="finderbutton">Find my recipe!</string>
+    <string name="event_list">Event List!</string>
+    <string name="enter_username">Enter username</string>
+    <string name="add">Add</string>
+</resources>
