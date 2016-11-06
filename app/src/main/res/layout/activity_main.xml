@@ -26,5 +26,12 @@
         android:onClick="createUser"
         android:layout_below="@id/button3"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="See Events"
+        android:id="@+id/button4"
+        android:onClick="eventList"
+        android:layout_below="@id/button2"/>
 
 </RelativeLayout>
