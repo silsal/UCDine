@@ -30,10 +30,17 @@ public class MainActivity extends AppCompatActivity {
         startActivity(in);
     }
 
-    //launch the InsertUser activity
+    //launch the eventList activity
     public void eventList(View l) {
         Intent i = new Intent(this, EventList.class);
         startActivity(i);
+    }
+
+    //launch create event
+    public void createEvent(View event) {
+        // Do something in response to button
+        Intent launchCreateEvent = new Intent(this, CreateEvent.class);
+        startActivity(launchCreateEvent);
     }
 
 }
