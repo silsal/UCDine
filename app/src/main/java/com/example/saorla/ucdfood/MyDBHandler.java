@@ -67,10 +67,10 @@ public class MyDBHandler extends SQLiteOpenHelper{
                 COLUMN_HOST_ID + " INTEGER NOT NULL," +
                 COLUMN_INVITE_NUM + " INTEGER NOT NULL CHECK(invite_num > 0)," +
                 COLUMN_EVENT_NAME + " TEXT," +
-                COLUMN_ADDRESS + " TEXT NOT NULL" +
+                COLUMN_ADDRESS + " TEXT NOT NULL," +
                 COLUMN_DESCRIPTION + " TEXT," +
                 COLUMN_TIME + " TEXT," +
-                COLUMN_DATE + " TEXT," +
+                COLUMN_DATE + " TEXT " +
                 " );";
 
         String query3 = "CREATE TABLE " + TABLE_FRIENDS + " ( " +
