@@ -33,7 +33,11 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public static final String COLUMN_EVENT_ID = "_eid";
     public static final String COLUMN_HOST_ID = "_hid";
     public static final String COLUMN_INVITE_NUM = "invite_num";
+    public static final String COLUMN_EVENT_NAME = "event_name";
     public static final String COLUMN_ADDRESS = "address";
+    public static final String COLUMN_DESCRIPTION = "description";
+    public static final String COLUMN_TIME = "time";
+    public static final String COLUMN_DATE = "date";
     //friends table column names
     public static final String COLUMN_FRIEND_ID = "_friendid";
     //favourite recipes column names
@@ -48,7 +52,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query1 = "CREATE TABLE " + TABLE_USERS + "( " +
-                COLUMN_USER_ID + " INTEGER PRIMARY KEY," +
+                COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 COLUMN_USERNAME + " TEXT," +
                 COLUMN_FIRST_NAME + " TEXT," +
                 COLUMN_SURNAME + " TEXT," +
@@ -62,7 +66,11 @@ public class MyDBHandler extends SQLiteOpenHelper{
                 COLUMN_EVENT_ID + " INTEGER PRIMARY KEY," +
                 COLUMN_HOST_ID + " INTEGER NOT NULL," +
                 COLUMN_INVITE_NUM + " INTEGER NOT NULL CHECK(invite_num > 0)," +
+                COLUMN_EVENT_NAME + " TEXT," +
                 COLUMN_ADDRESS + " TEXT NOT NULL" +
+                COLUMN_DESCRIPTION + " TEXT," +
+                COLUMN_TIME + " TEXT," +
+                COLUMN_DATE + " TEXT," +
                 " );";
 
         String query3 = "CREATE TABLE " + TABLE_FRIENDS + " ( " +
@@ -114,7 +122,18 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
     //add event to Events table
     public void addEvent(Events events){
-
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_EVENT_ID, events.get_eid());
+        values.put(COLUMN_HOST_ID, events.get_hid());
+        values.put(COLUMN_INVITE_NUM, events.getInvite_num());
+        values.put(COLUMN_EVENT_NAME, events.getEvent_name());
+        values.put(COLUMN_ADDRESS, events.getAddress());
+        values.put(COLUMN_DESCRIPTION, events.getDescription());
+        values.put(COLUMN_TIME, events.getTime());
+        values.put(COLUMN_DATE, events.getDate());
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(TABLE_EVENTS, null, values);
+        db.close();
     }
 
     //delete event from Events table

@@ -6,17 +6,27 @@ public class Events {
     private int _eid;
     private int _hid;
     private int invite_num;
+    private String event_name;
     private String address;
-    //private int time;
-    //private int date;
+    private String description;
+    private String time;
+    private String date;
 
 
     public Events(){
 
     }
 
-    public Events(int _eid) {
+    public Events(int _eid,int _hid,int invite_num, String event_name,String address,String description, String time, String date) {
+
         this._eid = _eid;
+        this._hid = _hid;
+        this.invite_num = invite_num;
+        this.event_name = event_name;
+        this.address = address;
+        this.description = description;
+        this.time = time;
+        this.date = date;
     }
 
     public void set_eid(int _eid) {
@@ -27,8 +37,28 @@ public class Events {
         this._hid = _hid;
     }
 
+
     public void setInvite_num(int invite_num) {
         this.invite_num = invite_num;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setTime(String time) {
+
+        this.time = time;
+    }
+
+    public void setDescription(String description) {
+
+        this.description = description;
+    }
+
+    public void setEvent_name(String event_name) {
+
+        this.event_name = event_name;
     }
 
     public void setAddress(String address) {
@@ -50,4 +80,23 @@ public class Events {
     public String getAddress() {
         return address;
     }
+    public String getDate() {
+        return date;
+    }
+
+    public String getTime() {
+
+        return time;
+    }
+
+    public String getDescription() {
+
+        return description;
+    }
+
+    public String getEvent_name() {
+
+        return event_name;
+    }
+
 }

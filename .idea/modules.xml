@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/UCDFood.iml" filepath="$PROJECT_DIR$/UCDFood.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UCDine.iml" filepath="$PROJECT_DIR$/UCDine.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
