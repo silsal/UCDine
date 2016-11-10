@@ -22,10 +22,11 @@ public class MyDBHandler extends SQLiteOpenHelper{
     //common column names
     public static final String COLUMN_USER_ID = "_uid";
     //users table column names
-    public static final String COLUMN_USERNAME = "username";
-    public static final String COLUMN_FIRST_NAME = "first_name";
-    public static final String COLUMN_SURNAME = "surname";
+    public static final String COLUMN_USERNAME = "uname";
+    public static final String COLUMN_FIRST_NAME = "fname";
+    public static final String COLUMN_SURNAME = "sname";
     public static final String COLUMN_EMAIL = "email";
+    public static final String COLUMN_PASS = "pass";
     public static final String COLUMN_HOST_SCORE = "host_score";
     public static final String COLUMN_ATTENDEE_POINTS = "attendee_points";
     public static final String COLUMN_AVAILABLE_POINTS = "available_points";
@@ -44,9 +45,10 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public static final String COLUMN_RECIPE_ID = "_recipeid";
     public static final String COLUMN_RECIPE_URL = "recipe_url";
 
+    SQLiteDatabase db;
 
-    public MyDBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, DATABASE_NAME, factory, DATABASE_VERSION);
+    public MyDBHandler(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
@@ -57,6 +59,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
                 COLUMN_FIRST_NAME + " TEXT," +
                 COLUMN_SURNAME + " TEXT," +
                 COLUMN_EMAIL + " TEXT," +
+                COLUMN_PASS + " TEXT NOT NULL,"+
                 COLUMN_HOST_SCORE + " INTEGER DEFAULT 0," +
                 COLUMN_ATTENDEE_POINTS + " INTEGER DEFAULT 3," +
                 COLUMN_AVAILABLE_POINTS + " INTEGER DEFAULT 3" +
@@ -90,6 +93,9 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.execSQL(query2);
         db.execSQL(query3);
         db.execSQL(query4);
+
+
+        this.db = db;
     }
 
     @Override
@@ -98,20 +104,47 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_FRIENDS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_FAVOURITERECIPES);
-        onCreate(db);
+        this.onCreate(db);
     }
 
     //add user to users table
-    public void addUser(Users users){
+    public void insertUsers(Users u){
+        db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_USERNAME, users.getUsername());
-        values.put(COLUMN_FIRST_NAME, users.getFirst_name());
-        values.put(COLUMN_SURNAME, users.getSurname());
-        values.put(COLUMN_EMAIL, users.getEmail());
-        SQLiteDatabase db = getWritableDatabase();
-        Log.i(DB_TAG, "Adding to DB " + values + "");
+
+        String query = "select * from users";
+        Cursor cursor = db.rawQuery(query,null);
+        int count  = cursor.getCount();
+
+        values.put(COLUMN_USER_ID, count);
+        values.put(COLUMN_FIRST_NAME, u.getFname());
+        values.put(COLUMN_SURNAME, u.getSname());
+        values.put(COLUMN_USERNAME, u.getUname());
+        values.put(COLUMN_EMAIL, u.getEmail());
+        values.put(COLUMN_PASS,u.getPass());
+
         db.insert(TABLE_USERS, null, values);
         db.close();
+    }
+
+    public String searchPass(String uname){
+        db = this.getReadableDatabase();
+        String query = "select uname, pass from "+TABLE_USERS;
+        Cursor cursor = db.rawQuery(query,null);
+        String a,b;
+        b = "not found";
+        if (cursor.moveToFirst()){
+            do{
+                a = cursor.getString(0);
+
+                if (a.equals(uname)){
+                    b = cursor.getString(1);
+                    break;
+                }
+            }
+            while(cursor.moveToNext());
+        }
+        return b;
     }
 
     //delete user from users table

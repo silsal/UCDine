@@ -4,43 +4,43 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.util.Log;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    public final static String EXTRA_MESSAGE = "com.example.saorla.ucdfood.MESSAGE";
-    private static final String TAG = "Saorla's Message!";
+
+    MyDBHandler helper = new MyDBHandler(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.i(TAG, "OnCreate");
     }
 
-    //Launch RecipeFinder activity
-    public void sendMessage(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(this, RecipeFinder.class);
-        startActivity(intent);
-    }
 
-    //launch the InsertUser activity
-    public void createUser(View v) {
-        Intent in = new Intent(this, InsertUser.class);
-        startActivity(in);
-    }
+    public void onButtonClick(View v){
+        if(v.getId()== R.id.Blogin){
 
-    //launch the eventList activity
-    public void eventList(View l) {
-        Intent i = new Intent(this, EventList.class);
-        startActivity(i);
-    }
+            EditText a = (EditText)findViewById(R.id.TFusername);
+            String str = a.getText().toString();
+            EditText b = (EditText)findViewById(R.id.TFpassword);
+            String pass = b.getText().toString();
 
-    //launch create event
-    public void createEvent(View event) {
-        // Do something in response to button
-        Intent launchCreateEvent = new Intent(this, CreateEvent.class);
-        startActivity(launchCreateEvent);
-    }
+            String password = helper.searchPass(str);
+            if(pass.equals(password)){
+                Intent i = new Intent(MainActivity.this, Display.class);
+                i.putExtra("Username",str);
+                startActivity(i);
+            }else{
+                Toast temp = Toast.makeText(MainActivity.this, "Username and password don't match!",Toast.LENGTH_SHORT);
+                temp.show();
+            }
 
+
+        }
+        if(v.getId()==R.id.Bsignup){
+            Intent i = new Intent(MainActivity.this, SignUp.class);
+            startActivity(i);
+        }
+    }
 }
