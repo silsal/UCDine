@@ -5,11 +5,13 @@
     <string name="event_list">Event List!</string>
     <string name="enter_username">Enter username</string>
     <string name="add">Add</string>
+    <!--create event list-->
     <string name="event_title">Event name</string>
     <string name="location">Enter location</string>
     <string name="date">Date</string>
     <string name="hour">Time</string>
     <string name="people">How many people?</string>
+    <string name ="remainder">on Calendar?</string>
     <string name="description">Describe your event</string>
     <string name="button">SUBMIT</string>
 </resources>
