@@ -12,7 +12,7 @@ import android.util.Log;
 public class MyDBHandler extends SQLiteOpenHelper{
     private static final String DB_TAG = "Please work!";
     //Name and version of db
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NAME = "foodshare.db";
     //Table names
     public static final String TABLE_USERS = "users";

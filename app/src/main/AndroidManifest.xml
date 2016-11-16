@@ -19,6 +19,7 @@
         </activity>
         <activity android:name=".RecipeFinder" />
         <activity android:name=".CreateEvent" />
+        <activity android:name=".printEventFields" />
         <activity android:name=".Display" />
         <activity android:name=".SignUp" />
 

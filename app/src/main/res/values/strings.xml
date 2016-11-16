@@ -14,4 +14,5 @@
     <string name ="remainder">on Calendar?</string>
     <string name="description">Describe your event</string>
     <string name="button">SUBMIT</string>
+    <string name="emptyString"></string>
 </resources>

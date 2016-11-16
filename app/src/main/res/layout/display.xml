@@ -24,25 +24,29 @@
         android:text="Profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/BProfile" />
+        android:id="@+id/BProfile"/>
 
     <Button
         android:text="CREATE EVENT"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/BCreateEvent" />
+        android:id="@+id/BCreateEvent"
+        android:onClick="showCreateActivity"/>
+
 
     <Button
         android:text="VIEW RECIPE"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/BViewRecipe" />
+        android:id="@+id/BViewRecipe"/>
+    <!--android:onClick=""/>-->
 
     <Button
         android:text="ATTEND"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/BAttend" />
+        android:id="@+id/BAttend"/>
+    <!--android:onClick=""/>-->
 
     <EditText
         android:layout_width="wrap_content"
