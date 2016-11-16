@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <EditText
         android:layout_width="116dp"
@@ -11,6 +12,37 @@
         android:text="Welcome,"
         android:ems="10"
         android:id="@+id/editText" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="235dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/TVdisplayid"
+        android:layout_weight="0.33" />
+
+    <Button
+        android:text="Profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/BProfile" />
+
+    <Button
+        android:text="CREATE EVENT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/BCreateEvent" />
+
+    <Button
+        android:text="VIEW RECIPE"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/BViewRecipe" />
+
+    <Button
+        android:text="ATTEND"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/BAttend" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -21,4 +53,5 @@
         android:id="@+id/TVusername"
         android:layout_weight="1"
         tools:text="@string/emptyString" />
+
 </LinearLayout>

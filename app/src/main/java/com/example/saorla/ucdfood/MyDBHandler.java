@@ -54,7 +54,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query1 = "CREATE TABLE " + TABLE_USERS + "( " +
-                COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                COLUMN_USER_ID + " INTEGER PRIMARY KEY NOT NULL," +
                 COLUMN_USERNAME + " TEXT," +
                 COLUMN_FIRST_NAME + " TEXT," +
                 COLUMN_SURNAME + " TEXT," +
@@ -137,6 +137,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
             do{
                 a = cursor.getString(0);
 
+
                 if (a.equals(uname)){
                     b = cursor.getString(1);
                     break;
@@ -146,8 +147,30 @@ public class MyDBHandler extends SQLiteOpenHelper{
         }
         return b;
     }
+    public String searchId(String uname) {
+        db = this.getReadableDatabase();
+        String query = "select uname, _uid from " + TABLE_USERS;
+        Cursor cursor = db.rawQuery(query, null);
+        String a, b;
+        b = "not found";
+        if (cursor.moveToFirst()) {
+            do {
+                a = cursor.getString(0);
 
-    //delete user from users table
+
+                if (a.equals(uname)) {
+                    b = cursor.getString(1);
+                    break;
+                }
+            }
+            while (cursor.moveToNext());
+        }
+
+        return b;
+    }
+
+
+        //delete user from users table
     public void deleteUser(String username){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_USERS + " WHERE " + COLUMN_USERNAME + "=\"" + username + "\";");
