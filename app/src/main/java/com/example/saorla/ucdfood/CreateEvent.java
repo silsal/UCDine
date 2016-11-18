@@ -7,7 +7,10 @@ import java.util.Locale;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
+import android.app.TimePickerDialog;
+import android.app.TimePickerDialog.OnTimeSetListener;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.text.InputType;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,12 +19,7 @@ import android.widget.EditText;
 import android.content.Intent;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-
-
-
-
-
-
+import android.widget.TimePicker;
 
 
 import com.google.android.gms.appindexing.Action;
@@ -37,8 +35,15 @@ import java.util.List;
  */
 public class CreateEvent extends AppCompatActivity implements View.OnClickListener {
     private EditText date;
+    public EditText hour;
+    private EditText event;
+    private EditText location;
+    private EditText noPeople;
+    private EditText description;
     private DatePickerDialog datePicker;
     private SimpleDateFormat dateFormatter;
+    private int  mHour,mMinute;
+    private TimePickerDialog timePicker;
 
 
     @Override
@@ -46,9 +51,10 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
         dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.UK);
-        findViewsById();
-        setDateTimeField();
 
+        findViewsById();
+        setDateField();
+        setTimeField();
 
     }
 
@@ -75,16 +81,16 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
     /**
      * Called when the user clicks the Send button
      */
-    public void sendMessage(View view) {
-        Intent intent = new Intent(this, printEventFields.class);
-        EditText editText = (EditText) findViewById(R.id.eventTitle);
-//        transform the message to string
-        String message = editText.getText().toString();
-//        adds the EditText's value to the intent. An Intent can carry data types as key-value pairs called extras.
-// Your key is a public constant EXTRA_MESSAGE because the next activity uses the key to retrive the text value.
-        intent.putExtra(EVENT_TITLE, message);
-        startActivity(intent);
-    }
+//    public void sendMessage(View view) {
+//        Intent intent = new Intent(this, printEventFields.class);
+//        EditText editText = (EditText) findViewById(R.id.eventTitle);
+////        transform the message to string
+//        String message = editText.getText().toString();
+////        adds the EditText's value to the intent. An Intent can carry data types as key-value pairs called extras.
+//// Your key is a public constant EXTRA_MESSAGE because the next activity uses the key to retrive the text value.
+//        intent.putExtra(EVENT_TITLE, message);
+//        startActivity(intent);
+//    }
 
 
 
@@ -94,16 +100,31 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
         date.requestFocus();
         date.setTextIsSelectable(true);
 //        dateText.setInputType(InputType.TYPE_NULL);
+
+        hour = (EditText) findViewById(R.id.hour);
+        hour.requestFocus();
+        hour.setTextIsSelectable(true);
+
+        event = (EditText) findViewById(R.id.eventTitle);
+        location = (EditText) findViewById(R.id.location);
+        noPeople = (EditText) findViewById(R.id.people);
+        description = (EditText) findViewById(R.id.description);
     }
 
     @Override
     public void onClick(View view) {
-        if (view == date) {
-            datePicker.show();
+
+        switch (view.getId()) {
+            case R.id.date:
+                datePicker.show();
+                break;
+            case R.id.hour:
+                timePicker.show();
+                break;
+//
         }
     }
-
-    public void setDateTimeField() {
+    public void setDateField() {
         date.setOnClickListener(this);
 
         Calendar newCalendar = Calendar.getInstance();
@@ -115,10 +136,44 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
             }
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
+    }
 
+
+    public void setTimeField(){
+        hour.setOnClickListener(this);
+        // Process to get Current Time
+        final Calendar c = Calendar.getInstance();
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
+
+        timePicker = new TimePickerDialog(this, new OnTimeSetListener() {
+            public void onTimeSet(TimePicker view, int hourOfDay,int minutes) {
+                // Display Selected time in textbox
+                hour.setText(hourOfDay + ":" + minutes);
+            }
+        }, mHour, mMinute, false);}
+
+        public void onAddEventClicked(View view){
+            Intent intent = new Intent(Intent.ACTION_INSERT);
+            intent.setType("vnd.android.cursor.item/event");
+
+
+//            long startTime = hour.toString().getTimeInMillis();
+//
+
+            intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,date.toString());
+            intent.putExtra(CalendarContract.Events.DTSTART,hour.toString());
+
+
+            intent.putExtra(CalendarContract.Events.TITLE, event.toString());
+            intent.putExtra(CalendarContract.Events.DESCRIPTION,  description.toString());
+            intent.putExtra(CalendarContract.Events.EVENT_LOCATION, location.toString());
+
+
+            startActivity(intent);
+        }
     }
 
 
 
 
-}
