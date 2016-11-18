@@ -6,6 +6,90 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/colorText</item>
+    </style>
+
+
+    <style name="editableText">
+        <item name="android:textColorHint">@color/colorTextEditable</item>
+        <item name="android:textColor">@color/colorTextEditable2</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">left</item>
+    </style>
+
+    <style name="nonEditText">
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">left</item>
+    </style>
+
+    <style name="primaryText1">
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">left|center</item>
+        <item name="android:textSize">30dp</item>
+    </style>
+
+    <style name="primaryText2">
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">left|center</item>
+        <item name="android:textSize">20dp</item>
+    </style>
+
+
+    <style name="profileDetailsText">
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">left|center</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="profile_details" parent="profileDetailsText">
+        <item name="android:layout_marginStart">5dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginEnd">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+    </style>
+
+    <style name="profile_margins">
+        <item name="android:layout_marginStart">5dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginEnd">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+    </style>
+
+    <style name="icon_margins">
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_marginStart">5dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginEnd">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+    </style>
+
+    <style name="profile_button" parent="profile_details">
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:background">@drawable/border_button</item>
+    </style>
+
+    <style name="welcomeNoteText">
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">left|center</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="sectionHeaderText">
+        <item name="android:textColor">#302f2f</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textSize">17dp</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 
 </resources>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">UCDFood</string>
+    <string name="app_name">UCDine</string>
     <string name="findertitle">Looking for a certain recipe, or just not sure what to make? Use our recipe finder!</string>
     <string name="finderbutton">Find my recipe!</string>
     <string name="event_list">Event List!</string>
@@ -15,4 +15,42 @@
     <string name="description">Describe your event</string>
     <string name="button">SUBMIT</string>
     <string name="emptyString"></string>
+
+    <!--***PROFILE ACTIVITY / EDIT PROFILE ACTIVITY***-->
+    <string name="profile">Profile</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="button_edit">UPDATE</string>
+    <string name="user_name">User Name</string>
+    <string name="user_email">\@email</string>
+    <string name="user_course">Course</string>
+    <string name="user_points">POINTS: %1$s</string>
+    <string name="user_events">EVENTS: %1$s</string>
+    <string name="user_past_events">PAST EVENTS: %1$s</string>
+    <string name="user_future_events">FUTURE EVENTS: %1$s</string>
+    <string name="user_rating">RATING: %1$s</string>
+    <string name="user_location_desc">This is the location the user has set for their Hosting</string>
+    <string name="take_picture">Take Picture</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="about_me">ABOUT ME:\nLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.</string>
+
+    <string name="search_event">Search Events</string>
+    <string name="create_event">Create Events</string>
+    <string name="search_recipe">Search Recipes</string>
+
+    <string name="welcome1">Hey </string>
+    <string name="welcome2">, it\'s good to see you!</string>
+    <string name="welcome3">Hey %1$s,\nIt\'s good to see you!</string>
+
+    <string name="my_activity">Here\'s how you\'ve been getting on...</string>
+    <string name="activities">My Activities</string>
+    <string name="events">My Events</string>
+    <string name="reviews">My Reviews</string>
+
+    <string name="event_details">Upcoming Events:</string>
+    <string name="cancel_event">CANCEL</string>
+
+    <string name="review_text_1">I don\'t like being outdoors, Smithers. For one thing, there\'s too many fat children.</string>
+    <string name="review_text_2">Kids, we need to talk for a moment about Krusty Brand Chew Goo Gum Like Substance.</string>
+    <string name="review_text_3">Son, when you participate in sporting events, it\'s not whether you win or lose: it\'s how drunk you get.</string>
+
 </resources>

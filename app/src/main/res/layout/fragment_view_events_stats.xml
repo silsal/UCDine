@@ -1,0 +1,93 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="1dp"
+    android:paddingRight="1dp"
+    android:paddingBottom="3dp"
+    android:background="@drawable/border_fragment"
+    tools:context=".MainActivityFragment"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:background="@color/colorPrimaryDark">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:src="@drawable/host_icon"
+                android:paddingLeft="40dp"
+                style="@style/icon_margins"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="@string/events"
+                style="@style/sectionHeaderText"
+                android:textAllCaps="true" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:paddingRight="40dp"
+                android:src="@drawable/attend_icon"
+                style="@style/icon_margins"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+
+            <ListView
+                android:padding="1dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/fv_listview_host_events"
+                android:headerDividersEnabled="false"
+                android:footerDividersEnabled="false">
+
+            </ListView>
+
+            <ListView
+                android:padding="1dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/fv_listview_attend_events"
+                android:headerDividersEnabled="false"
+                android:footerDividersEnabled="false">
+
+            </ListView>
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

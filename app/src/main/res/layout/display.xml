@@ -24,7 +24,8 @@
         android:text="Profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/BProfile"/>
+        android:id="@+id/BProfileActivity"
+        android:onClick="showProfileActivity"/>
 
     <Button
         android:text="CREATE EVENT"

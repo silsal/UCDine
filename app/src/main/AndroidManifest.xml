@@ -4,6 +4,10 @@
     <!--internet permission-->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!--camera permission-->
+    <uses-feature android:name="android.hardware.camera"
+        android:required="false" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,6 +27,26 @@
         <activity android:name=".Display" />
         <activity android:name=".SignUp" />
 
+        <activity android:name=".ProfileActivity"
+            android:label="@string/profile"
+            android:parentActivityName=".Display"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".Display"/>
+        </activity>
+
+        <activity android:name=".ProfileEditActivity"
+            android:label="@string/edit_profile"
+            android:parentActivityName=".ProfileActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ProfileActivity"/>
+
+        </activity>
 
 
         <!-- <activity android:name=".EventList"></activity> -->
