@@ -19,21 +19,21 @@ public class Display extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.display);
 
-        String username = getIntent().getStringExtra("Username");
+//        String username = getIntent().getStringExtra("Username");
+//
+//        TextView tv = (TextView) findViewById(R.id.TVusername);
+//        tv.setText(username);
 
-        TextView tv = (TextView) findViewById(R.id.TVusername);
-        tv.setText(username);
-
-        displayUserId();
+//        displayUserId();
 
 
 
     }
-    public void displayUserId (){
-        String userid = getIdfromSharedPrefernece();
-        TextView textView = (TextView)findViewById(R.id.TVdisplayid);
-        textView.setText(userid);
-    }
+//    public void displayUserId (){
+//        String userid = getIdfromSharedPrefernece();
+//        TextView textView = (TextView)findViewById(R.id.TVdisplayid);
+//        textView.setText(userid);
+//    }
 
     public String getIdfromSharedPrefernece(){
         SharedPreferences prefs = getSharedPreferences("User_Id",0);
