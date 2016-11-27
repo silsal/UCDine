@@ -21,7 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RecipeFinder" />
+        <activity android:name=".RecipeFinder"
+            android:configChanges="orientation|screenSize"></activity>
         <activity android:name=".CreateEvent" />
         <activity android:name=".printEventFields" />
         <activity android:name=".Display" />

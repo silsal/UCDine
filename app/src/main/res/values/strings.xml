@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">UCDine</string>
-    <string name="findertitle">Looking for a certain recipe, or just not sure what to make? Use our recipe finder!</string>
+    <string name="findertitle">Recipe Finder</string>
+    <string name="recipepitch">Looking for a certain recipe, or not sure what to make? Use our recipe finder!</string>
     <string name="finderbutton">Find my recipe!</string>
+    <string name="dishname">Enter dish name</string>
     <string name="event_list">Event List!</string>
     <string name="enter_username">Enter username</string>
     <string name="add">Add</string>
@@ -35,6 +37,8 @@
 
     <string name="search_event">Search Events</string>
     <string name="create_event">Create Events</string>
+    <string name="attend_event">Attend Event</string>
+    <string name="host_event">Host Event</string>
     <string name="search_recipe">Search Recipes</string>
 
     <string name="welcome1">Hey </string>

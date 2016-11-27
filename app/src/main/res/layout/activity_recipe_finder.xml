@@ -1,64 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--xmlns:tools="http://schemas.android.com/tools"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_centerVertical="true"-->
+<!--android:paddingBottom="@dimen/activity_vertical_margin"-->
+<!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+<!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+<!--android:paddingTop="@dimen/activity_vertical_margin"-->
+<!--tools:context="com.example.saorla.ucdfood.RecipeFinder">-->
+
+<!--<ScrollView-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="match_parent"-->
+<!--android:fillViewport="true">-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:scrollbars="vertical"
+    android:layout_centerVertical="true"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.saorla.ucdfood.RecipeFinder">
+    tools:context="com.example.saorla.ucdfood.RecipeFinder"
+    android:layout_width="fill_parent"
+    android:orientation="vertical"
+    android:layout_height="fill_parent">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/RecipeTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/findertitle"
+        android:textSize="12pt"
+        android:textAlignment="center"
+        android:textColor="#ffa500" />
+
+    <TextView
+        android:id="@+id/TextViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/recipepitch"
+        android:textSize="10pt">
+    </TextView>
+
+    <EditText
+        android:id="@+id/dishName"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="@string/dishname"
         android:layout_width="fill_parent"
-        android:orientation="vertical"
-        android:layout_height="fill_parent"
-        android:background="#DEFFF9">
+        android:layout_below="@id/TextViewTitle">
+    </EditText>
 
-        <TextView
-            android:id="@+id/TextViewTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/findertitle"
-            android:textSize="8pt">
-        </TextView>
+    <Button
+        android:id="@+id/recipeButton"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/finderbutton"
+        android:layout_width="fill_parent">
+    </Button>
 
-        <EditText
-            android:id="@+id/EditTextName"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:hint="Enter dish name"
-            android:inputType="textPersonName"
-            android:layout_width="fill_parent">
-        </EditText>
+    <!--</ScrollView>-->
 
-        <Button
-            android:id="@+id/ButtonSendFeedback"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/finderbutton"
-            android:onClick="sendRecipe"
-            android:layout_width="fill_parent">
-        </Button>
+    <!--</RelativeLayout>-->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:indeterminate="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:indeterminateDrawable="@drawable/progress"/>
 
-    </LinearLayout>
-</ScrollView>
-
+    <ListView
+        android:id="@+id/recipe_list_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="5.0sp"
+        android:layout_marginTop="10dp" />
 
 
+</LinearLayout>
+    <!--</ScrollView>-->
 
-<!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:paddingBottom="@dimen/activity_vertical_margin"-->
-    <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
-    <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
-    <!--android:paddingTop="@dimen/activity_vertical_margin"-->
-    <!--tools:context="com.example.saorla.ucdfood.RecipeFinder">-->
+    <!--</RelativeLayout>-->
 
-<!--</RelativeLayout>-->
+
 
 

@@ -52,6 +52,11 @@ public class Display extends Activity {
         startActivity(i);
     }
 
+    public void showRecipeFinder (View view){
+        Intent i = new Intent(this, RecipeFinder.class);
+        startActivity(i);
+    }
+
 
 
 }
