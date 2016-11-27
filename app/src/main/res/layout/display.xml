@@ -1,62 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:paddingBottom="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    android:orientation="vertical"
+    android:weightSum="1">
 
-    <EditText
-        android:layout_width="116dp"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Welcome,"
-        android:ems="10"
-        android:id="@+id/editText" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="418dp"
+        android:layout_height="288dp"
+        android:layout_weight="0.07"
+        android:weightSum="1">
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="235dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/TVdisplayid"
-        android:layout_weight="0.33" />
+        <ImageView
+            android:layout_width="370dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/logo_options_2"
+            android:id="@+id/imageView" />
+    </LinearLayout>
 
-    <Button
-        android:text="Profile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/BProfileActivity"
-        android:onClick="showProfileActivity"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="421dp"
+        android:layout_height="324dp"
+        android:background="@color/colorPrimaryDark">
 
-    <Button
-        android:text="CREATE EVENT"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/BCreateEvent"
-        android:onClick="showCreateActivity"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="118dp"
+            android:weightSum="1">
+
+            <Button
+                android:text="Profile"
+                android:layout_width="182dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/BProfileActivity"
+                android:onClick="showProfileActivity"
+                android:background="@drawable/white_profile_icon"
+                android:textDirection="anyRtl"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+
+            <Button
+                android:layout_width="197dp"
+                android:layout_height="match_parent"
+                android:id="@+id/BAttend"
+                android:background="@drawable/white_attend_icon"
+                android:text="Attend Event"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                android:elevation="0dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:weightSum="1">
+
+            <Button
+                android:text="Find Recipe"
+                android:layout_width="145dp"
+                android:layout_height="106dp"
+                android:id="@+id/BViewRecipe"
+                android:background="@drawable/white_cb_icon"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                android:layout_weight="0.37" />
+
+            <Button
+                android:layout_width="187dp"
+                android:layout_height="112dp"
+
+                android:id="@+id/BCreateEvent"
+                android:onClick="showCreateActivity"
+                android:background="@drawable/white_serve_icon"
+                android:text="Host Event"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                android:layout_weight="0.07" />
+        </LinearLayout>
+    </LinearLayout>
 
 
-    <Button
-        android:text="VIEW RECIPE"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/BViewRecipe"/>
-    <!--android:onClick=""/>-->
 
-    <Button
-        android:text="ATTEND"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/BAttend"/>
-    <!--android:onClick=""/>-->
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Name"
-        android:ems="10"
-        android:id="@+id/TVusername"
-        android:layout_weight="1"
-        tools:text="@string/emptyString" />
 
 </LinearLayout>
