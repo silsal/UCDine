@@ -13,50 +13,69 @@
     android:weightSum="1">
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="418dp"
+        android:layout_width="match_parent"
         android:layout_height="288dp"
-        android:layout_weight="0.07"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:baselineAligned="false"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <ImageView
-            android:layout_width="370dp"
-            android:layout_height="match_parent"
-            app:srcCompat="@drawable/logo_options_2"
-            android:id="@+id/imageView" />
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/logo"
+            android:id="@+id/imageView"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.45" />
     </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="421dp"
+        android:layout_width="match_parent"
         android:layout_height="324dp"
         android:background="@color/colorPrimaryDark">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="118dp"
-            android:weightSum="1">
+            android:layout_height="140dp"
+            android:weightSum="2"
+            android:baselineAligned="false"
+            android:paddingLeft="4.0dip"
+            android:paddingTop="5.0dip"
+            android:paddingRight="4.0dip"
+            android:paddingBottom="1.0dip">
 
             <Button
-                android:text="@string/profile"
-                android:layout_width="182dp"
-                android:layout_height="wrap_content"
                 android:id="@+id/BProfileActivity"
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:drawableTop="@drawable/user1"
+                android:text="@string/profile"
+                android:background="@color/colorPrimaryDark"
+                android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
+                android:textSize="20dp"
+                android:padding="10dp"
+                android:gravity="center"
+                android:layout_weight="1"
                 android:onClick="showProfileActivity"
-                android:background="@drawable/white_profile_icon"
-                android:textDirection="anyRtl"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+                android:textColor="@color/white" />
 
             <Button
-                android:layout_width="197dp"
-                android:layout_height="match_parent"
                 android:id="@+id/BAttend"
-                android:background="@drawable/white_attend_icon"
+                android:layout_width="0dp"
+                android:layout_height="139dp"
+                android:drawableTop="@drawable/attend_event"
                 android:text="@string/attend_event"
-                android:onClick="showEventListActivity"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-                android:elevation="0dp" />
+                android:background="@color/colorPrimaryDark"
+                android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
+                android:textSize="20dp"
+                android:padding="10dp"
+                android:gravity="center"
+                android:layout_toRightOf="@id/BProfileActivity"
+                android:layout_weight="1"
+                android:textColor="@color/white" />
+
 
 
         </LinearLayout>
@@ -64,34 +83,45 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:weightSum="1">
+            android:layout_height="140dp"
+            android:weightSum="2"
+            android:baselineAligned="false"
+            android:paddingLeft="4.0dip"
+            android:paddingTop="5.0dip"
+            android:paddingRight="4.0dip"
+            android:paddingBottom="1.0dip">
 
             <Button
-                android:text="Find Recipe"
-                android:layout_width="145dp"
-                android:layout_height="106dp"
                 android:id="@+id/BViewRecipe"
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:drawableTop="@drawable/menu"
+                android:text="Find Recipe"
+                android:background="@color/colorPrimaryDark"
+                android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
+                android:textSize="20dp"
+                android:padding="10dp"
+                android:gravity="center"
+                android:layout_weight="1"
                 android:onClick="showRecipeFinder"
-                android:background="@drawable/white_cb_icon"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-                android:layout_weight="0.37" />
-
+                android:textColor="@color/white" />
             <Button
-                android:layout_width="187dp"
-                android:layout_height="112dp"
-
                 android:id="@+id/BCreateEvent"
-                android:onClick="showCreateActivity"
-                android:background="@drawable/white_serve_icon"
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:drawableTop="@drawable/chef2"
                 android:text="@string/host_event"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-                android:layout_weight="0.07" />
+                android:background="@color/colorPrimaryDark"
+                android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
+                android:textSize="20dp"
+                android:padding="10dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:onClick="showCreateActivity"
+                android:textColor="@color/white" />
+
+
+
         </LinearLayout>
     </LinearLayout>
-
-
-
-
 </LinearLayout>
