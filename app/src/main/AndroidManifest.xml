@@ -53,16 +53,25 @@
 
         </activity>
 
+        <activity android:name=".EventList"
+            android:label="List of Events"
+            android:parentActivityName=".Display"
+            android:windowSoftInputMode="stateHidden|adjustResize">
 
-        <!-- <activity android:name=".EventList"></activity> -->
-        <!--
-     ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
-        -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Display"/>
 
-        <!--<activity android:name=".EventList"></activity>-->
-        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        </activity>
+        <activity android:name=".EventDetail"
+            android:label="Event Details"
+            android:parentActivityName=".EventList"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".EventList"/>
+        </activity>
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

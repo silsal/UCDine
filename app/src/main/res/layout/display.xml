@@ -54,8 +54,10 @@
                 android:id="@+id/BAttend"
                 android:background="@drawable/white_attend_icon"
                 android:text="@string/attend_event"
+                android:onClick="showEventListActivity"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display2"
                 android:elevation="0dp" />
+
 
         </LinearLayout>
 

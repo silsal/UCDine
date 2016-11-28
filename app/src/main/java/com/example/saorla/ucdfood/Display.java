@@ -57,6 +57,9 @@ public class Display extends Activity {
         startActivity(i);
     }
 
-
+    public void showEventListActivity (View view){
+        Intent i = new Intent(this, EventList.class);
+        startActivity(i);
+    }
 
 }
