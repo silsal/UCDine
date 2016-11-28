@@ -74,7 +74,8 @@
                 android:gravity="center"
                 android:layout_toRightOf="@id/BProfileActivity"
                 android:layout_weight="1"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:onClick="showEventListActivity"/>
 
 
 
