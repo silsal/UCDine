@@ -34,12 +34,18 @@ import java.util.List;
  * Created by Cometa on 06/11/2016.
  */
 public class CreateEvent extends AppCompatActivity implements View.OnClickListener {
-    private EditText date;
-    public EditText hour;
-    private EditText event;
-    private EditText location;
-    private EditText noPeople;
-    private EditText description;
+    private EditText Textdate,
+                     Texthour,
+                     Textevent,
+                     Textlocation,
+                     TextNoPeople,
+                     Textdescription;
+    private String date,
+                   hour,
+                   event,
+                   location,
+                   noPeople,
+                   description;
     private DatePickerDialog datePicker;
     private SimpleDateFormat dateFormatter;
     private int  mHour,mMinute;
@@ -96,20 +102,31 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
 
     private void findViewsById() {
 
-        date = (EditText) findViewById(R.id.date);
-        date.requestFocus();
-        date.setTextIsSelectable(true);
+        Textdate = (EditText) findViewById(R.id.date);
+        Textdate.requestFocus();
+        Textdate.setTextIsSelectable(true);
 //        dateText.setInputType(InputType.TYPE_NULL);
 
-        hour = (EditText) findViewById(R.id.hour);
-        hour.requestFocus();
-        hour.setTextIsSelectable(true);
+        Texthour = (EditText) findViewById(R.id.hour);
+        Texthour.requestFocus();
+        Texthour.setTextIsSelectable(true);
 
-        event = (EditText) findViewById(R.id.eventTitle);
-        location = (EditText) findViewById(R.id.location);
-        noPeople = (EditText) findViewById(R.id.people);
-        description = (EditText) findViewById(R.id.description);
+        Textevent = (EditText) findViewById(R.id.eventTitle);
+        Textlocation = (EditText) findViewById(R.id.location);
+        TextNoPeople = (EditText) findViewById(R.id.people);
+        Textdescription = (EditText) findViewById(R.id.description);
     }
+
+    // Store form values into corresponding variables
+    private void getFormValues(){
+        date = Textdate.getText().toString();
+        hour = Texthour.getText().toString();
+        event = Textevent.getText().toString();
+        location = Textlocation.getText().toString();
+        noPeople = TextNoPeople.getText().toString();
+        description = Textdescription.getText().toString();
+    }
+
 
     @Override
     public void onClick(View view) {
@@ -125,14 +142,14 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
         }
     }
     public void setDateField() {
-        date.setOnClickListener(this);
+        Textdate.setOnClickListener(this);
 
         Calendar newCalendar = Calendar.getInstance();
         datePicker = new DatePickerDialog(this, new OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
-                date.setText(dateFormatter.format(newDate.getTime()));
+                Textdate.setText(dateFormatter.format(newDate.getTime()));
             }
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
@@ -140,7 +157,7 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
 
 
     public void setTimeField(){
-        hour.setOnClickListener(this);
+        Texthour.setOnClickListener(this);
         // Process to get Current Time
         final Calendar c = Calendar.getInstance();
         mHour = c.get(Calendar.HOUR_OF_DAY);
@@ -149,7 +166,7 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
         timePicker = new TimePickerDialog(this, new OnTimeSetListener() {
             public void onTimeSet(TimePicker view, int hourOfDay,int minutes) {
                 // Display Selected time in textbox
-                hour.setText(hourOfDay + ":" + minutes);
+                Texthour.setText(hourOfDay + ":" + minutes);
             }
         }, mHour, mMinute, false);}
 
@@ -157,17 +174,17 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
             Intent intent = new Intent(Intent.ACTION_INSERT);
             intent.setType("vnd.android.cursor.item/event");
 
-
+            getFormValues();
 //            long startTime = hour.toString().getTimeInMillis();
 //
 
-            intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,date.toString());
-            intent.putExtra(CalendarContract.Events.DTSTART,hour.toString());
+            intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,date);
+            intent.putExtra(CalendarContract.Events.DTSTART,hour);
 
 
-            intent.putExtra(CalendarContract.Events.TITLE, event.toString());
-            intent.putExtra(CalendarContract.Events.DESCRIPTION,  description.toString());
-            intent.putExtra(CalendarContract.Events.EVENT_LOCATION, location.toString());
+            intent.putExtra(CalendarContract.Events.TITLE, event);
+            intent.putExtra(CalendarContract.Events.DESCRIPTION,  description);
+            intent.putExtra(CalendarContract.Events.EVENT_LOCATION, location);
 
 
             startActivity(intent);
