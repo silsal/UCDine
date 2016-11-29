@@ -199,6 +199,22 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.insert(TABLE_EVENTS, null, values);
         db.close();
     }
+    private final String EV_LOG = "YOU CAN DO IT!";
+
+    public void  getPoints(int userid) {
+        db = this.getWritableDatabase();
+
+        int new_score = 3;
+        db.execSQL("update " + TABLE_USERS + " set available_points = available_points +" + new_score + " where _uid =" + userid+";");
+
+
+        db.close();
+
+
+
+    }
+
+
 
     //delete event from Events table
     public void deleteEvent(){
@@ -247,11 +263,11 @@ public class MyDBHandler extends SQLiteOpenHelper{
         return dbString;
     }
 
-    public void insertNewEvent(String TableName, String[] ColumnNames, String[] values){
-        Log.i(DB_TAG, "inserting");
-        SQLiteDatabase db = getWritableDatabase();
-        String query = "INSERT INTO "+ TableName + " ("+ ColumnNames + ") VALUES (%1$d,%2$d,%3$s,%4$s,%5$s,%6$t,%7$t"+values + ");";
-        db.execSQL(query);
-        db.close();
-    }
+//    public void insertNewEvent(String TableName, String[] ColumnNames, String[] values){
+//        Log.i(DB_TAG, "inserting");
+//        SQLiteDatabase db = getWritableDatabase();
+//        String query = "INSERT INTO "+ TableName + " ("+ ColumnNames + ") VALUES (%1$d,%2$d,%3$s,%4$s,%5$s,%6$t,%7$t"+values + ");";
+//        db.execSQL(query);
+//        db.close();
+//    }
 }

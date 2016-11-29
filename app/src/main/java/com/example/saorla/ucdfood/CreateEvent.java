@@ -1,5 +1,8 @@
 package com.example.saorla.ucdfood;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -9,8 +12,11 @@ import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.text.InputType;
@@ -91,7 +97,40 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
 //        }
     }
 
-//    protected void onActivityResult(int requestCode, int result)
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode,data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            //get the photo
+            Bundle extras = data.getExtras();
+            Bitmap photo = (Bitmap)extras.get("data");
+            saveToInternalStorage(photo);
+        }
+    }
+    private String saveToInternalStorage(Bitmap bitmapImage){
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        // Create imageDir
+        int countvent = 0;
+
+        File mypath=new File(directory,"event.jpg");
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(mypath);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return directory.getAbsolutePath();
+    }
 //    public final static String EVENT_TITLE = "com.example.saorla.ucdfood.MESSAGE";
 
     /**
