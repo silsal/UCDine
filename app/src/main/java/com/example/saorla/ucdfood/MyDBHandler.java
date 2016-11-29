@@ -12,7 +12,7 @@ import android.util.Log;
 public class MyDBHandler extends SQLiteOpenHelper{
     private static final String DB_TAG = "Please work!";
     //Name and version of db
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     private static final String DATABASE_NAME = "foodshare.db";
     //Table names
     public static final String TABLE_USERS = "users";
@@ -176,10 +176,18 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.execSQL("DELETE FROM " + TABLE_USERS + " WHERE " + COLUMN_USERNAME + "=\"" + username + "\";");
     }
 
+
+
     //add event to Events table
     public void addEvent(Events events){
+        db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_EVENT_ID, events.get_eid());
+
+        String queryEvents = "select * from events";
+        Cursor cursor = db.rawQuery(queryEvents,null);
+        int countevent  = cursor.getCount();
+
+        values.put(COLUMN_EVENT_ID, countevent);
         values.put(COLUMN_HOST_ID, events.get_hid());
         values.put(COLUMN_INVITE_NUM, events.getInvite_num());
         values.put(COLUMN_EVENT_NAME, events.getEvent_name());
@@ -187,7 +195,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         values.put(COLUMN_DESCRIPTION, events.getDescription());
         values.put(COLUMN_TIME, events.getTime());
         values.put(COLUMN_DATE, events.getDate());
-        SQLiteDatabase db = getWritableDatabase();
+        //SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_EVENTS, null, values);
         db.close();
     }
@@ -237,5 +245,13 @@ public class MyDBHandler extends SQLiteOpenHelper{
         }
         db.close();
         return dbString;
+    }
+
+    public void insertNewEvent(String TableName, String[] ColumnNames, String[] values){
+        Log.i(DB_TAG, "inserting");
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "INSERT INTO "+ TableName + " ("+ ColumnNames + ") VALUES (%1$d,%2$d,%3$s,%4$s,%5$s,%6$t,%7$t"+values + ");";
+        db.execSQL(query);
+        db.close();
     }
 }

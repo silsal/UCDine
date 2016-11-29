@@ -245,6 +245,13 @@
             android:text="@string/calendarbutton"
             android:onClick="onAddEventClicked" />
         </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="7dp"
+        android:background="@color/lightGrey">
         <Button
             android:id="@+id/submit_toDb"
             android:layout_width="match_parent"
@@ -253,8 +260,8 @@
             android:textSize="20sp"
             android:textColor="@color/white"
             android:text="@string/formbutton"
-            android:onClick="sendEventToDb" />
+            android:onClick="sendEvent" />
     </LinearLayout>
-
+    </LinearLayout>
 
 </ScrollView>

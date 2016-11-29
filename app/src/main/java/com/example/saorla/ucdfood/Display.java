@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,7 +13,7 @@ import android.widget.TextView;
  * Created by user on 09/11/2016.
  */
 
-public class Display extends Activity {
+public class Display extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

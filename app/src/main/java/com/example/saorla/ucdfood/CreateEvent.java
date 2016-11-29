@@ -9,9 +9,12 @@ import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.DatePicker;
@@ -34,6 +37,7 @@ import java.util.List;
  * Created by Cometa on 06/11/2016.
  */
 public class CreateEvent extends AppCompatActivity implements View.OnClickListener {
+    private final String EV_LOG = "Silvia's message!";
     private EditText Textdate,
                      Texthour,
                      Textevent,
@@ -44,8 +48,11 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
                    hour,
                    event,
                    location,
-                   noPeople,
+//                    noPeople,
                    description;
+
+    int noPeople;
+    MyDBHandler helperevent = new MyDBHandler(this);
     private DatePickerDialog datePicker;
     private SimpleDateFormat dateFormatter;
     private int  mHour,mMinute;
@@ -61,6 +68,7 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
         findViewsById();
         setDateField();
         setTimeField();
+
 
     }
 
@@ -82,7 +90,7 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
     }
 
 
-    public final static String EVENT_TITLE = "com.example.saorla.ucdfood.MESSAGE";
+//    public final static String EVENT_TITLE = "com.example.saorla.ucdfood.MESSAGE";
 
     /**
      * Called when the user clicks the Send button
@@ -119,11 +127,12 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
 
     // Store form values into corresponding variables
     private void getFormValues(){
+        Log.i(EV_LOG,"getting form values");
         date = Textdate.getText().toString();
         hour = Texthour.getText().toString();
         event = Textevent.getText().toString();
         location = Textlocation.getText().toString();
-        noPeople = TextNoPeople.getText().toString();
+        noPeople = Integer.parseInt(TextNoPeople.getText().toString());
         description = Textdescription.getText().toString();
     }
 
@@ -157,6 +166,7 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
 
 
     public void setTimeField(){
+
         Texthour.setOnClickListener(this);
         // Process to get Current Time
         final Calendar c = Calendar.getInstance();
@@ -171,6 +181,7 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
         }, mHour, mMinute, false);}
 
         public void onAddEventClicked(View view){
+            Log.i(EV_LOG,"I am here!");
             Intent intent = new Intent(Intent.ACTION_INSERT);
             intent.setType("vnd.android.cursor.item/event");
 
@@ -189,6 +200,61 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
 
             startActivity(intent);
         }
+
+
+        public String getIdfromSharedPrefernece(){
+            SharedPreferences prefs = getSharedPreferences("User_Id",0);
+            String extractedText =  prefs.getString("shared_ref_id","No ID found");
+
+            return extractedText;
+        }
+
+    public void sendEvent(View v){
+
+        getFormValues();
+
+        //insert the details into db
+//        SharedPreferences prefs = getSharedPreferences("User_Id",0);
+        String user = getIdfromSharedPrefernece();
+        int id = Integer.parseInt(user);
+//        Log.i(EV_LOG, "SENDING SENDING SENDING");
+//        Events e = new Events();
+////        e.set_eid(2);
+//        e.set_hid(1);
+//        e.setInvite_num(Integer.parseInt(TextNoPeople.getText().toString()));
+//        e.setDate(Textdate.getText().toString());
+//        e.setTime(Texthour.getText().toString());
+//        e.setDescription(Textdescription.getText().toString());
+//        e.setAddress(Textlocation.getText().toString());
+//        Log.i(EV_LOG, e + "");
+//        helperevent.addEvent(e);
+//
+//        String tableEvents = "TABLE_EVENTS";
+//        String[] columnNames = {"COLUMN_HOST_ID",
+//                                "COLUMN_INVITE_NUM",
+//                                "COLUMN_EVENT_NAME",
+//                                "COLUMN_ADDRESS",
+//                                "COLUMN_DESCRIPTION",
+//                                "COLUMN_TIME",
+//                                "COLUMN_DATE"};
+//        String[] values = {user,noPeople,event, location,description,hour,date};
+//        Log.i(EV_LOG, values+"");
+//        SQLiteDatabase db = getWritableDatabase())
+        Events e = new Events();
+//       values.put(COLUMN_EVENT_ID, events.get_eid());
+        e.set_hid(id);
+        e.setInvite_num(noPeople);
+        e.setEvent_name(event);
+        e.setAddress(location);
+        e.setDescription(description);
+        e.setTime(hour);
+        e.setDate(date);
+        helperevent.addEvent(e);
+//        Log.i(EV_LOG, e+"");
+//         helperevent.insertNewEvent(tableEvents,columnNames,values);
+    }
+
+
     }
 
 
