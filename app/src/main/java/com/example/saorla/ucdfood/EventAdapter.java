@@ -17,21 +17,21 @@ import java.util.List;
  * Created by shauna on 15/11/2016.
  */
 public class EventAdapter extends ArrayAdapter<String> {
-//    int[] eventImageList = {};
-//    String[] eventTitleList = {};
-//    String[] eventHostList = {};
-//    String[] eventTimeList = {};
-    List<String> eventTitleList = new ArrayList<String>();
-    List<String> eventHostList = new ArrayList<String>();
-    List<String> eventTimeList = new ArrayList<String>();
+    int[] eventImageList = {};
+    String[] eventTitleList = {};
+    String[] eventHostList = {};
+    String[] eventTimeList = {};
+//    List<String> eventTitleList = new ArrayList<String>();
+//    List<String> eventHostList = new ArrayList<String>();
+//    List<String> eventTimeList = new ArrayList<String>();
 
 
 
     Context c;
     LayoutInflater inflater;
 
-//    public EventAdapter(Context context, String[] eventTitleList, String[] eventHostList, String[] eventTimeList, int[] eventImageList) {
-    public EventAdapter(Context context, List<String> eventTitleList, List<String> eventHostList, List<String> eventTimeList) {
+    public EventAdapter(Context context, String[] eventTitleList, String[] eventHostList, String[] eventTimeList) {
+//    public EventAdapter(Context context, List<String> eventTitleList, List<String> eventHostList, List<String> eventTimeList) {
 
         super(context, R.layout.custom_event_layout, eventTitleList);
 
@@ -77,9 +77,9 @@ public class EventAdapter extends ArrayAdapter<String> {
 
         //assign the data to the view
 //        holder.imageTV.setImageResource(eventImageList[position]);
-        holder.titleTV.setText(eventTitleList.get(position));
-        holder.hostTV.setText(eventHostList.get(position));
-        holder.timeTV.setText(eventTimeList.get(position));
+        holder.titleTV.setText(eventTitleList[position]);
+        holder.hostTV.setText(eventHostList[position]);
+        holder.timeTV.setText(eventTimeList[position]);
 
         return  v;
     }

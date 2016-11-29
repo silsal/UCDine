@@ -5,6 +5,7 @@ package com.example.saorla.ucdfood;
  */
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,12 +25,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.saorla.ucdfood.R.layout.activity_eventlist;
+
 
 public class EventList extends AppCompatActivity {
-//    List<String> events = new ArrayList<String>();
-//    List<String> details = new ArrayList<String>();
-//    List<String> time = new ArrayList<String>();
-//    List<String> hosts = new ArrayList<String>();
+
 
     public final static String EXTRA_MESSAGE = "com.example.saorla.ucdfood.MESSAGE";
     public String[] stringArray(String string_name){
@@ -99,28 +99,22 @@ public class EventList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_eventlist);
+        setContentView(activity_eventlist);
+        lv = (ListView) findViewById(R.id.eventList);
+        new GetEvents().execute();
 
-//        lv = (ListView) findViewById(R.id.eventList);
-//        final String[] events = helper.selectEventNames();
-//        String[] time = helper.selectEventTime();
-//        final String[] host = helper.selectHostName();
-//        final String[] description = helper.selectEventDetails();
-//
-//
-//        EventAdapter adapter = new EventAdapter(this, events, time, host);
-//        lv.setAdapter(adapter);
 
-        DBcall(events,time,hosts,details);
-        createAdapter(events,time,hosts,details);
+
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
 //                Toast.makeText(getApplicationContext(), eventDetailList[pos], Toast.LENGTH_LONG).show();
+                
+
                 Intent intent = new Intent(getApplicationContext(), EventDetail.class);
-                intent.putExtra(TITLE_MESSAGE, events.get(pos));
-                intent.putExtra(HOST_MESSAGE, hosts.get(pos));
-                intent.putExtra(DETAILS_MESSAGE, details.get(pos));
+                intent.putExtra(TITLE_MESSAGE, events[pos]);
+                intent.putExtra(HOST_MESSAGE, hosts[pos]);
+                intent.putExtra(DETAILS_MESSAGE, details[pos]);
                 startActivity(intent);
 
             }
@@ -172,17 +166,60 @@ public class EventList extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    public void DBcall(String[] events,String[] time,String[]hosts, String[] details) {
-        lv = (ListView) findViewById(R.id.eventList);
+//    public void DBcall(String[] events,String[] time,String[]hosts, String[] details) {
+//        lv = (ListView) findViewById(R.id.eventList);
+//
+//        events = helper.selectEventNames();
+//        time = helper.selectEventTime();
+//        hosts = helper.selectHostName();
+//        details = helper.selectEventDetails();
+//    }
+//    public void createAdapter(List<String>events,List<String>time,List<String>hosts,List<String>details){
+//        EventAdapter adapter = new EventAdapter(this, events, time, hosts);
+//        lv.setAdapter(adapter);
+//    }
 
-        events = helper.selectEventNames();
-        time = helper.selectEventTime();
-        hosts = helper.selectHostName();
-        details = helper.selectEventDetails();
-    }
-    public void createAdapter(List<String>events,List<String>time,List<String>hosts,List<String>details){
-        EventAdapter adapter = new EventAdapter(this, events, time, hosts);
-        lv.setAdapter(adapter);
+
+    class GetEvents extends AsyncTask<Void, Void, ArrayList<String[]>> {
+        private Exception exception;
+
+        @Override
+        protected void onPreExecute() {
+            //make progress bar visible
+//            progressBar.setVisibility(View.VISIBLE);
+
+        }
+
+        @Override
+        protected ArrayList<String[]> doInBackground(Void...params) {
+
+
+            String[] events = helper.selectEventNames();
+            String[] time = helper.selectEventTime();
+            String[] host = helper.selectHostName();
+            String[] description = helper.selectEventDetails();
+
+            ArrayList<String[]> eventstuff = new ArrayList<>();
+
+            eventstuff.add(events);
+            eventstuff.add(time);
+            eventstuff.add(host);
+            eventstuff.add(description);
+
+
+            return eventstuff;
+
+
+
+        }
+
+        protected void onPostExecute(ArrayList<String[]> response) {
+//            EventAdapter adapter = new EventAdapter(this, time, host,description);
+            EventAdapter adapter = new EventAdapter(EventList.this,response.get(0), response.get(1), response.get(2));
+            lv.setAdapter(adapter);
+
+
+        }
     }
 
 }
