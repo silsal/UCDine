@@ -6,11 +6,14 @@
 package com.example.saorla.ucdfood;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -38,6 +41,15 @@ import java.util.ArrayList;
 
 //This class is for the RecipeFinder activity. It sends HTTP requests to an external API and returns the results in JSON format
 public class RecipeFinder extends AppCompatActivity {
+    public final static String EXTRA_MESSAGE = "com.example.saorla.ucdfood.MESSAGE";
+    public String[] stringArray(String string_name){
+        String[] strArray = string_name.split(" ");
+        return strArray;
+    }
+    String strName = "name this tune";
+    String name = stringArray(strName)[0];
+    String user_name = name;
+
     //initialise variables, views and other components which will be required
     private final String APP_LOG = "Saorla's message!";
     private static final String RECIPE_RESPONSE = "RECIPE_RESPONSE";
@@ -272,7 +284,55 @@ public class RecipeFinder extends AppCompatActivity {
         super.onStop();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.recipe_finder_menu, menu);
+        return true;
+    }
+    /** Called when the user clicks the Search Events quick-link */
+    public void goToProfile() {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, user_name);
+        startActivity(intent);
+        finish();
+    }
 
+    /** Called when the user clicks the Create Events quick-link */
+    public void goToCreate() {
+        Intent intent = new Intent(this, CreateEvent.class);
+        intent.putExtra(EXTRA_MESSAGE, user_name);
+        startActivity(intent);
+        finish();
+    }
+
+    /** Called when the user clicks the Search Recipe quick-link */
+    public void goToEvents() {
+        Intent intent = new Intent(this, EventList.class);
+        intent.putExtra(EXTRA_MESSAGE, user_name);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        //action when corresponding action-bar item is clicked
+        switch(item.getItemId()) {
+
+            case R.id.create_events_ql:
+                goToCreate();
+                return true;
+
+            case R.id.profile_ql:
+                goToProfile();
+                return true;
+
+            case R.id.search_events_ql:
+                goToEvents();
+                return true;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }
 

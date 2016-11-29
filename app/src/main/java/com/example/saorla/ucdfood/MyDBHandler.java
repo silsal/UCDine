@@ -7,6 +7,10 @@ import android.content.Context;
 import android.content.ContentValues;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 //This class is responsible for creating the database
 
 public class MyDBHandler extends SQLiteOpenHelper{
@@ -213,6 +217,18 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
 
     }
+    public void  reducePoints(int userid) {
+        db = this.getWritableDatabase();
+
+        int reduce_score = 1;
+        db.execSQL("update " + TABLE_USERS + " set available_points = available_points -" + reduce_score + " where _uid =" + userid+";");
+
+
+        db.close();
+
+
+
+    }
 
 
 
@@ -262,7 +278,131 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.close();
         return dbString;
     }
+    public int EventSize() {
+        db = this.getReadableDatabase();
+        String query = "select * from "+TABLE_EVENTS;
+        Cursor cursor = db.rawQuery(query,null);
+        int cnt = cursor.getCount();
+        cursor.close();
+        return cnt;
 
+    }
+    public List<String> selectEventNames(){
+        db = this.getReadableDatabase();
+        String query = "select event_name from "+TABLE_EVENTS+";";
+        Cursor result = db.rawQuery(query,null);
+        int count = 0;
+//        String [] events = new String[EventSize()];
+        List<String> events = new ArrayList<String>();
+        if (result.moveToFirst()){
+            do{
+                events.add(result.getString(result.getColumnIndex("event_name")));
+                count++;
+            }while (result.moveToNext());
+        }
+//            result.moveToNext();
+        db.close();
+        Log.i(EV_LOG, "Event name");
+//        Log.i(EV_LOG, Arrays.toString(events));
+        return events;
+
+    }
+    //    public int[] selectEventID(){
+//        db = this.getReadableDatabase();
+//        String query = "select _eid from "+TABLE_EVENTS+";";
+//        Cursor result = db.rawQuery(query,null);
+//        int count = 0;
+//        String [] events = new String[EventSize()];
+//        if (result.moveToFirst()){
+//            events[count]=(result.getString(result.getColumnIndex("_eid")));
+//            count++;
+//        }
+//        result.moveToNext();
+//        result.close();
+//        Log.i(EV_LOG, "Event name");
+//        Log.i(EV_LOG, Arrays.toString(events));
+//        return events;
+//
+//    }
+    public List<String>  selectEventTime(){
+        db = this.getReadableDatabase();
+        String query = "select time from "+TABLE_EVENTS+";";
+        Cursor result = db.rawQuery(query,null);
+        int count = 0;
+//        String [] time = new String[EventSize()];
+        List<String> time = new ArrayList<String>();
+        if (result.moveToFirst()){
+            do{
+                time.add(result.getString(result.getColumnIndex("time")));
+                count++;
+            }while(result.moveToNext());
+
+        }
+        db.close();
+//        Log.i(EV_LOG, Arrays.toString(time));
+
+        return time;
+    }
+    public List<String> selectEventDetails(){
+        db = this.getReadableDatabase();
+        String query = "select description from "+TABLE_EVENTS+";";
+        Cursor des = db.rawQuery(query,null);
+        int count = 0;
+//        String [] descrip = new String[EventSize()];
+        List<String> descrip = new ArrayList<String>();
+        if (des.moveToFirst()){
+            do{
+                descrip.add(des.getString(des.getColumnIndex("description")));
+                count++;
+            }while(des.moveToNext());
+
+        }
+        db.close();
+//        Log.i(EV_LOG, Arrays.toString(descrip));
+
+        return descrip;
+    }
+
+    public List<String> selectHostName(){
+        db = this.getReadableDatabase();
+        String query = "select _hid from "+TABLE_EVENTS+";";
+//        String query2= "select uname from "+TABLE_USERS+ " where"
+        Cursor c = db.rawQuery(query,null);
+        int count = 0;
+//        String [] hid = new String[EventSize()];
+        List<String> hid = new ArrayList<String>();
+        if (c.moveToFirst()){
+            do{
+                hid.add(c.getString(c.getColumnIndex("_hid")));
+                count++;
+            }while(c.moveToNext());
+
+        }
+//        String [] unames = new String [EventSize()];
+        List<String> unames = new ArrayList<String>();
+        int cnt =0;
+        for(int i=0;i<hid.size();i++){
+            String query2= "select uname from "+TABLE_USERS+ " where _uid == "+hid.get(i);
+            Cursor c2 = db.rawQuery(query2,null);
+
+            if(c2.moveToFirst()){
+                do{
+                    unames.add((c2.getString(c2.getColumnIndex("uname"))));
+                    cnt++;
+                }while(c2.moveToNext());
+
+            }
+        }
+
+
+        db.close();
+        Log.i(EV_LOG, "Usernames");
+//        Log.i(EV_LOG, unames[1]+"");
+//        Log.i(EV_LOG, Arrays.toString(unames));
+
+        return unames;
+
+    }
 //    public void insertNewEvent(String TableName, String[] ColumnNames, String[] values){
 //        Log.i(DB_TAG, "inserting");
 //        SQLiteDatabase db = getWritableDatabase();

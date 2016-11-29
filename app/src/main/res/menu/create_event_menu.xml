@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/search_events_ql"
+        android:title="@string/search_event"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/profile_ql"
+        android:title="@string/profile"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/search_recipe_ql"
+        android:title="@string/search_recipe"
+        app:showAsAction="never"
+        />
+
+</menu>

@@ -41,8 +41,9 @@ public class MainActivity extends AppCompatActivity {
 
             if(pass.equals(password)){
             Intent i = new Intent(MainActivity.this, Display.class);
-                i.putExtra("Username",str);
+            i.putExtra("Username",str);
             startActivity(i);
+            finish();
             }else{
                 Toast temp = Toast.makeText(MainActivity.this, "Username and password don't match!",Toast.LENGTH_SHORT);
                 temp.show();
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         if(v.getId()==R.id.Bsignup){
             Intent i = new Intent(MainActivity.this, SignUp.class);
             startActivity(i);
+            finish();
         }
 
     }

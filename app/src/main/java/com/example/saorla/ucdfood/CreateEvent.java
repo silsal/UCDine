@@ -21,6 +21,8 @@ import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.DatePicker;
@@ -43,6 +45,15 @@ import java.util.List;
  * Created by Cometa on 06/11/2016.
  */
 public class CreateEvent extends AppCompatActivity implements View.OnClickListener {
+    public final static String EXTRA_MESSAGE = "com.example.saorla.ucdfood.MESSAGE";
+    public String[] stringArray(String string_name){
+        String[] strArray = string_name.split(" ");
+        return strArray;
+    }
+    String strName = "name this tune";
+    String name = stringArray(strName)[0];
+    String user_name = name;
+
     private final String EV_LOG = "Silvia's message!";
     private EditText Textdate,
                      Texthour,
@@ -281,7 +292,52 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
         helperevent.getPoints(id);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.event_list_menu, menu);
+        return true;
+    }
+    /** Called when the user clicks the Profile quick-link */
+    public void goToProfile() {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, user_name);
+        startActivity(intent);
+    }
 
+    /** Called when the user clicks the Search Recipe quick-link */
+    public void goToEvents() {
+        Intent intent = new Intent(this, EventList.class);
+        intent.putExtra(EXTRA_MESSAGE, user_name);
+        startActivity(intent);
+        finish();
+    }
+
+    /** Called when the user clicks the Search Recipe quick-link */
+    public void goToRecipe() {
+        Intent intent = new Intent(this, RecipeFinder.class);
+        intent.putExtra(EXTRA_MESSAGE, user_name);
+        startActivity(intent);
+        finish();
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        //action when corresponding action-bar item is clicked
+        switch(item.getItemId()) {
+
+            case R.id.search_events_ql:
+                goToEvents();
+                return true;
+
+            case R.id.profile_ql:
+                goToProfile();
+                return true;
+
+            case R.id.search_recipe_ql:
+                goToRecipe();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     }
 
 

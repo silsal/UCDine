@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
 /**
  * Created by user on 09/11/2016.
  */
@@ -15,15 +14,11 @@ import android.widget.Toast;
 public class SignUp extends Activity {
 
     MyDBHandler helper = new MyDBHandler(this);
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup);
     }
-
-
     public void onSignUpClick(View v){
         if (v.getId()==R.id.Bsignupbutton){
             EditText fname = (EditText)findViewById(R.id.TFname);
@@ -57,20 +52,12 @@ public class SignUp extends Activity {
                 helper.insertUsers(s);
 
             }
-
-
         }
         //bring back to login
         if(v.getId()==R.id.Bsignupbutton){
             Intent i = new Intent(SignUp.this, MainActivity.class);
             startActivity(i);
+            finish();
         }
-
     }
-
-
-
-
-
-
 }
