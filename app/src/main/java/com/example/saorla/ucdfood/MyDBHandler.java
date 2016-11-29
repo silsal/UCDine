@@ -287,16 +287,16 @@ public class MyDBHandler extends SQLiteOpenHelper{
         return cnt;
 
     }
-    public List<String> selectEventNames(){
+    public String[]selectEventNames(){
         db = this.getReadableDatabase();
         String query = "select event_name from "+TABLE_EVENTS+";";
         Cursor result = db.rawQuery(query,null);
         int count = 0;
-//        String [] events = new String[EventSize()];
-        List<String> events = new ArrayList<String>();
+        String [] events = new String[EventSize()];
+//        List<String> events = new ArrayList<String>();
         if (result.moveToFirst()){
             do{
-                events.add(result.getString(result.getColumnIndex("event_name")));
+                events[count]=result.getString(result.getColumnIndex("event_name"));
                 count++;
             }while (result.moveToNext());
         }
@@ -324,16 +324,16 @@ public class MyDBHandler extends SQLiteOpenHelper{
 //        return events;
 //
 //    }
-    public List<String>  selectEventTime(){
+    public String[]  selectEventTime(){
         db = this.getReadableDatabase();
         String query = "select time from "+TABLE_EVENTS+";";
         Cursor result = db.rawQuery(query,null);
         int count = 0;
-//        String [] time = new String[EventSize()];
-        List<String> time = new ArrayList<String>();
+        String [] time = new String[EventSize()];
+//        List<String> time = new ArrayList<String>();
         if (result.moveToFirst()){
             do{
-                time.add(result.getString(result.getColumnIndex("time")));
+                time[count]=result.getString(result.getColumnIndex("time"));
                 count++;
             }while(result.moveToNext());
 
@@ -343,16 +343,16 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
         return time;
     }
-    public List<String> selectEventDetails(){
+    public String[] selectEventDetails(){
         db = this.getReadableDatabase();
         String query = "select description from "+TABLE_EVENTS+";";
         Cursor des = db.rawQuery(query,null);
         int count = 0;
-//        String [] descrip = new String[EventSize()];
-        List<String> descrip = new ArrayList<String>();
+        String [] descrip = new String[EventSize()];
+//        List<String> descrip = new ArrayList<String>();
         if (des.moveToFirst()){
             do{
-                descrip.add(des.getString(des.getColumnIndex("description")));
+                descrip[count]=des.getString(des.getColumnIndex("description"));
                 count++;
             }while(des.moveToNext());
 
@@ -363,31 +363,31 @@ public class MyDBHandler extends SQLiteOpenHelper{
         return descrip;
     }
 
-    public List<String> selectHostName(){
+    public String[] selectHostName(){
         db = this.getReadableDatabase();
         String query = "select _hid from "+TABLE_EVENTS+";";
 //        String query2= "select uname from "+TABLE_USERS+ " where"
         Cursor c = db.rawQuery(query,null);
         int count = 0;
-//        String [] hid = new String[EventSize()];
-        List<String> hid = new ArrayList<String>();
+        String [] hid = new String[EventSize()];
+//        List<String> hid = new ArrayList<String>();
         if (c.moveToFirst()){
             do{
-                hid.add(c.getString(c.getColumnIndex("_hid")));
+                hid[count]=c.getString(c.getColumnIndex("_hid"));
                 count++;
             }while(c.moveToNext());
 
         }
-//        String [] unames = new String [EventSize()];
-        List<String> unames = new ArrayList<String>();
+        String [] unames = new String [EventSize()];
+//        List<String> unames = new ArrayList<String>();
         int cnt =0;
-        for(int i=0;i<hid.size();i++){
-            String query2= "select uname from "+TABLE_USERS+ " where _uid == "+hid.get(i);
+        for(int i=0;i<hid.length;i++){
+            String query2= "select uname from "+TABLE_USERS+ " where _uid == "+hid[i];
             Cursor c2 = db.rawQuery(query2,null);
 
             if(c2.moveToFirst()){
                 do{
-                    unames.add((c2.getString(c2.getColumnIndex("uname"))));
+                    unames[cnt]=(c2.getString(c2.getColumnIndex("uname")));
                     cnt++;
                 }while(c2.moveToNext());
 

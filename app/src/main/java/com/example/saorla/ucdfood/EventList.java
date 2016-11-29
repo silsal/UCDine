@@ -26,10 +26,10 @@ import java.util.List;
 
 
 public class EventList extends AppCompatActivity {
-    List<String> events = new ArrayList<String>();
-    List<String> details = new ArrayList<String>();
-    List<String> time = new ArrayList<String>();
-    List<String> hosts = new ArrayList<String>();
+//    List<String> events = new ArrayList<String>();
+//    List<String> details = new ArrayList<String>();
+//    List<String> time = new ArrayList<String>();
+//    List<String> hosts = new ArrayList<String>();
 
     public final static String EXTRA_MESSAGE = "com.example.saorla.ucdfood.MESSAGE";
     public String[] stringArray(String string_name){
@@ -172,7 +172,7 @@ public class EventList extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    public void DBcall(List<String>events,List<String>time,List<String>hosts,List<String>details) {
+    public void DBcall(String[] events,String[] time,String[]hosts, String[] details) {
         lv = (ListView) findViewById(R.id.eventList);
 
         events = helper.selectEventNames();
