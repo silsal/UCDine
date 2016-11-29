@@ -60,8 +60,7 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/camera_icon"
                 android:background="@color/lightGrey"
-                android:layout_toRightOf="@id/eventTitle"
-                android:onClick="takePicture" >
+                android:layout_toRightOf="@id/eventTitle">
             </ImageButton>
         </LinearLayout>
         <LinearLayout
