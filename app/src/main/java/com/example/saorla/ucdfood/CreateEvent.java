@@ -81,7 +81,9 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
     public void takePicture(View view) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            //Take a picc and pass result to onActivityResult
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+
         }
 //        else {
 //            Toast.makeText(getActivity(), "This device does not have a camera.", Toast.LENGTH_SHORT)
@@ -89,7 +91,7 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
 //        }
     }
 
-
+//    protected void onActivityResult(int requestCode, int result)
 //    public final static String EVENT_TITLE = "com.example.saorla.ucdfood.MESSAGE";
 
     /**
@@ -136,6 +138,15 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
         description = Textdescription.getText().toString();
     }
 
+        //clear fields
+    public void clearFields(){
+        Textdate.getText().clear();
+        Texthour.getText().clear();
+        Textevent.getText().clear();
+        Textlocation.getText().clear();
+        TextNoPeople.getText().clear();
+        Textdescription.getText().clear();
+    }
 
     @Override
     public void onClick(View view) {
@@ -202,7 +213,7 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
         }
 
 
-        public String getIdfromSharedPrefernece(){
+        public String getIdfromSharedPreference(){
             SharedPreferences prefs = getSharedPreferences("User_Id",0);
             String extractedText =  prefs.getString("shared_ref_id","No ID found");
 
@@ -215,33 +226,11 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
 
         //insert the details into db
 //        SharedPreferences prefs = getSharedPreferences("User_Id",0);
-        String user = getIdfromSharedPrefernece();
+        String user = getIdfromSharedPreference();
         int id = Integer.parseInt(user);
-//        Log.i(EV_LOG, "SENDING SENDING SENDING");
-//        Events e = new Events();
-////        e.set_eid(2);
-//        e.set_hid(1);
-//        e.setInvite_num(Integer.parseInt(TextNoPeople.getText().toString()));
-//        e.setDate(Textdate.getText().toString());
-//        e.setTime(Texthour.getText().toString());
-//        e.setDescription(Textdescription.getText().toString());
-//        e.setAddress(Textlocation.getText().toString());
-//        Log.i(EV_LOG, e + "");
-//        helperevent.addEvent(e);
-//
-//        String tableEvents = "TABLE_EVENTS";
-//        String[] columnNames = {"COLUMN_HOST_ID",
-//                                "COLUMN_INVITE_NUM",
-//                                "COLUMN_EVENT_NAME",
-//                                "COLUMN_ADDRESS",
-//                                "COLUMN_DESCRIPTION",
-//                                "COLUMN_TIME",
-//                                "COLUMN_DATE"};
-//        String[] values = {user,noPeople,event, location,description,hour,date};
-//        Log.i(EV_LOG, values+"");
-//        SQLiteDatabase db = getWritableDatabase())
+
         Events e = new Events();
-//       values.put(COLUMN_EVENT_ID, events.get_eid());
+
         e.set_hid(id);
         e.setInvite_num(noPeople);
         e.setEvent_name(event);
@@ -250,8 +239,7 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
         e.setTime(hour);
         e.setDate(date);
         helperevent.addEvent(e);
-//        Log.i(EV_LOG, e+"");
-//         helperevent.insertNewEvent(tableEvents,columnNames,values);
+        helperevent.getPoints(id);
     }
 
 
