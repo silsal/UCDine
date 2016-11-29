@@ -23,18 +23,26 @@
         <item name="android:gravity">left</item>
     </style>
 
-    <style name="primaryText1">
+    <style name="profileText1">
         <item name="android:textColor">@color/colorText</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:gravity">left|center</item>
+        <item name="android:gravity">left|center_vertical</item>
         <item name="android:textSize">30dp</item>
+        <item name="android:layout_marginStart">5dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginEnd">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 
-    <style name="primaryText2">
-        <item name="android:textColor">@color/colorText</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:gravity">left|center</item>
+    <style name="profileText2" parent="profileText1">
         <item name="android:textSize">20dp</item>
+    </style>
+
+    <style name="profileText3" parent="profileText1">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textSize">13dp</item>
     </style>
 
 
@@ -72,15 +80,23 @@
 
     <style name="profile_button" parent="profile_details">
         <item name="android:gravity">center_vertical|center_horizontal</item>
-        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/colorText</item>
         <item name="android:background">@drawable/border_button</item>
     </style>
 
     <style name="welcomeNoteText">
         <item name="android:textColor">@color/colorText</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:gravity">left|top</item>
+        <item name="android:textSize">25dp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="welcomeNoteSubText">
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:gravity">left|center</item>
-        <item name="android:textSize">20dp</item>
+        <item name="android:textSize">21dp</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
@@ -89,6 +105,14 @@
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">center_vertical|center_horizontal</item>
         <item name="android:textSize">17dp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="hostAttendText">
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textStyle">italic|bold</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textSize">11dp</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 

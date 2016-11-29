@@ -43,7 +43,7 @@ public class FragmentReviewsStats extends Fragment{
         //Create an Array Adapter which is where the List Array will be bound to. Eg binding the list to another Activity(s)
         ArrayAdapter<String> reviewAdapter = new ArrayAdapter<String>(
                 getActivity(),
-                R.layout.fragment_view_activity_stats_list, //name of xml file (Activity) that the <TextView> element is in
+                R.layout.fragment_view_reviews_stats_list, //name of xml file (Activity) that the <TextView> element is in
                 R.id.list_reviews_textview, //name (id) of the <TextView> element
                 reviewStats);
 

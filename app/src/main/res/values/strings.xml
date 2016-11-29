@@ -24,8 +24,9 @@
     <string name="edit_message">Enter a message</string>
     <string name="button_edit">UPDATE</string>
     <string name="user_name">User Name</string>
-    <string name="user_email">\@email</string>
-    <string name="user_course">Course</string>
+    <string name="user_email">EMAIL: %1$s</string>
+    <string name="user_course">COURSE: %1$s</string>
+    <string name="user_bio">About Me</string>
     <string name="user_points">POINTS: %1$s</string>
     <string name="user_events">EVENTS: %1$s</string>
     <string name="user_past_events">PAST EVENTS: %1$s</string>
@@ -50,6 +51,8 @@
     <string name="activities">My Activities</string>
     <string name="events">My Events</string>
     <string name="reviews">My Reviews</string>
+    <string name="hosted">Host</string>
+    <string name="attended">Guest</string>
 
     <string name="event_details">Upcoming Events:</string>
     <string name="cancel_event">CANCEL</string>

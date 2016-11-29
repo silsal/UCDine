@@ -3,13 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/border_event"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp">
 
+    <!--android:background="@drawable/border_event"-->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="100dp"
+        android:minHeight="100dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
         android:gravity="center_horizontal|center_vertical"
         android:id="@+id/list_item_events_textview"
         android:textColor="#0f0e0e">
@@ -22,31 +25,31 @@
     <!--android:src="@drawable/cancel_icon"-->
     <!--/>-->
 
-    <RelativeLayout
-        android:layout_width="50dp"
-        android:layout_height="30dp"
-        android:orientation="horizontal"
-        android:gravity="center">
+    <!--<RelativeLayout-->
+        <!--android:layout_width="50dp"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:gravity="center">-->
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            android:onClick="testToast"
-            android:text="@string/cancel_event"
-            />
+        <!--<Button-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@android:color/transparent"-->
+            <!--android:onClick="cancelToast()"-->
+            <!--android:text="@string/cancel_event"-->
+            <!--/>-->
 
-        <ImageButton
-            android:id="@+id/delete_btn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="right"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/cancel_icon"
-            android:onClick="testToast"
-            android:scaleType="fitXY"
-            android:text="@string/cancel_event"
-            android:background="@android:color/transparent"/>
-    </RelativeLayout>
+        <!--<ImageButton-->
+            <!--android:id="@+id/delete_btn"-->
+            <!--android:layout_width="30dp"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:layout_gravity="right"-->
+            <!--android:layout_marginRight="5dp"-->
+            <!--android:src="@drawable/cancel_icon"-->
+            <!--android:onClick="cancelToast()"-->
+            <!--android:scaleType="fitXY"-->
+            <!--android:text="@string/cancel_event"-->
+            <!--android:background="@android:color/transparent"/>-->
+    <!--</RelativeLayout>-->
 
 </LinearLayout>

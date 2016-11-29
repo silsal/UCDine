@@ -1,12 +1,12 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="400dp"
+    android:layout_height="match_parent"
     android:paddingLeft="1dp"
     android:paddingRight="1dp"
     android:paddingBottom="3dp"
-    android:background="@drawable/border_fragment"
-    tools:context=".MainActivityFragment"
+    android:background="@drawable/border_profile"
+    tools:context="com.example.saorla.ucdfood.FragmentActivityStats"
     >
 
     <LinearLayout

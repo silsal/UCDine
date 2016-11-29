@@ -34,6 +34,8 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public static final String COLUMN_HOST_SCORE = "host_score";
     public static final String COLUMN_ATTENDEE_POINTS = "attendee_points";
     public static final String COLUMN_AVAILABLE_POINTS = "available_points";
+    public static final String COLUMN_COURSE = "course";
+    public static final String COLUMN_BIO = "bio";
     //events table column names
     public static final String COLUMN_EVENT_ID = "_eid";
     public static final String COLUMN_HOST_ID = "_hid";
@@ -65,6 +67,8 @@ public class MyDBHandler extends SQLiteOpenHelper{
                 COLUMN_EMAIL + " TEXT," +
                 COLUMN_PASS + " TEXT NOT NULL,"+
                 COLUMN_HOST_SCORE + " INTEGER DEFAULT 0," +
+                COLUMN_COURSE + " TEXT," +
+                COLUMN_BIO + " TEXT," +
                 COLUMN_ATTENDEE_POINTS + " INTEGER DEFAULT 3," +
                 COLUMN_AVAILABLE_POINTS + " INTEGER DEFAULT 3" +
                 " );";
@@ -126,6 +130,9 @@ public class MyDBHandler extends SQLiteOpenHelper{
         values.put(COLUMN_USERNAME, u.getUname());
         values.put(COLUMN_EMAIL, u.getEmail());
         values.put(COLUMN_PASS,u.getPass());
+        values.put(COLUMN_COURSE,"CompSci");
+        values.put(COLUMN_HOST_SCORE,"5");
+        values.put(COLUMN_BIO,"Tell the UCDine world a little bit about yourself");
 
         db.insert(TABLE_USERS, null, values);
         db.close();
@@ -410,4 +417,58 @@ public class MyDBHandler extends SQLiteOpenHelper{
 //        db.execSQL(query);
 //        db.close();
 //    }
+
+    //General "Select" fuunction
+    public String databaseSelectByIDToString(String TableName, String ColumnName, int WhereValueEquals){
+        String dbString = "";
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT " + ColumnName +" FROM " + TableName + " WHERE " + COLUMN_USER_ID +" == " + WhereValueEquals + ";";
+
+        //cursor
+        Cursor cursor = db.rawQuery(query, null);
+        //get first row in the results
+        cursor.moveToFirst();
+
+
+        dbString += cursor.getString(0);
+
+        if (dbString.length() ==0 ){
+            dbString = "Empty";
+        }
+        db.close();
+        return dbString;
+    }
+
+
+    //General "Update" function
+    public void databaseUpdateByIDToString(String TableName, String ColumnName, String UpdateValue, int UserId){
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "UPDATE " + TableName +" SET " + ColumnName + " = '" + UpdateValue + "' WHERE " + COLUMN_USER_ID +" = " + UserId + ";";
+
+        db.execSQL(query);
+
+        db.close();
+    }
+
+    //General "Count" function
+    public String databaseCountByIDToString(String TableName, String CountColumnName, String WhereColumnName, int WhereEqualsValue){
+        String dbCountString = "";
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT count(" + CountColumnName + ") FROM " + TableName + " WHERE " + WhereColumnName + " = " + WhereEqualsValue + ";";
+
+        //cursor
+        Cursor cursor = db.rawQuery(query, null);
+        //get first row in the results
+        cursor.moveToFirst();
+
+
+        dbCountString += cursor.getString(0);
+
+        if (dbCountString.length() ==0 ){
+            dbCountString = "27";
+        }
+        db.close();
+        return dbCountString;
+    }
+
 }

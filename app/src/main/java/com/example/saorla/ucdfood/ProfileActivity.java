@@ -5,6 +5,8 @@ package com.example.saorla.ucdfood;
  */
 
 import android.content.res.Resources;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -38,17 +40,31 @@ import android.widget.ViewFlipper;
 
 import static android.R.attr.cursorVisible;
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
+import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_ATTENDEE_POINTS;
+import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_AVAILABLE_POINTS;
+//import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_COURSE;
+import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_BIO;
+import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_COURSE;
+import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_EMAIL;
+import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_HOST_ID;
+import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_HOST_SCORE;
+import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_USERNAME;
+import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_USER_ID;
+import static com.example.saorla.ucdfood.MyDBHandler.TABLE_EVENTS;
+import static com.example.saorla.ucdfood.MyDBHandler.TABLE_USERS;
+import android.content.Intent;
 
 
 public class ProfileActivity extends AppCompatActivity {
     public final static String EXTRA_MESSAGE = "com.example.saorla.ucdfood.MESSAGE";
-    String user_id;
+    private int userID;
     TextView userDeetsName;
     TextView userDeetsEmail;
     TextView userDeetsCourse;
     TextView userDeetsPoints;
     TextView userDeetsEvents;
     TextView userDeetsRanking;
+    TextView userDeetsBio;
 
     public String[] stringArray(String string_name){
         String[] strArray = string_name.split(" ");
@@ -60,17 +76,17 @@ public class ProfileActivity extends AppCompatActivity {
     String name = stringArray(strName)[0];
 
 
-
-    String user_name = name;
+    String user_name;
     String user_email;
     String user_course;
     String user_points;
     String user_events;
     String user_ranking;
+    String user_bio;
 
     String userDeetsText;
     TextView userWelcome;
-
+    MyDBHandler dbHandler;
 
 
     @Override
@@ -86,7 +102,9 @@ public class ProfileActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in_profile, R.anim.slide_out_profile);
 
         Resources res = getResources();
-
+        dbHandler = new MyDBHandler(this);
+        userID = Integer.parseInt(getIdfromSharedPreference());
+//        userID = 0;
         //FIND VIEWS
         //In row 2 of Profile Layout
         userDeetsEmail = (TextView) findViewById(R.id.ap_user_email);
@@ -96,31 +114,48 @@ public class ProfileActivity extends AppCompatActivity {
         //In row 3 of Profile Layout
         userDeetsName = (TextView) findViewById(R.id.ap_user_name);
         userDeetsRanking = (TextView) findViewById(R.id.ap_user_rating);
+        //In row 3 of Profile Layout
+        userDeetsBio = (TextView) findViewById(R.id.ap_user_about);
         //Welcome Note
         userWelcome = (TextView) findViewById(R.id.ap_welcome_note);
 
         //GET VALUES FROM DATABASE
-        user_name = stringArray(db_response_userTable)[3];
-        user_email = stringArray(db_response_userTable)[4];
-        user_course = stringArray(db_response_userTable)[5];
-        user_points = stringArray(db_response_userTable)[6];
-        user_events = Integer.toString(stringArray(db_response_eventTable).length);
-        user_ranking = stringArray(db_response_userTable)[7];
+        //user_name = stringArray(db_response_userTable)[3];
+        user_name = populateDetails(TABLE_USERS, COLUMN_USERNAME,userID);
+        //user_name = getIdfromSharedPrefernece();
+        //user_email = stringArray(db_response_userTable)[4];
+        user_email = populateDetails(TABLE_USERS, COLUMN_EMAIL,userID);
+        //user_course = stringArray(db_response_userTable)[5];
+        user_course = populateDetails(TABLE_USERS, COLUMN_COURSE,userID);
+        //user_points = stringArray(db_response_userTable)[6];
+        user_points = populateDetails(TABLE_USERS, COLUMN_AVAILABLE_POINTS,userID);
+        //user_events = Integer.toString(stringArray(db_response_eventTable).length);
+        user_events = populateCountDetails(TABLE_EVENTS, COLUMN_HOST_ID, COLUMN_HOST_ID, userID);
+        //user_ranking = stringArray(db_response_userTable)[7];
+        user_ranking = populateDetails(TABLE_USERS, COLUMN_HOST_SCORE, userID);
+        user_bio = populateDetails(TABLE_USERS, COLUMN_BIO, userID);
 
         //INSERT DATABASE VALUES INTO PRE-SET STRINGS
-        //Ranking
-        String user_ranking_combined = String.format(res.getString(R.string.user_rating), user_ranking);
         //Points
         String user_points_combined = String.format(res.getString(R.string.user_points), user_points);
+        //Email
+        String user_email_combined = String.format(res.getString(R.string.user_email), user_email);
+        //Course
+        String user_course_combined = String.format(res.getString(R.string.user_course), user_course);
         //Events
         String user_events_combined = String.format(res.getString(R.string.user_events), user_events);
+        //Ranking
+        String user_ranking_combined = String.format(res.getString(R.string.user_rating), user_ranking);
+
+
         //Welcome Note
         String welcome_note = String.format(res.getString(R.string.welcome3), user_name);
 
         //ASSIGN TEXT STRINGS TO VIEWS IN LAYOUTS
         userDeetsName.setText(user_name);
-        userDeetsEmail.setText(user_email);
-        userDeetsCourse.setText(user_course);
+        userDeetsEmail.setText(user_email_combined);
+        userDeetsCourse.setText(user_course_combined);
+        userDeetsBio.setText(user_bio);
         userDeetsRanking.setText(user_ranking_combined);
         userDeetsPoints.setText(user_points_combined);
         userDeetsEvents.setText(user_events_combined);
@@ -129,6 +164,36 @@ public class ProfileActivity extends AppCompatActivity {
         //Intent intent = getIntent();
         //String message = intent.getStringExtra(ProfileEditActivity.EXTRA_MESSAGE_2);
     }
+
+
+    public String getIdfromSharedPreference(){
+        SharedPreferences prefs = getSharedPreferences("User_Id",0);
+        String extractedText =  prefs.getString("shared_ref_id","No ID found");
+
+        return extractedText;
+    }
+
+
+
+
+
+
+//    public String getIdfromSharedPrefernece(){
+//        SharedPreferences prefs = getSharedPreferences(id);
+//        String extractedText =  prefs.getString("User_id");
+//
+//        return extractedText;
+//    }
+
+    public String populateDetails(String Table, String Column, int ID){
+        return dbHandler.databaseSelectByIDToString(Table, Column, ID);
+    }
+
+
+    public String populateCountDetails(String Table, String CountColumnName, String WhereColumnName, int WhereEqualsValue){
+        return dbHandler.databaseCountByIDToString(Table, CountColumnName, WhereColumnName, WhereEqualsValue);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -209,6 +274,7 @@ public class ProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ProfileEditActivity.class);
         intent.putExtra(EXTRA_MESSAGE, user_name);
         startActivity(intent);
+        finish();
     }
 
 
@@ -233,6 +299,25 @@ public class ProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(this, RecipeFinder.class);
         intent.putExtra(EXTRA_MESSAGE, user_name);
         startActivity(intent);
+    }
+
+    public void cancelToast(View view){
+        //Create Toast
+        Context context = getApplicationContext();
+//        Context context = this;
+        CharSequence cancelText = ("Event Cancelled");
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast_cancel = Toast.makeText(context, cancelText, duration);
+        toast_cancel.setGravity(Gravity.TOP, 0, 200);
+
+        View toast_view = toast_cancel.getView();
+        toast_view.setBackgroundResource(R.drawable.border_background_reverse);
+        toast_cancel.setView(toast_view);
+
+
+        toast_cancel.show();
+
     }
 
 

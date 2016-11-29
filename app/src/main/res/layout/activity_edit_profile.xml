@@ -4,59 +4,95 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="@color/background">
+    android:background="@mipmap/background">
 
 
     <LinearLayout
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="700dp"
         android:orientation="vertical"
-        android:weightSum="2"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/border_profile"
         tools:context=".MainActivityFragment"
         >
 
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
             android:orientation="horizontal"
-            android:gravity="center">
+            android:weightSum="2"
+            android:background="@color/colorPrimaryDark">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/aep_updateImageButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/camera_icon"
+                    android:onClick="updateProfilePic"
+                    android:scaleType="fitXY"/>
+
+                <ImageButton
+                    android:id="@+id/aep_behindImageButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_centerHorizontal="true"
+
+                    android:onClick="updateProfilePic"
+                    android:alpha="0.4"
+                    android:scaleType="fitXY"/>
+                <!--android:src="@drawable/profile_image_default"-->
+
+            </RelativeLayout>
+
+            <ImageView
+                android:contentDescription="@string/user_location_desc"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                style="@style/profile_margins"
+
+                android:cropToPadding="true"/>
+            <!--android:src="@drawable/g_maps_logo"-->
 
 
-
-
-
-            <ImageButton
-                android:id="@+id/aep_updateImageButton"
-                android:layout_width="200dp"
-                android:layout_height="150dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="10dp"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/camera_icon_2"
-                android:onClick="updateProfilePic"
-                android:scaleType="fitXY"/>
-
-            <ImageButton
-                android:id="@+id/aep_behindImageButton"
-                android:layout_width="200dp"
-                android:layout_height="150dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="10dp"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/prof_pic_example"
-                android:onClick="updateProfilePic"
-                android:alpha="0.5"
-                android:scaleType="fitXY"/>
-
-        </RelativeLayout>
+        </LinearLayout>
 
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="500dp"
             >
 
             <EditText
@@ -139,6 +175,37 @@
                 android:paddingLeft="15dp"
                 style="@style/nonEditText"
                 android:text="@string/user_course"/>
+
+            <EditText android:id="@+id/aep_editUserBio"
+                android:layout_below="@+id/aep_editUserCourse"
+                android:layout_weight ="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_background_editable"
+                style="@style/editableText"
+                android:inputType="textMultiLine|textCapWords|textCapSentences"
+                android:maxLines ="4"
+                android:minLines ="4"
+                android:maxLength="160"
+                android:scrollHorizontally="false"
+                android:hint="@string/user_bio">
+                <requestFocus />
+            </EditText>
+
+            <TextView
+                android:id="@+id/aep_editUserBioLabel"
+                android:layout_below="@+id/aep_editUserCourse"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="15dp"
+                style="@style/nonEditText"
+                android:text="@string/user_bio"/>
 
 
             <ImageView

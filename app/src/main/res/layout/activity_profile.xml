@@ -1,531 +1,563 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-
-<android.support.v4.widget.DrawerLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ap_profile_page"
-    android:orientation="horizontal"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/background">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/background">
 
-    <ScrollView
-        android:id="@+id/ap_main_scroll"
+<ScrollView
+    android:id="@+id/ap_main_scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--Lin Layout for All Information-->
+    <LinearLayout
+        android:id="@+id/ap_overall_layout"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="match_parent">
 
-        <ViewFlipper
-            android:id="@+id/ap_profile_viewFlip"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            <!--******** WELCOME NOTES ***********-->
 
-
-            <!--Lin Layout for All Information-->
+            <!--&lt;!&ndash;Lin Layout for Welcome Notes&ndash;&gt;-->
             <LinearLayout
-                android:id="@+id/ap_overall_layout"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="100dp"
+                android:weightSum="3">
 
-                <!--Lin Layout for All Profile Information-->
-                <LinearLayout
-                    android:id="@+id/ap_overall_profile_layout"
-                    android:orientation="vertical"
+                <TextView
+                    android:id="@+id/ap_welcome_note"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp">
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    style="@style/welcomeNoteText"
+                    android:text=""/>
 
-                    <!--Lin Layout for Profile Information Row 1-->
+                <TextView
+                    android:id="@+id/ap_activities"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    style="@style/welcomeNoteSubText"
+                    android:text="@string/my_activity"/>
+                <!--End Layout for Welcome Notes-->
+            </LinearLayout>
+
+            <!--android:textStyle="normal"-->
+
+            <!--Lin Layout for All Profile Information-->
+            <LinearLayout
+                android:id="@+id/ap_overall_profile_layout"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="310dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_profile">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3"
+                    android:background="@color/colorPrimaryDark">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/profile_icon"
+                        android:paddingLeft="40dp"
+                        style="@style/icon_margins"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:text="@string/profile"
+                        style="@style/sectionHeaderText"
+                        android:textAllCaps="true" />
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:paddingRight="40dp"
+                        android:src="@drawable/profile_edit_icon2"
+                        style="@style/icon_margins"/>
+                </LinearLayout>
+
+                <!--Lin Layout for Profile Information Row 1-->
+                <LinearLayout
+                    android:id="@+id/ap_profile_layout_row1"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="5dp"
+                    android:weightSum="5">
+
+                    <!--Lin Layout for Prof Pic & Edit Button-->
                     <LinearLayout
-                        android:id="@+id/ap_profile_layout_row1"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="90dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="5dp"
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:layout_height="match_parent"
                         android:weightSum="3">
 
                         <ImageView
                             android:id="@+id/ap_profile_image"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginEnd="5dp"
-                            android:layout_marginRight="5dp"
-                            android:background="@drawable/border_background_reverse"
-                            android:src="@drawable/prof_pic_example"/>
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginStart="10dp"
-                            android:background="@color/colorPrimaryDark" />
-
-                        <!--Lin Layout for User Details-->
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="match_parent"
-                            android:weightSum="4"
-                            style = "@style/profile_details">
-
-                            <TextView
-                                android:id="@+id/ap_user_email"
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                style = "@style/editableText"
-                                android:gravity="center_horizontal|center_vertical"
-                                android:hint="@string/user_email"/>
-
-                            <TextView
-                                android:id="@+id/ap_user_course"
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                style = "@style/editableText"
-                                android:gravity="center_horizontal|center_vertical"
-                                android:hint="@string/user_course"/>
-
-                            <TextView
-                                android:id="@+id/ap_user_points"
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                style = "@style/editableText"
-                                android:gravity="center_horizontal|center_vertical"
-                                android:hint="@string/user_points"/>
-
-                            <TextView
-                                android:id="@+id/ap_user_events"
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                style = "@style/editableText"
-                                android:gravity="center_horizontal|center_vertical"
-                                android:hint="@string/user_events"/>
-
-                            <!--End User Details Layout-->
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:background="@color/colorPrimaryDark" />
-
-                        <ImageView
-                            android:contentDescription="@string/user_location_desc"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="match_parent"
-                            style="@style/profile_margins"
-                            android:background="@drawable/border_background_reverse"
-                            android:src="@drawable/g_maps_logo"/>
-
-                        <!--End Layout for Profile Pic & Button-->
-                    </LinearLayout>
-
-                    <!--Lin Layout for Profile Information Row 2-->
-                    <LinearLayout
-                        android:id="@+id/ap_profile_layout_row2"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:weightSum="3">
-
-                        <TextView
-                            android:id="@+id/ap_user_name"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="match_parent"
-                            android:includeFontPadding="false"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="2"
+                            android:layout_gravity = "center_horizontal"
                             android:layout_marginStart="10dp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginEnd="5dp"
                             android:layout_marginRight="5dp"
-                            style = "@style/primaryText1"
-                            android:hint="@string/user_name"/>
-
-                        <TextView
-                            android:id="@+id/ap_user_rating"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="match_parent"
-                            style = "@style/primaryText2"
-                            android:gravity = "center_vertical"
-                            android:hint="@string/user_rating"/>
+                            android:padding="5dp"
+                            android:cropToPadding="true"
+                            android:background="@drawable/border_background_reverse"
+                            android:src="@mipmap/profile_image_default"
+                            android:scaleType="centerCrop"/>
 
                         <Button
                             android:id="@+id/ap_buttonUpdate"
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:layout_height="match_parent"
+                            android:layout_gravity = "center_horizontal"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginRight="5dp"
                             style="@style/profile_button"
                             android:text="@string/edit_profile"
                             android:onClick="editProfile"/>
-
-                        <!--END Layout for Profile Information Row 2-->
+                        <!--End Layout for Prof Pic & Edit Button-->
                     </LinearLayout>
 
+                    <!--Vertical Divider Line-->
                     <View
-                        android:layout_width="match_parent"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_height="1dp"
-                        android:background="@color/colorPrimaryDark" />
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:background="@color/background" />
 
-                    <TextView
-                        android:id="@+id/ap_user_about"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:textColor="@color/colorText"
-                        android:text="@string/about_me"/>
+                    <!--Lin Layout for User Details-->
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="3"
+                        android:weightSum="14"
+                        style = "@style/profile_details">
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_height="1dp"
-                        android:background="@color/colorPrimaryDark" />
+                        <!--Row: User Name-->
+                        <TextView
+                            android:id="@+id/ap_user_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="4"
+                            style = "@style/profileText1"
+                            android:hint="@string/user_name"/>
 
+                        <!--Row: Points-->
+                        <TextView
+                            android:id="@+id/ap_user_points"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="2"
+                            style = "@style/profileText2"
+                            android:hint="@string/user_points"/>
 
-                    <!--END Layout for All Profile Information-->
+                        <!--Row: Email-->
+                        <TextView
+                            android:id="@+id/ap_user_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="2"
+                            style = "@style/profileText3"
+                            android:hint="@string/user_email"/>
+
+                        <!--Row: Course-->
+                        <TextView
+                            android:id="@+id/ap_user_course"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="2"
+                            style = "@style/profileText3"
+                            android:hint="@string/user_course"/>
+
+                        <!--Row: Total Events-->
+                        <TextView
+                            android:id="@+id/ap_user_events"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="2"
+                            style = "@style/profileText3"
+                            android:hint="@string/user_events"/>
+
+                        <!--Row: Rating-->
+                        <TextView
+                            android:id="@+id/ap_user_rating"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="2"
+                            style = "@style/profileText3"
+                            android:hint="@string/user_rating"/>
+
+                        <!--Lin Layout for User Details-->
+                    </LinearLayout>
+
+                    <!--Lin Layout for Profile Information Row 1                        -->
                 </LinearLayout>
 
-                <!--******** WELCOME NOTES ***********-->
-
-                <!--Lin Layout for Welcome Notes-->
-                <LinearLayout
-                    android:orientation="vertical"
+                <!--Horizontal Divider Line-->
+                <View
                     android:layout_width="match_parent"
                     android:layout_marginTop="5dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_height="100dp"
-                    android:weightSum="2">
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_height="1dp"
+                    android:background="@color/background" />
 
-                    <TextView
-                        android:id="@+id/ap_welcome_note"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        style="@style/welcomeNoteText"
-                        android:text=""/>
-
-                    <TextView
-                        android:id="@+id/ap_activities"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        style="@style/welcomeNoteText"
-                        android:textStyle="normal"
-                        android:text="@string/my_activity"/>
-                    <!--End Layout for Welcome Notes-->
-                </LinearLayout>
-
-
-                <!--************ ACTIVITIES SUMMARY ***************-->
-
-                <!--Lin Layout for Activities Fragments-->
-                <LinearLayout
+                <!--Row: Biography-->
+                <TextView
+                    android:id="@+id/ap_user_about"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="175dp"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="5dp">
+                    android:layout_height="60dp"
+                    android:textColor="@color/colorText"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/about_me"/>
 
-                    <!--<fragment-->
-                        <!--android:id="@+id/ap_activity_fragment"-->
-                        <!--android:name="com.example.saorla.ucdfood.FragmentActivityStats"-->
-                        <!--tools:layout="@layout/fragment_view_activity_stats"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_marginStart="10dp"-->
-                        <!--android:layout_marginLeft="10dp"-->
-                        <!--android:layout_marginEnd="10dp"-->
-                        <!--android:layout_marginRight="10dp"-->
-                        <!--android:layout_height="match_parent"/>-->
-
-                    <!--End Layout for Activities Fragments-->
-                </LinearLayout>
-
-
-                <!--************ DIVIDE LINE ***************-->
+                <!--Horizontal Divider Line-->
                 <View
                     android:layout_width="match_parent"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
                     android:layout_height="1dp"
-                    android:background="@color/colorPrimaryDark" />
+                    android:background="@color/background" />
 
-
-
-                <!--************ EVENTS SUMMARY ***************-->
-
-                <!--Lin Layout for EVENTS Fragments-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="500dp"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="5dp">
-
-                    <!--<fragment-->
-                        <!--android:id="@+id/ap_events_fragment"-->
-                        <!--android:name="com.example.saorla.ucdfood.FragmentEventsStats"-->
-                        <!--tools:layout="@layout/fragment_view_events_stats"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_marginStart="10dp"-->
-                        <!--android:layout_marginLeft="10dp"-->
-                        <!--android:layout_marginEnd="10dp"-->
-                        <!--android:layout_marginRight="10dp"-->
-                        <!--android:layout_height="match_parent"/>-->
-
-                    <!--END Layout for EVENTS Fragments-->
-                </LinearLayout>
-
-
-
-                <!--************ DIVIDE LINE ***************-->
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_height="1dp"
-                    android:background="@color/colorPrimaryDark" />
-
-
-                <!--************ REVIEWS SUMMARY ***************-->
-
-                <!--Lin Layout for REVIEWS Fragments-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="500dp"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="5dp">
-
-                    <!--<fragment-->
-                        <!--android:id="@+id/ap_reviews_fragment"-->
-                        <!--android:name="com.example.saorla.ucdfood.FragmentReviewsStats"-->
-                        <!--tools:layout="@layout/fragment_view_reviews_stats"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_marginStart="10dp"-->
-                        <!--android:layout_marginLeft="10dp"-->
-                        <!--android:layout_marginEnd="10dp"-->
-                        <!--android:layout_marginRight="10dp"-->
-                        <!--android:layout_height="match_parent"/>-->
-
-                    <!--END Layout for REVIEWS Fragments-->
-                </LinearLayout>
-
-
-                <!--************ FINISH DIVIDE LINE ***************-->
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_height="1dp"
-                    android:background="@color/colorPrimaryDark" />
-
-                <!--END LIN LAYOUT FOR ALL INFORMATION-->
+                <!--END Layout for All Profile Information-->
             </LinearLayout>
-        </ViewFlipper>
-    </ScrollView>
 
-    <!--<View-->
-    <!--android:id="@+id/divide2"-->
-    <!--android:layout_marginTop="10dp"-->
-    <!--android:layout_marginBottom="10dp"-->
-    <!--android:layout_marginStart="5dp"-->
-    <!--android:layout_marginLeft="5dp"-->
-    <!--android:layout_marginEnd="5dp"-->
-    <!--android:layout_marginRight="5dp"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="5dp"-->
-    <!--android:background="@drawable/border_background"/>-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimaryDark" />
 
-    <!--<TextView-->
-    <!--android:id="@+id/events_title"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="@string/events"/>-->
+            <!--************ ACTIVITIES SUMMARY ***************-->
 
-    <!--&lt;!&ndash;Lin Layout for Events Fragments&ndash;&gt;-->
-    <!--<LinearLayout-->
-    <!--android:id="@+id/events_layout"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_weight="2"-->
-    <!--android:orientation="horizontal">-->
+            <!--Lin Layout for Activities Fragments-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="175dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
 
-    <!--<ImageView-->
-    <!--android:id="@+id/events_calendar"-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_marginTop="5dp"-->
-    <!--android:layout_marginStart="5dp"-->
-    <!--android:layout_marginLeft="5dp"-->
-    <!--android:layout_marginEnd="5dp"-->
-    <!--android:layout_marginRight="5dp"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:background="@drawable/boreder_background_reverse"-->
-    <!--android:src="@drawable/calendar_icon"/>-->
+                <fragment
+                    android:id="@+id/ap_activity_fragment"
+                    android:name="com.example.saorla.ucdfood.FragmentActivityStats"
+                    tools:layout="@layout/fragment_view_activity_stats"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_height="match_parent"/>
 
-    <!--<fragment-->
-    <!--android:id="@+id/next_event_fragment"-->
-    <!--android:name="com.example.eatwith_profile.AttendInfoFragment"-->
-    <!--tools:layout="@layout/fragment_attend_info"-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_marginTop="5dp"-->
-    <!--android:layout_marginStart="5dp"-->
-    <!--android:layout_marginLeft="5dp"-->
-    <!--android:layout_marginEnd="5dp"-->
-    <!--android:layout_marginRight="5dp"-->
-    <!--android:layout_height="500dp"/>-->
-    <!--&lt;!&ndash;End Layout for Events Fragments&ndash;&gt;-->
-    <!--</LinearLayout>-->
-
-    <!--<View-->
-    <!--android:id="@+id/divide3"-->
-    <!--android:layout_marginTop="5dp"-->
-    <!--android:layout_marginBottom="5dp"-->
-    <!--android:layout_marginStart="5dp"-->
-    <!--android:layout_marginLeft="5dp"-->
-    <!--android:layout_marginEnd="5dp"-->
-    <!--android:layout_marginRight="5dp"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="5dp"-->
-    <!--android:background="@drawable/border_background"/>-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/events_details_title"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="@string/event_details"/>-->
-
-    <!--&lt;!&ndash;Lin Layout for Event Details Fragments&ndash;&gt;-->
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_weight="2"-->
-    <!--android:orientation="horizontal">-->
-
-    <!--<fragment-->
-    <!--android:id="@+id/host_events_details_fragment"-->
-    <!--android:name="com.example.eatwith_profile.HostInfoFragment"-->
-    <!--tools:layout="@layout/fragment_host_info"-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_marginTop="5dp"-->
-    <!--android:layout_marginStart="5dp"-->
-    <!--android:layout_marginLeft="5dp"-->
-    <!--android:layout_marginEnd="5dp"-->
-    <!--android:layout_marginRight="5dp"-->
-    <!--android:layout_height="wrap_content"/>-->
-
-    <!--<fragment-->
-    <!--android:id="@+id/attend_events_details_fragment"-->
-    <!--android:name="com.example.eatwith_profile.AttendInfoFragment"-->
-    <!--tools:layout="@layout/fragment_attend_info"-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_marginTop="5dp"-->
-    <!--android:layout_marginStart="5dp"-->
-    <!--android:layout_marginLeft="5dp"-->
-    <!--android:layout_marginEnd="5dp"-->
-    <!--android:layout_marginRight="5dp"-->
-    <!--android:layout_height="wrap_content"/>-->
-    <!--&lt;!&ndash;End Layout for Events Details Fragments&ndash;&gt;-->
-    <!--</LinearLayout>-->
-    <!--&lt;!&ndash;End Layout for All Information&ndash;&gt;-->
-
-    <!--<LinearLayout-->
-    <!--android:orientation="horizontal"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="200dp"-->
-    <!--android:weightSum="2">-->
+                <!--End Layout for Activities Fragments-->
+            </LinearLayout>
 
 
-    <!--&lt;!&ndash;<include&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-    <!--&lt;!&ndash;layout="@layout/test_include" />&ndash;&gt;-->
-    <!--</LinearLayout>-->
+            <!--************ DIVIDE LINE ***************-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimaryDark" />
 
-    <!--<ListView android:id="@+id/left_drawer"-->
-    <!--android:layout_width="240dp"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_gravity="start"-->
-    <!--android:choiceMode="singleChoice"-->
-    <!--android:divider="@android:color/transparent"-->
-    <!--android:dividerHeight="0dp"-->
-    <!--android:background="#111"/>-->
 
-    <!--<TextView-->
-    <!--android:id="@+id/user_deets"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:background="@drawable/boreder_background_reverse"-->
-    <!--android:text="Test"-->
-    <!--/>-->
 
-    <!--<fragment-->
-    <!--android:id="@+id/user_name_fragment"-->
-    <!--android:name="com.example.eatwith_profile.UserNameEditableFragment"-->
-    <!--tools:layout="@layout/fragment_user_name_editable"-->
-    <!--android:layout_marginTop="5dp"-->
-    <!--android:layout_width="125dp"-->
-    <!--android:layout_height="40dp"-->
-    <!--/>-->
+            <!--************ EVENTS SUMMARY ***************-->
 
-    <!--<fragment-->
-    <!--android:id="@+id/user_email_fragment"-->
-    <!--android:name="com.example.eatwith_profile.UserEmailEditableFragment"-->
-    <!--tools:layout="@layout/fragment_user_email_editable"-->
-    <!--android:layout_width="125dp"-->
-    <!--android:layout_height="40dp"-->
-    <!--android:layout_marginTop="47dp"-->
-    <!--android:layout_marginStart="-125dp"-->
-    <!--android:layout_marginLeft="-125dp"-->
-    <!--/>-->
+            <!--Lin Layout for EVENTS Fragments-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
 
-    <!--<fragment-->
-    <!--android:id="@+id/user_course_fragment"-->
-    <!--android:name="com.example.eatwith_profile.UserCourseEditableFragment"-->
-    <!--tools:layout="@layout/fragment_user_course_editable"-->
-    <!--android:layout_width="125dp"-->
-    <!--android:layout_height="40dp"-->
-    <!--android:layout_marginTop="89dp"-->
-    <!--android:layout_marginStart="-125dp"-->
-    <!--android:layout_marginLeft="-125dp"-->
-    <!--/>-->
+                <fragment
+                    android:id="@+id/ap_events_fragment"
+                    android:name="com.example.saorla.ucdfood.FragmentEventsStats"
+                    tools:layout="@layout/fragment_view_events_stats"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_height="match_parent"/>
 
-    <!--<ImageView-->
-    <!--android:id="@+id/imageViewCamera"-->
-    <!--android:layout_height="100dp"-->
-    <!--android:layout_marginTop="140dp"-->
-    <!--android:layout_marginStart="50dp"-->
-    <!--android:layout_marginLeft="50dp"-->
-    <!--android:src="@drawable/camera_icon"-->
-    <!--android:layout_width="wrap_content">-->
-    <!--</ImageView>-->
-</android.support.v4.widget.DrawerLayout>
+                <!--END Layout for EVENTS Fragments-->
+            </LinearLayout>
+
+
+
+            <!--************ DIVIDE LINE ***************-->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimaryDark" />
+
+
+            <!--************ REVIEWS SUMMARY ***************-->
+
+            <!--Lin Layout for REVIEWS Fragments-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="375dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+
+                <fragment
+                    android:id="@+id/ap_reviews_fragment"
+                    android:name="com.example.saorla.ucdfood.FragmentReviewsStats"
+                    tools:layout="@layout/fragment_view_reviews_stats"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_height="match_parent"/>
+
+                <!--END Layout for REVIEWS Fragments-->
+            </LinearLayout>
+
+
+            <!--************ FINISH DIVIDE LINE ***************-->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimaryDark" />
+
+        <!--END LIN LAYOUT FOR ALL INFORMATION-->
+    </LinearLayout>
+
+</ScrollView>
+</LinearLayout>
+<!--<View-->
+<!--android:id="@+id/divide2"-->
+<!--android:layout_marginTop="10dp"-->
+<!--android:layout_marginBottom="10dp"-->
+<!--android:layout_marginStart="5dp"-->
+<!--android:layout_marginLeft="5dp"-->
+<!--android:layout_marginEnd="5dp"-->
+<!--android:layout_marginRight="5dp"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="5dp"-->
+<!--android:background="@drawable/border_background"/>-->
+
+<!--<TextView-->
+<!--android:id="@+id/events_title"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:text="@string/events"/>-->
+
+<!--&lt;!&ndash;Lin Layout for Events Fragments&ndash;&gt;-->
+<!--<LinearLayout-->
+<!--android:id="@+id/events_layout"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_weight="2"-->
+<!--android:orientation="horizontal">-->
+
+<!--<ImageView-->
+<!--android:id="@+id/events_calendar"-->
+<!--android:layout_width="0dp"-->
+<!--android:layout_weight="1"-->
+<!--android:layout_marginTop="5dp"-->
+<!--android:layout_marginStart="5dp"-->
+<!--android:layout_marginLeft="5dp"-->
+<!--android:layout_marginEnd="5dp"-->
+<!--android:layout_marginRight="5dp"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:background="@drawable/boreder_background_reverse"-->
+<!--android:src="@drawable/calendar_icon"/>-->
+
+<!--<fragment-->
+<!--android:id="@+id/next_event_fragment"-->
+<!--android:name="com.example.eatwith_profile.AttendInfoFragment"-->
+<!--tools:layout="@layout/fragment_attend_info"-->
+<!--android:layout_width="0dp"-->
+<!--android:layout_weight="1"-->
+<!--android:layout_marginTop="5dp"-->
+<!--android:layout_marginStart="5dp"-->
+<!--android:layout_marginLeft="5dp"-->
+<!--android:layout_marginEnd="5dp"-->
+<!--android:layout_marginRight="5dp"-->
+<!--android:layout_height="500dp"/>-->
+<!--&lt;!&ndash;End Layout for Events Fragments&ndash;&gt;-->
+<!--</LinearLayout>-->
+
+<!--<View-->
+<!--android:id="@+id/divide3"-->
+<!--android:layout_marginTop="5dp"-->
+<!--android:layout_marginBottom="5dp"-->
+<!--android:layout_marginStart="5dp"-->
+<!--android:layout_marginLeft="5dp"-->
+<!--android:layout_marginEnd="5dp"-->
+<!--android:layout_marginRight="5dp"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="5dp"-->
+<!--android:background="@drawable/border_background"/>-->
+
+<!--<TextView-->
+<!--android:id="@+id/events_details_title"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:text="@string/event_details"/>-->
+
+<!--&lt;!&ndash;Lin Layout for Event Details Fragments&ndash;&gt;-->
+<!--<LinearLayout-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_weight="2"-->
+<!--android:orientation="horizontal">-->
+
+<!--<fragment-->
+<!--android:id="@+id/host_events_details_fragment"-->
+<!--android:name="com.example.eatwith_profile.HostInfoFragment"-->
+<!--tools:layout="@layout/fragment_host_info"-->
+<!--android:layout_width="0dp"-->
+<!--android:layout_weight="1"-->
+<!--android:layout_marginTop="5dp"-->
+<!--android:layout_marginStart="5dp"-->
+<!--android:layout_marginLeft="5dp"-->
+<!--android:layout_marginEnd="5dp"-->
+<!--android:layout_marginRight="5dp"-->
+<!--android:layout_height="wrap_content"/>-->
+
+<!--<fragment-->
+<!--android:id="@+id/attend_events_details_fragment"-->
+<!--android:name="com.example.eatwith_profile.AttendInfoFragment"-->
+<!--tools:layout="@layout/fragment_attend_info"-->
+<!--android:layout_width="0dp"-->
+<!--android:layout_weight="1"-->
+<!--android:layout_marginTop="5dp"-->
+<!--android:layout_marginStart="5dp"-->
+<!--android:layout_marginLeft="5dp"-->
+<!--android:layout_marginEnd="5dp"-->
+<!--android:layout_marginRight="5dp"-->
+<!--android:layout_height="wrap_content"/>-->
+<!--&lt;!&ndash;End Layout for Events Details Fragments&ndash;&gt;-->
+<!--</LinearLayout>-->
+<!--&lt;!&ndash;End Layout for All Information&ndash;&gt;-->
+
+<!--<LinearLayout-->
+<!--android:orientation="horizontal"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="200dp"-->
+<!--android:weightSum="2">-->
+
+
+<!--&lt;!&ndash;<include&ndash;&gt;-->
+<!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;layout="@layout/test_include" />&ndash;&gt;-->
+<!--</LinearLayout>-->
+
+<!--<ListView android:id="@+id/left_drawer"-->
+<!--android:layout_width="240dp"-->
+<!--android:layout_height="match_parent"-->
+<!--android:layout_gravity="start"-->
+<!--android:choiceMode="singleChoice"-->
+<!--android:divider="@android:color/transparent"-->
+<!--android:dividerHeight="0dp"-->
+<!--android:background="#111"/>-->
+
+<!--<TextView-->
+<!--android:id="@+id/user_deets"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:background="@drawable/boreder_background_reverse"-->
+<!--android:text="Test"-->
+<!--/>-->
+
+<!--<fragment-->
+<!--android:id="@+id/user_name_fragment"-->
+<!--android:name="com.example.eatwith_profile.UserNameEditableFragment"-->
+<!--tools:layout="@layout/fragment_user_name_editable"-->
+<!--android:layout_marginTop="5dp"-->
+<!--android:layout_width="125dp"-->
+<!--android:layout_height="40dp"-->
+<!--/>-->
+
+<!--<fragment-->
+<!--android:id="@+id/user_email_fragment"-->
+<!--android:name="com.example.eatwith_profile.UserEmailEditableFragment"-->
+<!--tools:layout="@layout/fragment_user_email_editable"-->
+<!--android:layout_width="125dp"-->
+<!--android:layout_height="40dp"-->
+<!--android:layout_marginTop="47dp"-->
+<!--android:layout_marginStart="-125dp"-->
+<!--android:layout_marginLeft="-125dp"-->
+<!--/>-->
+
+<!--<fragment-->
+<!--android:id="@+id/user_course_fragment"-->
+<!--android:name="com.example.eatwith_profile.UserCourseEditableFragment"-->
+<!--tools:layout="@layout/fragment_user_course_editable"-->
+<!--android:layout_width="125dp"-->
+<!--android:layout_height="40dp"-->
+<!--android:layout_marginTop="89dp"-->
+<!--android:layout_marginStart="-125dp"-->
+<!--android:layout_marginLeft="-125dp"-->
+<!--/>-->
+
+<!--<ImageView-->
+<!--android:id="@+id/imageViewCamera"-->
+<!--android:layout_height="100dp"-->
+<!--android:layout_marginTop="140dp"-->
+<!--android:layout_marginStart="50dp"-->
+<!--android:layout_marginLeft="50dp"-->
+<!--android:src="@drawable/camera_icon"-->
+<!--android:layout_width="wrap_content">-->
+<!--</ImageView>-->
+<!--</android.support.v4.widget.LinearLayout>-->
 
 

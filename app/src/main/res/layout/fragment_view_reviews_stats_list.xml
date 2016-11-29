@@ -3,22 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/border_event"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="100dp"
+        android:minHeight="100dp"
         android:orientation="horizontal"
-        android:weightSum="8">
+        android:weightSum="9">
 
 
         <TextView
             android:id="@+id/list_reviews_textview"
             android:layout_width="0dp"
-            android:layout_weight="7"
+            android:layout_weight="8"
             android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:padding="7dp"
             android:gravity="left|center_vertical"
             android:textColor="#0f0e0e">
         </TextView>
@@ -34,7 +37,7 @@
             android:src="@drawable/two_star"
             android:onClick="testToast"
             android:scaleType="fitXY"
-            android:text="@string/cancel_event"
+            android:text="RATING"
             android:background="@android:color/transparent"/>
 
 
