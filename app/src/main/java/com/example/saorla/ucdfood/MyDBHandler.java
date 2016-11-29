@@ -16,19 +16,21 @@ import java.util.List;
 public class MyDBHandler extends SQLiteOpenHelper{
     private static final String DB_TAG = "Please work!";
     //Name and version of db
-    private static final int DATABASE_VERSION = 4;
-    private static final String DATABASE_NAME = "foodshare.db";
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "foodshareDB.db";
     //Table names
     public static final String TABLE_USERS = "users";
     public static final String TABLE_EVENTS = "events";
-    public static final String TABLE_FRIENDS = "friends";
-    public static final String TABLE_FAVOURITERECIPES = "favouriterecipes";
+    public static final String TABLE_MY_EVENTS = "events";
+//    public static final String TABLE_FRIENDS = "friends";
+//    public static final String TABLE_FAVOURITERECIPES = "favouriterecipes";
     //common column names
     public static final String COLUMN_USER_ID = "_uid";
     //users table column names
     public static final String COLUMN_USERNAME = "uname";
     public static final String COLUMN_FIRST_NAME = "fname";
     public static final String COLUMN_SURNAME = "sname";
+    public static final String COLUMN_LOCATION = "location";
     public static final String COLUMN_EMAIL = "email";
     public static final String COLUMN_PASS = "pass";
     public static final String COLUMN_HOST_SCORE = "host_score";
@@ -36,20 +38,29 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public static final String COLUMN_AVAILABLE_POINTS = "available_points";
     public static final String COLUMN_COURSE = "course";
     public static final String COLUMN_BIO = "bio";
+    public static final String COLUMN_PROFILE_PIC = "user_pic";
+
     //events table column names
     public static final String COLUMN_EVENT_ID = "_eid";
     public static final String COLUMN_HOST_ID = "_hid";
     public static final String COLUMN_INVITE_NUM = "invite_num";
+    public static final String COLUMN_AVAILABLE_INVITE_NUM = "available_num";
     public static final String COLUMN_EVENT_NAME = "event_name";
     public static final String COLUMN_ADDRESS = "address";
     public static final String COLUMN_DESCRIPTION = "description";
     public static final String COLUMN_TIME = "time";
     public static final String COLUMN_DATE = "date";
+    public static final String COLUMN_EVENT_PIC = "event_pic";
     //friends table column names
-    public static final String COLUMN_FRIEND_ID = "_friendid";
+//    public static final String COLUMN_FRIEND_ID = "_friendid";
     //favourite recipes column names
-    public static final String COLUMN_RECIPE_ID = "_recipeid";
-    public static final String COLUMN_RECIPE_URL = "recipe_url";
+//    public static final String COLUMN_RECIPE_ID = "_recipeid";
+//    public static final String COLUMN_RECIPE_URL = "recipe_url";
+
+    //My events table column names
+    public static final String COLUMN_MY_EVENT_ID = "_myeid";
+    public static final String COLUMN_EVENT_ATTENDED_ID = "_myaid";
+
 
     SQLiteDatabase db;
 
@@ -64,6 +75,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
                 COLUMN_USERNAME + " TEXT," +
                 COLUMN_FIRST_NAME + " TEXT," +
                 COLUMN_SURNAME + " TEXT," +
+                COLUMN_LOCATION + " TEXT," +
                 COLUMN_EMAIL + " TEXT," +
                 COLUMN_PASS + " TEXT NOT NULL,"+
                 COLUMN_HOST_SCORE + " INTEGER DEFAULT 0," +
@@ -71,36 +83,47 @@ public class MyDBHandler extends SQLiteOpenHelper{
                 COLUMN_BIO + " TEXT," +
                 COLUMN_ATTENDEE_POINTS + " INTEGER DEFAULT 3," +
                 COLUMN_AVAILABLE_POINTS + " INTEGER DEFAULT 3" +
+                COLUMN_PROFILE_PIC + " TEXT," +
                 " );";
 
         String query2 = "CREATE TABLE " + TABLE_EVENTS + " ( " +
                 COLUMN_EVENT_ID + " INTEGER PRIMARY KEY," +
                 COLUMN_HOST_ID + " INTEGER NOT NULL," +
                 COLUMN_INVITE_NUM + " INTEGER NOT NULL CHECK(invite_num > 0)," +
+                COLUMN_AVAILABLE_INVITE_NUM + " INTEGER DEFAULT 0," +
                 COLUMN_EVENT_NAME + " TEXT," +
                 COLUMN_ADDRESS + " TEXT NOT NULL," +
                 COLUMN_DESCRIPTION + " TEXT," +
                 COLUMN_TIME + " TEXT," +
                 COLUMN_DATE + " TEXT " +
+                COLUMN_EVENT_PIC + " TEXT " +
+        " );";
+
+        String query3 = "CREATE TABLE " + TABLE_MY_EVENTS + " ( " +
+                COLUMN_MY_EVENT_ID + " INTEGER NOT NULL," +
+                COLUMN_EVENT_ATTENDED_ID+ " INTEGER NOT NULL," +
+                "PRIMARY KEY" + "(" + COLUMN_MY_EVENT_ID + ", " +  COLUMN_EVENT_ATTENDED_ID+ ")" +
                 " );";
 
-        String query3 = "CREATE TABLE " + TABLE_FRIENDS + " ( " +
-                COLUMN_USER_ID + " INTEGER NOT NULL," +
-                COLUMN_FRIEND_ID + " INTEGER NOT NULL," +
-                "PRIMARY KEY" + "(" + COLUMN_USER_ID + ", " + COLUMN_FRIEND_ID + ")" +
-                " );";
 
-        String query4 = "CREATE TABLE " + TABLE_FAVOURITERECIPES + " ( " +
-                COLUMN_RECIPE_ID + " INTEGER PRIMARY KEY," +
-                COLUMN_USERNAME + " INTEGER NOT NULL," +
-                COLUMN_RECIPE_URL + " TEXT" +
-                " );";
+
+//        String query3 = "CREATE TABLE " + TABLE_FRIENDS + " ( " +
+//                COLUMN_USER_ID + " INTEGER NOT NULL," +
+//                COLUMN_FRIEND_ID + " INTEGER NOT NULL," +
+//                "PRIMARY KEY" + "(" + COLUMN_USER_ID + ", " + COLUMN_FRIEND_ID + ")" +
+//                " );";
+
+//        String query4 = "CREATE TABLE " + TABLE_FAVOURITERECIPES + " ( " +
+//                COLUMN_RECIPE_ID + " INTEGER PRIMARY KEY," +
+//                COLUMN_USERNAME + " INTEGER NOT NULL," +
+//                COLUMN_RECIPE_URL + " TEXT" +
+//                " );";
 
         //create the required tables
         db.execSQL(query1);
         db.execSQL(query2);
         db.execSQL(query3);
-        db.execSQL(query4);
+//        db.execSQL(query4);
 
 
         this.db = db;
@@ -110,8 +133,8 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FRIENDS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FAVOURITERECIPES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_MY_EVENTS);
+//        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FAVOURITERECIPES);
         this.onCreate(db);
     }
 
@@ -128,12 +151,12 @@ public class MyDBHandler extends SQLiteOpenHelper{
         values.put(COLUMN_FIRST_NAME, u.getFname());
         values.put(COLUMN_SURNAME, u.getSname());
         values.put(COLUMN_USERNAME, u.getUname());
+        values.put(COLUMN_LOCATION, u.getLocation());
         values.put(COLUMN_EMAIL, u.getEmail());
         values.put(COLUMN_PASS,u.getPass());
+//        values.put(COLUMN_HOST_SCORE,"5");
         values.put(COLUMN_COURSE,"CompSci");
-        values.put(COLUMN_HOST_SCORE,"5");
         values.put(COLUMN_BIO,"Tell the UCDine world a little bit about yourself");
-
         db.insert(TABLE_USERS, null, values);
         db.close();
     }
@@ -201,11 +224,14 @@ public class MyDBHandler extends SQLiteOpenHelper{
         values.put(COLUMN_EVENT_ID, countevent);
         values.put(COLUMN_HOST_ID, events.get_hid());
         values.put(COLUMN_INVITE_NUM, events.getInvite_num());
+        values.put(COLUMN_AVAILABLE_INVITE_NUM, events.getAvailable_num());
         values.put(COLUMN_EVENT_NAME, events.getEvent_name());
         values.put(COLUMN_ADDRESS, events.getAddress());
         values.put(COLUMN_DESCRIPTION, events.getDescription());
         values.put(COLUMN_TIME, events.getTime());
         values.put(COLUMN_DATE, events.getDate());
+        values.put(COLUMN_EVENT_PIC, events.getEvent_pic());
+
         //SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_EVENTS, null, values);
         db.close();

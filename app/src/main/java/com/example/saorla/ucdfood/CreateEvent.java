@@ -14,24 +14,29 @@ import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
+import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.content.Intent;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageButton;
 import android.widget.TimePicker;
-
+import java.util.UUID;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -65,7 +70,6 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
                    hour,
                    event,
                    location,
-//                    noPeople,
                    description;
 
     int noPeople;
@@ -74,7 +78,7 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
     private SimpleDateFormat dateFormatter;
     private int  mHour,mMinute;
     private TimePickerDialog timePicker;
-
+    private ImageButton addImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +90,38 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
         setDateField();
         setTimeField();
 
+        final String[] option = new String[] {"Take Photo", "Gallery Upload"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.select_dialog_item, option);
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Select Option");
+        builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+                Log.e("Selected Item", String.valueOf(which));
+                if (which == 0) {
+                    // DO Something here for first option (like call a function / Show a Toast etc)
+                    takePicture(null);
+                }
+
+                if (which == 1) {
+                    pickGallery(null);
+                }
+
+
+            }
+        });
+        final AlertDialog dialog = builder.create();
+        addImage = (ImageButton) findViewById(R.id.camera);
+
+        addImage.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dialog.show();
+            }
+        });
     }
 
     /**
@@ -94,6 +129,8 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
      */
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
+
+
 
     public void takePicture(View view) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -108,6 +145,18 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
 //        }
     }
 
+    private int PICK_IMAGE_REQUEST = 1;
+    public void pickGallery(View view) {
+        Intent intent = new Intent();
+        // Show only images, no videos or anything else
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        // Always show the chooser (if there are multiple options available)
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        super.onActivityResult(requestCode, resultCode,data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
@@ -116,15 +165,28 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
             Bitmap photo = (Bitmap)extras.get("data");
             saveToInternalStorage(photo);
         }
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+            Uri uri = data.getData();
+
+//            try {
+//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+//                // Log.d(TAG, String.valueOf(bitmap));
+//
+////                ImageView imageView = (ImageView) findViewById(R.id.aep_insert_image);
+////                imageView.setImageBitmap(bitmap);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+        }
     }
     private String saveToInternalStorage(Bitmap bitmapImage){
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
         // path to /data/data/yourapp/app_data/imageDir
         File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
         // Create imageDir
-        int countvent = 0;
 
-        File mypath=new File(directory,"event.jpg");
+        File mypath=new File(directory,UUID.randomUUID().toString()+".jpg");
 
         FileOutputStream fos = null;
         try {
@@ -283,11 +345,13 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
 
         e.set_hid(id);
         e.setInvite_num(noPeople);
+        e.setAvailable_num(noPeople);
         e.setEvent_name(event);
         e.setAddress(location);
         e.setDescription(description);
         e.setTime(hour);
         e.setDate(date);
+//        e.setEvent_pic();
         helperevent.addEvent(e);
         helperevent.getPoints(id);
     }

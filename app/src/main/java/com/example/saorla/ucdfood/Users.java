@@ -8,11 +8,16 @@ public class Users {
     private String uname;
     private String fname;
     private String sname;
+    private String location;
     private String email;
     private String pass;
     private int host_score;
     private int attendee_points;
     private int available_points;
+    private String course;
+    private String bio;
+    private String user_pic;
+
 
 
     //Methods to set attributes
@@ -26,6 +31,7 @@ public class Users {
     public void setSname(String sname){
         this.sname = sname;
     }
+    public void setLocation(String location) {this.location = location;}
     public void setEmail(String email) { this.email=email;   }
     public void setPass(String pass){
         this.pass = pass;
@@ -36,9 +42,10 @@ public class Users {
     public void setAttendee_points(int attendee_points) {
         this.attendee_points = attendee_points;
     }
-    public void setAvailable_points(int available_points) {
-        this.available_points = available_points;
-    }
+    public void setAvailable_points(int available_points) {this.available_points = available_points;}
+    public void setCourse(String course) {this.course = course;}
+    public void setBio(String bio) {this.bio = bio;}
+    public void setUser_pic(String user_pic) {this.user_pic = user_pic;}
 
 
     //Get Methods
@@ -52,6 +59,7 @@ public class Users {
     public String getSname() {
         return this.sname;
     }
+    public String getLocation() {return location;}
     public String getEmail() {
         return this.email;
     }
@@ -67,6 +75,7 @@ public class Users {
     public int getAvailable_points() {
         return this.available_points;
     }
-
-
+    public String getCourse() {return course;}
+    public String getBio() {return bio;}
+    public String getUser_pic() {return user_pic;}
 }
