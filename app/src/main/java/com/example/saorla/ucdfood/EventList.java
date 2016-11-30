@@ -28,18 +28,10 @@ import java.util.List;
 import static com.example.saorla.ucdfood.R.layout.activity_eventlist;
 
 
-public class EventList extends AppCompatActivity {
+public class EventList extends AppCompatActivity implements AsyncResponse{
 
 
     public final static String EXTRA_MESSAGE = "com.example.saorla.ucdfood.MESSAGE";
-    public String[] stringArray(String string_name){
-        String[] strArray = string_name.split(" ");
-        return strArray;
-    }
-    String strName = "name this tune";
-    String name = stringArray(strName)[0];
-    String user_name = name;
-
     MyDBHandler helper = new MyDBHandler(this);
     String table_events = "TABLE_EVENTS";
     String[] columnNames = {"COLUMN_HOST_ID",
@@ -98,28 +90,32 @@ public class EventList extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        GetEvents getEvents = new GetEvents();
         super.onCreate(savedInstanceState);
         setContentView(activity_eventlist);
         lv = (ListView) findViewById(R.id.eventList);
-        new GetEvents().execute();
+//        new GetEvents().execute();
+        getEvents.delegate = this;
+        getEvents.execute();
 
+        final ArrayList<String[]> eventslist = (ArrayList<String[]>) getEvents.delegate;
 
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
 //                Toast.makeText(getApplicationContext(), eventDetailList[pos], Toast.LENGTH_LONG).show();
-                
+
 
                 Intent intent = new Intent(getApplicationContext(), EventDetail.class);
-                intent.putExtra(TITLE_MESSAGE, events[pos]);
-                intent.putExtra(HOST_MESSAGE, hosts[pos]);
-                intent.putExtra(DETAILS_MESSAGE, details[pos]);
+                intent.putExtra(TITLE_MESSAGE, eventslist.get(0)[pos]);
+                intent.putExtra(HOST_MESSAGE, eventslist.get(2)[pos]);
+                intent.putExtra(DETAILS_MESSAGE, eventslist.get(3)[pos]);
                 startActivity(intent);
 
             }
         });
-        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.event_list_menu, menu);
@@ -128,14 +124,12 @@ public class EventList extends AppCompatActivity {
     /** Called when the user clicks the Profile quick-link */
     public void goToProfile() {
         Intent intent = new Intent(this, ProfileActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, user_name);
         startActivity(intent);
     }
 
     /** Called when the user clicks the Create Events quick-link */
     public void goToCreate() {
         Intent intent = new Intent(this, CreateEvent.class);
-        intent.putExtra(EXTRA_MESSAGE, user_name);
         startActivity(intent);
         finish();
     }
@@ -143,7 +137,6 @@ public class EventList extends AppCompatActivity {
     /** Called when the user clicks the Search Recipe quick-link */
     public void goToRecipe() {
         Intent intent = new Intent(this, RecipeFinder.class);
-        intent.putExtra(EXTRA_MESSAGE, user_name);
         startActivity(intent);
         finish();
     }
@@ -166,7 +159,7 @@ public class EventList extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-//    public void DBcall(String[] events,String[] time,String[]hosts, String[] details) {
+    //    public void DBcall(String[] events,String[] time,String[]hosts, String[] details) {
 //        lv = (ListView) findViewById(R.id.eventList);
 //
 //        events = helper.selectEventNames();
@@ -178,10 +171,13 @@ public class EventList extends AppCompatActivity {
 //        EventAdapter adapter = new EventAdapter(this, events, time, hosts);
 //        lv.setAdapter(adapter);
 //    }
-
+    @Override
+    public ArrayList<String[]> processFinish(ArrayList<String[]> output){return output;}
 
     class GetEvents extends AsyncTask<Void, Void, ArrayList<String[]>> {
         private Exception exception;
+
+        public AsyncResponse delegate = null;
 
         @Override
         protected void onPreExecute() {
@@ -217,6 +213,7 @@ public class EventList extends AppCompatActivity {
 //            EventAdapter adapter = new EventAdapter(this, time, host,description);
             EventAdapter adapter = new EventAdapter(EventList.this,response.get(0), response.get(1), response.get(2));
             lv.setAdapter(adapter);
+            delegate.processFinish(response);
 
 
         }
@@ -224,3 +221,6 @@ public class EventList extends AppCompatActivity {
 
 }
 
+interface AsyncResponse{
+    ArrayList<String[]> processFinish(ArrayList<String[]> output);
+}
