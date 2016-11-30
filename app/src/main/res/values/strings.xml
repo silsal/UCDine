@@ -36,6 +36,18 @@
     <string name="take_picture">Take Picture</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="about_me">ABOUT ME:\nLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.</string>
+    <string name="edit">EDIT</string>
+    <string name="edit_pic">Change Photo</string>
+    <string name="set_loci">Set Locations</string>
+    <string name="email_label">eMail</string>
+    <string name="course_label">Course</string>
+
+    <string name="my_activity">Here\'s how you\'ve been getting on...</string>
+    <string name="activities">My Activities</string>
+    <string name="events">My Events</string>
+    <string name="reviews">My Reviews</string>
+    <string name="hosted">Host</string>
+    <string name="attended">Guest</string>
 
     <string name="search_event">Search Events</string>
     <string name="create_event">Create Events</string>
@@ -47,12 +59,7 @@
     <string name="welcome2">, it\'s good to see you!</string>
     <string name="welcome3">Hey %1$s,\nIt\'s good to see you!</string>
 
-    <string name="my_activity">Here\'s how you\'ve been getting on...</string>
-    <string name="activities">My Activities</string>
-    <string name="events">My Events</string>
-    <string name="reviews">My Reviews</string>
-    <string name="hosted">Host</string>
-    <string name="attended">Guest</string>
+
 
     <string name="event_details">Upcoming Events:</string>
     <string name="cancel_event">CANCEL</string>
