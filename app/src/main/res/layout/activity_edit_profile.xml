@@ -11,7 +11,7 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:layout_width="match_parent"
-        android:layout_height="700dp"
+        android:layout_height="500dp"
         android:orientation="vertical"
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
@@ -24,9 +24,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="100dp"
             android:orientation="horizontal"
-            android:weightSum="2"
+            android:weightSum="3"
             android:background="@color/colorPrimaryDark">
 
             <RelativeLayout
@@ -41,11 +41,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginRight="0dp"
                     android:layout_centerHorizontal="true"
                     android:src="@drawable/camera_icon"
                     android:onClick="updateProfilePic"
@@ -56,37 +56,78 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginRight="0dp"
                     android:layout_centerHorizontal="true"
-
+                    android:src="@mipmap/profile_image_default"
                     android:onClick="updateProfilePic"
+                    android:inputType="textCapWords"
                     android:alpha="0.4"
                     android:scaleType="fitXY"/>
-                <!--android:src="@drawable/profile_image_default"-->
 
             </RelativeLayout>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="@string/edit_profile"
+                style="@style/editProfileText1"/>
 
             <ImageView
                 android:contentDescription="@string/user_location_desc"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
                 style="@style/profile_margins"
-
+                android:src="@mipmap/g_maps_logo"
                 android:cropToPadding="true"/>
-            <!--android:src="@drawable/g_maps_logo"-->
 
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:background="@color/colorPrimaryDark">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="@string/edit_pic"
+                android:layout_gravity="center_horizontal|top"
+                android:paddingLeft="20dp"
+                android:layout_marginBottom="5dp"
+                style="@style/editProfileText2"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text=""
+                style="@style/sectionHeaderText"
+                android:textAllCaps="true" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal|top"
+                android:paddingRight="15dp"
+                android:layout_marginBottom="5dp"
+                android:text="@string/set_loci"
+                style="@style/editProfileText2"/>
         </LinearLayout>
 
 
@@ -134,7 +175,7 @@
                 android:background="@drawable/border_background_editable"
                 style="@style/editableText"
                 android:inputType="textEmailAddress"
-                android:hint="@string/user_email">
+                android:hint="@string/email_label">
                 <requestFocus />
             </EditText>
 
@@ -147,7 +188,7 @@
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="15dp"
                 style="@style/nonEditText"
-                android:text="@string/user_email"/>
+                android:text="@string/email_label"/>
 
 
             <EditText android:id="@+id/aep_editUserCourse"
@@ -161,7 +202,7 @@
                 android:background="@drawable/border_background_editable"
                 style="@style/editableText"
                 android:inputType="textCapWords|textCapSentences"
-                android:hint="@string/user_course">
+                android:hint="@string/course_label">
                 <requestFocus />
             </EditText>
 
@@ -174,7 +215,7 @@
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="15dp"
                 style="@style/nonEditText"
-                android:text="@string/user_course"/>
+                android:text="@string/course_label"/>
 
             <EditText android:id="@+id/aep_editUserBio"
                 android:layout_below="@+id/aep_editUserCourse"
@@ -210,7 +251,7 @@
 
             <ImageView
                 android:id="@+id/aep_insert_image"
-                android:layout_below="@+id/aep_editUserCourseLabel"
+                android:layout_below="@+id/aep_editUserBio"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:background="@drawable/border_event"
