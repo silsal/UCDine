@@ -21,7 +21,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
     //Table names
     public static final String TABLE_USERS = "users";
     public static final String TABLE_EVENTS = "events";
-    public static final String TABLE_MY_EVENTS = "events";
+    public static final String TABLE_MY_EVENTS = "my_events";
 //    public static final String TABLE_FRIENDS = "friends";
 //    public static final String TABLE_FAVOURITERECIPES = "favouriterecipes";
     //common column names
@@ -82,8 +82,8 @@ public class MyDBHandler extends SQLiteOpenHelper{
                 COLUMN_COURSE + " TEXT," +
                 COLUMN_BIO + " TEXT," +
                 COLUMN_ATTENDEE_POINTS + " INTEGER DEFAULT 3," +
-                COLUMN_AVAILABLE_POINTS + " INTEGER DEFAULT 3" +
-                COLUMN_PROFILE_PIC + " TEXT," +
+                COLUMN_AVAILABLE_POINTS + " INTEGER DEFAULT 3," +
+                COLUMN_PROFILE_PIC + " TEXT" +
                 " );";
 
         String query2 = "CREATE TABLE " + TABLE_EVENTS + " ( " +
@@ -95,7 +95,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
                 COLUMN_ADDRESS + " TEXT NOT NULL," +
                 COLUMN_DESCRIPTION + " TEXT," +
                 COLUMN_TIME + " TEXT," +
-                COLUMN_DATE + " TEXT " +
+                COLUMN_DATE + " TEXT," +
                 COLUMN_EVENT_PIC + " TEXT " +
         " );";
 
