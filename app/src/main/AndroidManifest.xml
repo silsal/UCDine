@@ -45,10 +45,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".RecipeFinder"
-            android:configChanges="orientation|screenSize" />
-        <activity android:name=".CreateEvent" />
+            android:configChanges="orientation|screenSize">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".Display" />
+        </activity>
+
+        <activity android:name=".CreateEvent">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".Display" />
+        </activity>
+
+
         <activity android:name=".Display" />
         <activity android:name=".SignUp"
             android:windowSoftInputMode="stateHidden" />
@@ -61,6 +73,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Display" />
         </activity>
+
         <activity
             android:name=".ProfileEditActivity"
             android:label="@string/edit_profile"

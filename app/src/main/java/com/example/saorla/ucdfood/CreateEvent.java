@@ -14,6 +14,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.util.Log;
@@ -340,7 +341,7 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.event_list_menu, menu);
+        getMenuInflater().inflate(R.menu.create_event_menu, menu);
         return true;
     }
     /** Called when the user clicks the Profile quick-link */
@@ -366,6 +367,13 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
     public boolean onOptionsItemSelected(MenuItem item){
         //action when corresponding action-bar item is clicked
         switch(item.getItemId()) {
+
+
+            //"Back" button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+
 
             case R.id.search_events_ql:
                 goToEvents();

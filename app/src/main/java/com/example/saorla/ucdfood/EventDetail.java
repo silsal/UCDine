@@ -162,7 +162,6 @@ public class EventDetail extends AppCompatActivity {
     /** Called when the user clicks the Profile quick-link */
     public void goToProfile() {
         Intent intent = new Intent(this, ProfileActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, user_name);
         startActivity(intent);
         finish();
     }
@@ -170,7 +169,6 @@ public class EventDetail extends AppCompatActivity {
     /** Called when the user clicks the Create Events quick-link */
     public void goToCreate() {
         Intent intent = new Intent(this, CreateEvent.class);
-        intent.putExtra(EXTRA_MESSAGE, user_name);
         startActivity(intent);
         finish();
     }
@@ -178,20 +176,23 @@ public class EventDetail extends AppCompatActivity {
     /** Called when the user clicks the Search Recipe quick-link */
     public void goToRecipe() {
         Intent intent = new Intent(this, RecipeFinder.class);
-        intent.putExtra(EXTRA_MESSAGE, user_name);
         startActivity(intent);
         finish();
     }
     /** Called when the user clicks the Create Events quick-link */
     public void goToEvents() {
         Intent intent = new Intent(this, EventList.class);
-        intent.putExtra(EXTRA_MESSAGE, user_name);
         startActivity(intent);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         //action when corresponding action-bar item is clicked
         switch(item.getItemId()) {
+
+            //"Back" button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
 
             case R.id.create_events_ql:
                 goToCreate();

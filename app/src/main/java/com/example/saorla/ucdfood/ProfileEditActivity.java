@@ -504,12 +504,15 @@ public class ProfileEditActivity extends AppCompatActivity {
 
             Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
 
+            Bitmap resized = Bitmap.createScaledBitmap(imageBitmap,(int)(imageBitmap.getWidth()*0.01), (int)(imageBitmap.getHeight()*0.01), true);
             // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
             //Uri tempUri = getImageUri(getApplicationContext(), imageBitmap);
-
-
+//            ImageView test = (ImageView) findViewById(R.id.testIMG);
+//            test.setImageBitmap(resized);
+            profileImage.setImageBitmap(resized);
             //Compress & Convert Bitmap to String
-            bitmapString = BitMapToString(imageBitmap);
+            //bitmapString = BitMapToString(imageBitmap);
+            bitmapString = BitMapToString(resized);
 
 
             //Convert String to Bitmap
@@ -519,8 +522,8 @@ public class ProfileEditActivity extends AppCompatActivity {
 
             try {
                 //Set Bitmap into ButtonImage Profile Pic
-                ImageView test = (ImageView) findViewById(R.id.testIMG);
-                test.setImageBitmap(db_bitmap);
+//                ImageView test = (ImageView) findViewById(R.id.testIMG);
+//                test.setImageBitmap(db_bitmap);
 //              profileImage.setImageBitmap(db_bitmap);
                 profileImage.setAlpha((float) 1 );
                 Toast.makeText(this, "Image Inserted", Toast.LENGTH_LONG).show();

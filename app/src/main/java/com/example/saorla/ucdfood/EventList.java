@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -23,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -94,6 +96,64 @@ public class EventList extends AppCompatActivity{
         });
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.event_list_menu, menu);
+        return true;
+    }
+
+    //Function (Menu Options Click) that instructs operations to be performed on-click of Menu Options.
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        //action when corresponding action-bar item is clicked
+        switch(item.getItemId()) {
+
+            //"Back" button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+
+
+            //Drop-down: Create Event
+            case R.id.create_events_ql:
+                goToCreate();
+                return true;
+
+            //Drop-down: Search Recipe
+            case R.id.search_recipe_ql:
+                goToRecipe();
+                return true;
+
+            case R.id.profile_ql:
+                goToProfile();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    /** Called when the user clicks the Profile quick-link */
+    public void goToProfile() {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    /** Called when the user clicks the Create Events quick-link */
+    public void goToCreate() {
+        Intent intent = new Intent(this, CreateEvent.class);
+        startActivity(intent);
+        finish();
+    }
+
+    /** Called when the user clicks the Search Recipe quick-link */
+    public void goToRecipe() {
+        Intent intent = new Intent(this, RecipeFinder.class);
+        startActivity(intent);
+        finish();
+    }
+
 
 
 

@@ -93,7 +93,7 @@ public class ProfileActivity extends AppCompatActivity {
         userID = Integer.parseInt(getIdfromSharedPreference());
 //        Toast.makeText(this,""+userID,Toast.LENGTH_LONG).show();
         //FIND VIEWS
-        //userDeetsPic = (ImageView) findViewById(R.id.ap_profile_image);
+        userDeetsPic = (ImageView) findViewById(R.id.ap_profile_image);
         userDeetsEmail = (TextView) findViewById(R.id.ap_user_email);
         userDeetsCourse = (TextView) findViewById(R.id.ap_user_course);
         userDeetsPoints = (TextView) findViewById(R.id.ap_user_points);
@@ -139,7 +139,7 @@ public class ProfileActivity extends AppCompatActivity {
         String welcome_note = String.format(res.getString(R.string.welcome3), user_name);
 
         //ASSIGN IMAGE TO PROFILE PIC
-        //setProfileImage(userDeetsPic);
+        setProfileImage(userDeetsPic);
         //ASSIGN TEXT STRINGS TO VIEWS IN LAYOUTS
         userDeetsName.setText(user_name);
         userDeetsEmail.setText(user_email_combined);
@@ -272,13 +272,13 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void setProfileImage(ImageView image) {
         String imgInDB = dbHandler.databaseSelectByIDToString(TABLE_USERS, COLUMN_PROFILE_PIC, userID);
-        if(imgInDB.length() == 0) {
-            Toast.makeText(this, "1" + imgInDB, Toast.LENGTH_LONG).show();
-        }
-        else{
+//        if(imgInDB.length() == 0) {
+//            Toast.makeText(this, "1" + imgInDB, Toast.LENGTH_LONG).show();
+//        }
+//        else{
             image.setImageBitmap(StringToBitMap(imgInDB));
 
-        }
+//        }
     }
 
     public Bitmap StringToBitMap(String encodedString){
