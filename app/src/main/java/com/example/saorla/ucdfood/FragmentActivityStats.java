@@ -4,6 +4,7 @@ package com.example.saorla.ucdfood;
  * Created by Paudi on 18/11/2016.
  */
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -34,7 +35,7 @@ public class FragmentActivityStats extends Fragment{
         View rootViewActivity = inflater.inflate(R.layout.fragment_view_activity_stats, container, false);
 
 //        userID = getPreferenceFunction();
-        userID = 0;
+        userID = Integer.parseInt(getIdfromSharedPreference());
         dbHandler = new MyDBHandler(getActivity().getApplicationContext());
 
         //Get values from database to populate the arrays
@@ -101,5 +102,16 @@ public class FragmentActivityStats extends Fragment{
 
     public String populateDetails(String Table, String Column, int ID){
         return dbHandler.databaseSelectByIDToString(Table, Column, ID);
+    }
+
+    //**************************
+    //GENERAL HELPER FUNCTIONS
+    //**************************
+
+    public String getIdfromSharedPreference(){
+        SharedPreferences prefs = getActivity().getApplicationContext().getSharedPreferences("User_Id",0);
+        String extractedText =  prefs.getString("shared_ref_id","No ID found");
+
+        return extractedText;
     }
 }

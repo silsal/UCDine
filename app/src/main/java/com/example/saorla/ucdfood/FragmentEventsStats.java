@@ -2,6 +2,7 @@ package com.example.saorla.ucdfood;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
@@ -22,11 +23,14 @@ import java.util.List;
 import android.app.ListFragment;
 
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_DATE;
+import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_EVENT_ATTENDED_ID;
+import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_EVENT_ID;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_EVENT_NAME;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_HOST_ID;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_HOST_SCORE;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_INVITE_NUM;
 import static com.example.saorla.ucdfood.MyDBHandler.TABLE_EVENTS;
+import static com.example.saorla.ucdfood.MyDBHandler.TABLE_MY_EVENTS;
 import static com.example.saorla.ucdfood.MyDBHandler.TABLE_USERS;
 
 /**
@@ -51,41 +55,26 @@ public class FragmentEventsStats extends Fragment{
         View rootViewEvents = inflater.inflate(R.layout.fragment_view_events_stats, container, false);
 
         //        userID = getPreferenceFunction();
-        userID = 0;
+        userID = Integer.parseInt(getIdfromSharedPreference());
         dbHandler = new MyDBHandler(getActivity().getApplicationContext());
 
 //        //Get values from database to populate the arrays
 //        //Hosted
-//        String[] h_titles = populateEventDetail(TABLE_EVENTS, COLUMN_EVENT_NAME, COLUMN_HOST_ID, userID);
-//        String[] h_dates = populateEventDetail(TABLE_EVENTS, COLUMN_DATE, COLUMN_HOST_ID, userID);
-//        String[] h_guests = populateEventDetail(TABLE_EVENTS, COLUMN_INVITE_NUM, COLUMN_HOST_ID, userID);
-//
-//        public void setInputs(String[] strArray){
-//            int len = strArray.length();
-//            String[] strArrayOut;
-//
-//            if (len == 0){
-//                strArrayOut = ["no event", "no event", "no event"];
-//            }
-//            if (len == 1) {
-//                strArrayOut = [strArray[0], "no event", "no event"];
-//            }
-//            if (len == 2) {
-//                strArrayOut = [strArray[0], strArray[1], "no event"];
-//            }
-//            if (len >=3) {
-//                strArrayOut = [strArray[0], strArray[1], strArray[2]];
-//            }
-//        }
+        String[] h_titles = setInputs(populateEventDetails(TABLE_EVENTS, COLUMN_EVENT_NAME, COLUMN_HOST_ID, userID));
+//        String[] h_dates = setInputs(populateEventDetails(TABLE_EVENTS, COLUMN_DATE, COLUMN_HOST_ID, userID));
+//        String[] h_guests = setInputs(populateEventDetails(TABLE_EVENTS, COLUMN_INVITE_NUM, COLUMN_HOST_ID, userID);
 
-        //Attended
+//            String[] h_titles = new String[] {"Burger Bash", "Pasta Party", "French Flair"};
 //
-
+//        //Attended
+        String[] a_titles = setInputs(populateEventAttdDetail(TABLE_EVENTS, COLUMN_EVENT_NAME, TABLE_MY_EVENTS, COLUMN_EVENT_ID, COLUMN_EVENT_ATTENDED_ID));
+//        String[] a_dates = setInputs(populateEventAttdDetail(TABLE_EVENTS, COLUMN_EVENT_NAME, TABLE_MY_EVENTS, COLUMN_EVENT_ID, COLUMN_EVENT_ATTENDED_ID));
+//        String[] a_guests = setInputs(populateEventAttdDetail(TABLE_EVENTS, COLUMN_EVENT_NAME, TABLE_MY_EVENTS, COLUMN_EVENT_ID, COLUMN_EVENT_ATTENDED_ID));
 
 
 
         String[] hostEventArray = {
-                "T - 2\nTitle: Burger Bash\nWednesday 19th Oct\nGuests: 1",
+                "T - 2\nTitle: "+ h_titles[0] +"\nWednesday 19th Oct\nGuests: 1",
                 "T - 4\nTitle: Pasta Party\nFriday 21st Oct\nGuests: 4",
                 "T - 6\nTitle: French Flair\nSunday 23th Oct\nGuests: 5",
         };
@@ -123,54 +112,65 @@ public class FragmentEventsStats extends Fragment{
         attendEventListView.setAdapter(attendEventAdapter);
 
 
-//        ListView button = (ListView) rootViewEvents.findViewById(R.id.fv_listview_host_events);
-//        button.setOnItemClickListener(new View.OnItemClickListener()
-//        {
-//            @Override
-//            public void onClick(View v)
-//            {
-//                Toast.makeText(getActivity().getApplicationContext(), "tester", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
-
         return rootViewEvents;
-
-//        deleteImage = (ImageButton) getActivity().findViewById(R.id.delete_btn);
-//
-//        deleteImage.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                Toast.makeText(getActivity().getApplicationContext(), "tester", Toast.LENGTH_SHORT).show();
-//            }
-//        });
 
 
     }
 
 
 
-        //Create Toast
-//        Context context = getActivity().getApplicationContext();
-////        Context context = this;
-//        CharSequence cancelText = ("Event Cancelled");
-//        int duration = Toast.LENGTH_SHORT;
-//
-//        Toast toast_cancel = Toast.makeText(context, cancelText, duration);
-//        toast_cancel.setGravity(Gravity.TOP, 0, 200);
-//
-//        View toast_view = toast_cancel.getView();
-//        toast_view.setBackgroundResource(R.drawable.border_background_reverse);
-//        toast_cancel.setView(toast_view);
 
     public String populateCountDetails(String Table, String CountColumnName, String WhereColumnName, int WhereEqualsValue){
         return dbHandler.databaseCountByIDToString(Table, CountColumnName, WhereColumnName, WhereEqualsValue);
     }
 
-    public String populateDetails(String Table, String Column, int ID){
-        return dbHandler.databaseSelectByIDToString(Table, Column, ID);
+    public String[] populateEventAttdDetail(String Table_1_Name, String ColumnNameSelect, String Table_2_Name, String Column_1_NameEquals, String Column_2_NameEquals){
+        return dbHandler.databaseSelectJoinByIDToArray(Table_1_Name, ColumnNameSelect, Table_2_Name, Column_1_NameEquals, Column_2_NameEquals);
     }
 
+    public String[] populateEventDetails(String Table, String ColumnSelect, String ColumnEquals, int ID){
+        return dbHandler.databaseSelectByIDToArray(Table, ColumnSelect, ColumnEquals, ID);
+    }
 
+    public String[] setInputs(String[] strArray){
+        int len = strArray.length;
+        String[] strArrayOut = new String[3];
+
+        if (len == 0){
+            strArrayOut[0] = "no event";
+            strArrayOut[1] = "no event";
+            strArrayOut[2] = "no event";
+        }
+        if (len == 1) {
+            strArrayOut[0] = strArray[0];
+            strArrayOut[1] = "no event";
+            strArrayOut[2] = "no event";
+
+        }
+        if (len == 2) {
+            strArrayOut[0] = strArray[0];
+            strArrayOut[1] = strArray[1];
+            strArrayOut[2] = "no event";
+        }
+        if (len >=3) {
+            strArrayOut[0] = strArray[0];
+            strArrayOut[1] = strArray[1];
+            strArrayOut[2] = strArray[2];
+        }
+
+        return strArrayOut;
+    }
+
+//**************************
+    //GENERAL HELPER FUNCTIONS
+    //**************************
+
+    public String getIdfromSharedPreference(){
+        SharedPreferences prefs = getActivity().getApplicationContext().getSharedPreferences("User_Id",0);
+        String extractedText =  prefs.getString("shared_ref_id","No ID found");
+
+        return extractedText;
+    }
 
 
 }

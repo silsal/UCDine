@@ -389,4 +389,51 @@ public class MyDBHandler extends SQLiteOpenHelper{
         return dbCountString;
     }
 
+    //Specific "Select" multiples into Array function
+    public String[] databaseSelectByIDToArray(String TableName, String ColumnNameSelect, String ColumnNameEquals,int WhereValueEquals){
+        String[] dbString = {};
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT " + ColumnNameSelect +" FROM " + TableName + " WHERE " + ColumnNameEquals +" == " + WhereValueEquals + ";";
+
+        Cursor cursor = db.rawQuery(query, null);
+        //get first row in the results
+        cursor.moveToFirst();
+        int pos = 0;
+        //move through the whole table
+        while(!cursor.isAfterLast()){
+            if(cursor.getString(pos)!=null){
+                dbString[0] = cursor.getString(pos);
+                pos +=1;
+            }
+            cursor.moveToNext();
+        }
+
+        db.close();
+        return dbString;
+    }
+
+    //Specific "Select" multiples into Array function
+    public String[] databaseSelectJoinByIDToArray(String Table_1_Name, String ColumnNameSelect, String Table_2_Name, String Column_1_NameEquals, String Column_2_NameEquals){
+        String[] dbString = {};
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT " + ColumnNameSelect +" FROM " + Table_1_Name + " INNER JOIN " + Table_2_Name + " ON " + Table_1_Name+ "." +Column_1_NameEquals +" == " + Table_2_Name+ "." +Column_2_NameEquals + ";";
+
+        Cursor cursor = db.rawQuery(query, null);
+        //get first row in the results
+        cursor.moveToFirst();
+        int pos = 0;
+        //move through the whole table
+        while(!cursor.isAfterLast()){
+            if(cursor.getString(pos)!=null){
+                dbString[0] = cursor.getString(pos);
+                pos +=1;
+            }
+            cursor.moveToNext();
+        }
+
+        db.close();
+        return dbString;
+    }
+
+
 }

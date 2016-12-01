@@ -15,6 +15,7 @@
 
     <color name="background">#C0C0C0</color>
     <color name="section_background">#f0e7ba</color>
+    <color name="main_background">#fafafa</color>
     <color name="popups">#AFAFAF</color>
 
 </resources>

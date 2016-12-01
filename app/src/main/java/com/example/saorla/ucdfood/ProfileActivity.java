@@ -66,16 +66,6 @@ public class ProfileActivity extends AppCompatActivity {
     TextView userDeetsRanking;
     TextView userDeetsBio;
 
-    public String[] stringArray(String string_name){
-        String[] strArray = string_name.split(" ");
-        return strArray;
-    }
-
-    String strName = "name this tune";
-
-    String name = stringArray(strName)[0];
-
-
     String user_name;
     String user_email;
     String user_course;
@@ -84,7 +74,6 @@ public class ProfileActivity extends AppCompatActivity {
     String user_ranking;
     String user_bio;
 
-    String userDeetsText;
     TextView userWelcome;
     MyDBHandler dbHandler;
 
@@ -92,19 +81,13 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //user_id = from Login/Display getIdfromSharedPreferences**METHOD FROM ADAM***
-        String db_response_userTable = "id Paudi Smith Paudi paudi@ucd.ie CompSci 2 6";
-        String db_response_eventTable = "id_e id_u 5 PizzaTown Italian 25_Nov_2016";
-        String db_response_reviewsTable = "Great!";
-
         setContentView(R.layout.activity_profile);
         overridePendingTransition(R.anim.slide_in_profile, R.anim.slide_out_profile);
 
         Resources res = getResources();
         dbHandler = new MyDBHandler(this);
         userID = Integer.parseInt(getIdfromSharedPreference());
-//        userID = 0;
+
         //FIND VIEWS
         //In row 2 of Profile Layout
         userDeetsEmail = (TextView) findViewById(R.id.ap_user_email);
@@ -117,7 +100,7 @@ public class ProfileActivity extends AppCompatActivity {
         //In row 3 of Profile Layout
         userDeetsBio = (TextView) findViewById(R.id.ap_user_about);
         //Welcome Note
-        userWelcome = (TextView) findViewById(R.id.ap_welcome_note);
+        //userWelcome = (TextView) findViewById(R.id.ap_welcome_note);
 
         //GET VALUES FROM DATABASE
         //user_name = stringArray(db_response_userTable)[3];
@@ -159,93 +142,138 @@ public class ProfileActivity extends AppCompatActivity {
         userDeetsRanking.setText(user_ranking_combined);
         userDeetsPoints.setText(user_points_combined);
         userDeetsEvents.setText(user_events_combined);
-        userWelcome.setText(welcome_note);
+        //userWelcome.setText(welcome_note);
 
-        //Intent intent = getIntent();
-        //String message = intent.getStringExtra(ProfileEditActivity.EXTRA_MESSAGE_2);
+        //End of ON CREATE
     }
 
 
-    public String getIdfromSharedPreference(){
-        SharedPreferences prefs = getSharedPreferences("User_Id",0);
-        String extractedText =  prefs.getString("shared_ref_id","No ID found");
+    //*********************************************
+    //FUNCTIONS RELATING TO THE MENU IN ACTION BAR
+    //*********************************************
 
-        return extractedText;
-    }
-
-
-
-
-
-
-//    public String getIdfromSharedPrefernece(){
-//        SharedPreferences prefs = getSharedPreferences(id);
-//        String extractedText =  prefs.getString("User_id");
-//
-//        return extractedText;
-//    }
-
-    public String populateDetails(String Table, String Column, int ID){
-        return dbHandler.databaseSelectByIDToString(Table, Column, ID);
-    }
-
-
-    public String populateCountDetails(String Table, String CountColumnName, String WhereColumnName, int WhereEqualsValue){
-        return dbHandler.databaseCountByIDToString(Table, CountColumnName, WhereColumnName, WhereEqualsValue);
-    }
-
-
+    //Function (Menu Options) that generates the Menu Options in the Activity bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.profile, menu);
         return true;
     }
 
-    public void jumpToProfile(){
-        ScrollView scroll = (ScrollView) findViewById(R.id.ap_main_scroll);
-        scroll.smoothScrollTo(0,0);
-    }
-
-    public void jumpToEvents(){
-        ScrollView scroll = (ScrollView) findViewById(R.id.ap_main_scroll);
-        scroll.smoothScrollTo(0,1600);
-    }
-
-    public void jumpToReviews(){
-        ScrollView scroll = (ScrollView) findViewById(R.id.ap_main_scroll);
-        scroll.smoothScrollTo(0,3200);
-    }
-
+    //Function (Menu Options Click) that instructs operations to be performed on-click of Menu Options.
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         //action when corresponding action-bar item is clicked
         switch(item.getItemId()) {
 
+            //"Back" button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+
+            //Quick Scroll to "Profile" Section
             case R.id.profile_jump:
                 jumpToProfile();
                 return true;
 
+            //Quick Scroll to "Events" Section
             case R.id.events_jump:
                 jumpToEvents();
                 return true;
 
+            //Quick Scroll to "Reviews" Section
             case R.id.reviews_jump:
                 jumpToReviews();
                 return true;
 
+            //Drop-down: Create Event
             case R.id.create_events_ql:
                 goToCreate();
                 return true;
 
+            //Drop-down: Search Event
             case R.id.search_events_ql:
                 goToEvents();
                 return true;
 
+            //Drop-down: Search Recipe
             case R.id.search_recipe_ql:
                 goToRecipe();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    //Function called when the user clicks the "Profile" quick-link
+    public void jumpToProfile(){
+        ScrollView scroll = (ScrollView) findViewById(R.id.ap_main_scroll);
+        scroll.smoothScrollTo(0,0);
+    }
+
+    //Function called when the user clicks the "Events" quick-link
+    public void jumpToEvents(){
+        ScrollView scroll = (ScrollView) findViewById(R.id.ap_main_scroll);
+        scroll.smoothScrollTo(0,1620);
+    }
+
+    //Function called when the user clicks the "Reviews quick-link
+    public void jumpToReviews(){
+        ScrollView scroll = (ScrollView) findViewById(R.id.ap_main_scroll);
+        scroll.smoothScrollTo(0,3500);
+    }
+
+    //Function called when the user clicks the Search Events quick-link
+    public void goToEvents() {
+        Intent intent = new Intent(this, EventList.class);
+        startActivity(intent);
+        finish();
+    }
+
+    //Function cCalled when the user clicks the Create Events quick-link
+    public void goToCreate() {
+        Intent intent = new Intent(this, CreateEvent.class);
+        startActivity(intent);
+        finish();
+    }
+
+    //Function called when the user clicks the Search Recipe quick-link
+    public void goToRecipe() {
+        Intent intent = new Intent(this, RecipeFinder.class);
+        startActivity(intent);
+        finish();
+    }
+
+    //Function called when the user clicks the "EDIT PROFILE" button
+    public void editProfile(View view) {
+        Intent intent = new Intent(this, ProfileEditActivity.class);
+        startActivity(intent);
+        //finish();
+    }
+
+
+    //**************************
+    //DATABASE HELPER FUNCTIONS
+    //**************************
+
+    //Function to Select data from Database for input into a View
+    public String populateDetails(String Table, String Column, int ID){
+        return dbHandler.databaseSelectByIDToString(Table, Column, ID);
+    }
+
+    //Function to Select a count of Occurances from Database for input into a View
+    public String populateCountDetails(String Table, String CountColumnName, String WhereColumnName, int WhereEqualsValue){
+        return dbHandler.databaseCountByIDToString(Table, CountColumnName, WhereColumnName, WhereEqualsValue);
+    }
+
+
+    //**************************
+    //GENERAL HELPER FUNCTIONS
+    //**************************
+
+    public String getIdfromSharedPreference(){
+        SharedPreferences prefs = getSharedPreferences("User_Id",0);
+        String extractedText =  prefs.getString("shared_ref_id","No ID found");
+
+        return extractedText;
     }
 
     public void testToast(){
@@ -264,76 +292,8 @@ public class ProfileActivity extends AppCompatActivity {
         toast_set.show();
     }
 
-//    public TextView getTextView() {
-//        TextView txtView = (TextView)findViewById(R.id.ap_user_name);
-//        return txtView;
-//    }
-
-    /** Called when the user clicks the Send button */
-    public void editProfile(View view) {
-        Intent intent = new Intent(this, ProfileEditActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, user_name);
-        startActivity(intent);
-        finish();
-    }
 
 
-//    TODO ******** ENSURE CORRECT ACTIVITY NAME******************
-
-    /** Called when the user clicks the Search Events quick-link */
-    public void goToEvents() {
-        Intent intent = new Intent(this, EventList.class);
-        intent.putExtra(EXTRA_MESSAGE, user_name);
-        startActivity(intent);
-    }
-
-    /** Called when the user clicks the Create Events quick-link */
-    public void goToCreate() {
-        Intent intent = new Intent(this, CreateEvent.class);
-        intent.putExtra(EXTRA_MESSAGE, user_name);
-        startActivity(intent);
-    }
-
-    /** Called when the user clicks the Search Recipe quick-link */
-    public void goToRecipe() {
-        Intent intent = new Intent(this, RecipeFinder.class);
-        intent.putExtra(EXTRA_MESSAGE, user_name);
-        startActivity(intent);
-    }
-
-    public void cancelToast(View view){
-        //Create Toast
-        Context context = getApplicationContext();
-//        Context context = this;
-        CharSequence cancelText = ("Event Cancelled");
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast_cancel = Toast.makeText(context, cancelText, duration);
-        toast_cancel.setGravity(Gravity.TOP, 0, 200);
-
-        View toast_view = toast_cancel.getView();
-        toast_view.setBackgroundResource(R.drawable.border_background_reverse);
-        toast_cancel.setView(toast_view);
-
-
-        toast_cancel.show();
-
-    }
-
-
-    /** Called when the user clicks the "UPDATE" button on Profile Page*/
-//    public void updateUserDetails(View view) {
-//        //Capture the Input Name
-//        EditText editText_name = (EditText) findViewById(R.id.ap_user_name);
-//        String toast_msg_name = editText_name.getText().toString();
-//        if (toast_msg_name.isEmpty()){toast_msg_name = "Name Empty!";}
-//        //Capture the input Email
-//        EditText editText_email = (EditText) findViewById(R.id.ap_user_email);
-//        String toast_msg_email = editText_email.getText().toString();
-//        if (toast_msg_email.isEmpty()){toast_msg_email = "Email Empty!";}
-//        //Capture the input Course
-//        EditText editText_course = (EditText) findViewById(R.id.ap_user_course);
-//        String toast_msg_course = editText_course.getText().toString();
 //        if (toast_msg_course.isEmpty()){toast_msg_course = "Course Empty!";}
 //
 //        //Crete Toast
