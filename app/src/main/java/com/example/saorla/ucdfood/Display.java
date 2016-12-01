@@ -1,24 +1,20 @@
 package com.example.saorla.ucdfood;
 
-import android.app.Activity;
+
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.PowerManager;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
-import android.widget.Button;
-import android.widget.TextView;
-import android.view.View.OnClickListener;
 import android.widget.Toast;
 
 /**
- * Created by user on 09/11/2016.
+ * Activity for main menu which includes:
+ * Novelty onclick logo function
+ * Buttons to navigate from homepage to other activities
  */
 
 public class Display extends AppCompatActivity {
@@ -29,46 +25,32 @@ public class Display extends AppCompatActivity {
         setContentView(R.layout.display);
     }
 
+    /**
+     Method to animate logo on click &
+     Produce 'Baaa' sound
+     */
+    public void flash(View v) {
+        //Set up animation
+        final Animation animation = new AlphaAnimation(1, 0);
+        animation.setDuration(300);
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setRepeatCount(5);
+        animation.setRepeatMode(Animation.REVERSE);
 
-        public void flash(View v) {
-            final Animation animation = new AlphaAnimation(1, 0); // Change alpha from fully visible to invisible
-            animation.setDuration(300); // duration - half a second
-            animation.setInterpolator(new LinearInterpolator()); // do not alter animation rate
-            animation.setRepeatCount(5); // Repeat animation infinitely
-            animation.setRepeatMode(Animation.REVERSE);
-
-            final MediaPlayer mp = MediaPlayer.create(this, R.raw.sheep);
-
-            if(v.getId()==R.id.BSheep){
-                mp.start();
-                v.startAnimation(animation);
-                Toast.makeText(getBaseContext(), "Baaaa, welcome!", Toast.LENGTH_LONG).show();
-            }
-
+        //Set up Media player
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.sheep);
+        if(v.getId()==R.id.BSheep){
+            mp.start();
+            v.startAnimation(animation);
+            Toast.makeText(getBaseContext(), "Baaaa, welcome!", Toast.LENGTH_LONG).show();
         }
 
-//        String username = getIntent().getStringExtra("Username");
-//
-//        TextView tv = (TextView) findViewById(R.id.TVusername);
-//        tv.setText(username);
-
-//        displayUserId();
-
-
-
-
-//    public void displayUserId (){
-//        String userid = getIdfromSharedPrefernece();
-//        TextView textView = (TextView)findViewById(R.id.TVdisplayid);
-//        textView.setText(userid);
-//    }
-
-    public String getIdfromSharedPrefernece(){
-        SharedPreferences prefs = getSharedPreferences("User_Id",0);
-        String extractedText =  prefs.getString("shared_ref_id","No ID found");
-
-        return extractedText;
     }
+
+    /**
+     * Methods in menu to allow users to move between homepage and other actvites
+     * including profile, event list, Recipe finder and create event
+     */
 
     public void showCreateActivity (View view){
         Intent i = new Intent(this, CreateEvent.class);
@@ -89,8 +71,6 @@ public class Display extends AppCompatActivity {
         Intent i = new Intent(this, EventList.class);
         startActivity(i);
     }
-
-
 
 
 }

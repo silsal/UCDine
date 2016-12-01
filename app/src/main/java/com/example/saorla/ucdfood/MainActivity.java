@@ -10,7 +10,6 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -30,13 +29,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    /**
+        Method to animate logo on click &
+        Produce 'Baaa' sound
+     */
     public void baaflash(View v) {
-        final Animation animation = new AlphaAnimation(1, 0); // Change alpha from fully visible to invisible
-        animation.setDuration(300); // duration - half a second
-        animation.setInterpolator(new LinearInterpolator()); // do not alter animation rate
-        animation.setRepeatCount(5); // Repeat animation infinitely
+        //Set up animation
+        final Animation animation = new AlphaAnimation(1, 0);
+        animation.setDuration(300);
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setRepeatCount(5);
         animation.setRepeatMode(Animation.REVERSE);
 
+        //Set up media player
         final MediaPlayer mp = MediaPlayer.create(this, R.raw.sheep);
 
         if(v.getId()==R.id.WelcomeSheep){
@@ -78,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast temp = Toast.makeText(MainActivity.this, "Username and password don't match!",Toast.LENGTH_SHORT);
                 temp.show();
             }
-
 
         }
         if(v.getId()==R.id.Bsignup){
