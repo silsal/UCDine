@@ -90,19 +90,19 @@ public class EventDetail extends AppCompatActivity {
         titleTxt.setText(title);
 
         TextView hostTxt = (TextView) findViewById(R.id.host);
-        hostTxt.setText(host);
+        hostTxt.setText("Hosted by : "+host);
 
         TextView timeTxt = (TextView) findViewById(R.id.time);
-        timeTxt.setText(time);
+        timeTxt.setText("Time : "+time);
 
         TextView descriptionTxt = (TextView) findViewById(R.id.description);
         descriptionTxt.setText(details);
 
         TextView dateTxt = (TextView) findViewById(R.id.date);
-        dateTxt.setText(date);
+        dateTxt.setText("Date : "+date);
 
         TextView addressTxt = (TextView) findViewById(R.id.address);
-        addressTxt.setText(address);
+        addressTxt.setText("Event Address : "+address);
 
 
 // confirmation alert box
