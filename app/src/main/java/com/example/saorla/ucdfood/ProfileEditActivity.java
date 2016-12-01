@@ -372,7 +372,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         updateUserEmail();
         updateUserCourse();
         updateUserBio();
-        //updateUserPic();
+        updateUserPic();
         if ((""+updateMsg).equals("Updated: ")){
             updateMsg = (""+updateMsg).concat("No Updates!");
         }
@@ -403,7 +403,7 @@ public class ProfileEditActivity extends AppCompatActivity {
 
     public String BitMapToString(Bitmap bitmap){
         ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,0, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG,5, baos);
         byte [] b=baos.toByteArray();
         String temp= Base64.encodeToString(b, Base64.DEFAULT);
         return temp;
@@ -505,7 +505,7 @@ public class ProfileEditActivity extends AppCompatActivity {
             Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
 
             // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
-            Uri tempUri = getImageUri(getApplicationContext(), imageBitmap);
+            //Uri tempUri = getImageUri(getApplicationContext(), imageBitmap);
 
 
             //Compress & Convert Bitmap to String
@@ -514,7 +514,7 @@ public class ProfileEditActivity extends AppCompatActivity {
 
             //Convert String to Bitmap
             Bitmap db_bitmap = StringToBitMap(bitmapString);
-
+            Toast.makeText(this, ""+bitmapString, Toast.LENGTH_LONG).show();
 
 
             try {
@@ -524,6 +524,7 @@ public class ProfileEditActivity extends AppCompatActivity {
 //              profileImage.setImageBitmap(db_bitmap);
                 profileImage.setAlpha((float) 1 );
                 Toast.makeText(this, "Image Inserted", Toast.LENGTH_LONG).show();
+
             }
             catch (Exception e){
                 Toast.makeText(this,"Insert Failed",Toast.LENGTH_LONG).show();

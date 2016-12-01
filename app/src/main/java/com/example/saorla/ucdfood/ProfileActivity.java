@@ -7,6 +7,7 @@ package com.example.saorla.ucdfood;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -48,6 +50,7 @@ import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_COURSE;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_EMAIL;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_HOST_ID;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_HOST_SCORE;
+import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_PROFILE_PIC;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_USERNAME;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_USER_ID;
 import static com.example.saorla.ucdfood.MyDBHandler.TABLE_EVENTS;
@@ -58,6 +61,7 @@ import android.content.Intent;
 public class ProfileActivity extends AppCompatActivity {
     public final static String EXTRA_MESSAGE = "com.example.saorla.ucdfood.MESSAGE";
     private int userID;
+    ImageView userDeetsPic;
     TextView userDeetsName;
     TextView userDeetsEmail;
     TextView userDeetsCourse;
@@ -87,9 +91,9 @@ public class ProfileActivity extends AppCompatActivity {
         Resources res = getResources();
         dbHandler = new MyDBHandler(this);
         userID = Integer.parseInt(getIdfromSharedPreference());
-        Toast.makeText(this,""+userID,Toast.LENGTH_LONG).show();
+//        Toast.makeText(this,""+userID,Toast.LENGTH_LONG).show();
         //FIND VIEWS
-        //In row 2 of Profile Layout
+        //userDeetsPic = (ImageView) findViewById(R.id.ap_profile_image);
         userDeetsEmail = (TextView) findViewById(R.id.ap_user_email);
         userDeetsCourse = (TextView) findViewById(R.id.ap_user_course);
         userDeetsPoints = (TextView) findViewById(R.id.ap_user_points);
@@ -134,6 +138,8 @@ public class ProfileActivity extends AppCompatActivity {
         //Welcome Note
         String welcome_note = String.format(res.getString(R.string.welcome3), user_name);
 
+        //ASSIGN IMAGE TO PROFILE PIC
+        //setProfileImage(userDeetsPic);
         //ASSIGN TEXT STRINGS TO VIEWS IN LAYOUTS
         userDeetsName.setText(user_name);
         userDeetsEmail.setText(user_email_combined);
@@ -262,6 +268,28 @@ public class ProfileActivity extends AppCompatActivity {
     //Function to Select a count of Occurances from Database for input into a View
     public String populateCountDetails(String Table, String CountColumnName, String WhereColumnName, int WhereEqualsValue){
         return dbHandler.databaseCountByIDToString(Table, CountColumnName, WhereColumnName, WhereEqualsValue);
+    }
+
+    public void setProfileImage(ImageView image) {
+        String imgInDB = dbHandler.databaseSelectByIDToString(TABLE_USERS, COLUMN_PROFILE_PIC, userID);
+        if(imgInDB.length() == 0) {
+            Toast.makeText(this, "1" + imgInDB, Toast.LENGTH_LONG).show();
+        }
+        else{
+            image.setImageBitmap(StringToBitMap(imgInDB));
+
+        }
+    }
+
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 
 
