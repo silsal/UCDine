@@ -109,7 +109,7 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
     public void takePicture(View view) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            //Take a picc and pass result to onActivityResult
+            //Take a pic and pass result to onActivityResult
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
 
         }
@@ -128,18 +128,19 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode,data);
+
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            //get the photo
+            //get the photo and compress it into a byte array
             Bundle extras = data.getExtras();
             Bitmap photo = (Bitmap) extras.get("data");
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             photo.compress(Bitmap.CompressFormat.JPEG, 10, stream);
             byte[] byteArray = stream.toByteArray();
+            //transfor the byte array into a string for facilitating the storage into the database
             picture = Base64.encodeToString(byteArray, Base64.DEFAULT);
         }
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-
+            //do the same if the picture is taken from a gallery
             Uri uri = data.getData();
             try {
                 Bitmap gallery = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
@@ -155,7 +156,7 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
     }
 
     private void findViewsById() {
-
+        //get all the edit text from the form and save them into a edit text
         Textdate = (EditText) findViewById(R.id.date);
         Textdate.requestFocus();
         Textdate.setTextIsSelectable(true);
@@ -179,7 +180,7 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
         description = Textdescription.getText().toString();
     }
 
-    //clear fields
+    //clear fields of the form
     public void clearFields() {
         Textdate.getText().clear();
         Texthour.getText().clear();
@@ -191,7 +192,7 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
-
+        //activate the on click listener for the date picker of the time picker
         switch (view.getId()) {
             case R.id.date:
                 datePicker.show();
@@ -205,8 +206,8 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
     }
 
     public void setDateField() {
+        //allow to call the calendar content provider for allowing the user to select the date of the event
         Textdate.setOnClickListener(this);
-
         Calendar newCalendar = Calendar.getInstance();
         datePicker = new DatePickerDialog(this, new OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -215,18 +216,16 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
                 Textdate.setText(dateFormatter.format(newDate.getTime()));
             }
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-
     }
 
 
     public void setTimeField() {
-
+        //allow to call the calendar content provider for allowing the user to select the time
         Texthour.setOnClickListener(this);
         // Process to get Current Time
         final Calendar c = Calendar.getInstance();
         int mHour = c.get(Calendar.HOUR_OF_DAY);
         int mMinute = c.get(Calendar.MINUTE);
-
         timePicker = new TimePickerDialog(this, new OnTimeSetListener() {
             public void onTimeSet(TimePicker view, int hourOfDay, int minutes) {
                 // Display Selected time in textbox
@@ -236,6 +235,8 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
     }
 
     public void onAddEventClicked(View view) {
+        //if the form is complet send the event to the calendar content provider in order to allow the user to save the  event into
+        //its local calendar
         Log.i(EV_LOG, "I am here!");
         try {
             getFormValues();
@@ -259,6 +260,7 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
 
 
     public String getIdfromSharedPreference() {
+        //function that retrive the id of the user
         SharedPreferences prefs = getSharedPreferences("User_Id", 0);
         String extractedText = prefs.getString("shared_ref_id", "No ID found");
 
@@ -266,6 +268,7 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
     }
 
     public void sendEvent(View v) {
+        //if the form is filled, send the event to the database, increase the user point by 3 and clear the field of the form after submission
         try {
             getFormValues();
             if (validateForm()) {
@@ -300,6 +303,7 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
                 clearFields();
             }
         } catch (Exception e) {
+            //if not all the field of the form are complete, create a Toast for warning the user to fill in all the form
             Log.i(EV_LOG, e.getMessage(), e);
             Toast.makeText(getBaseContext(), "Fill all the field in the form, please!", Toast.LENGTH_LONG).show();
         }
@@ -309,7 +313,7 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
 
 
 
-    //Check that all the fields have been filled
+    //Check that all the fields  of the form have been filled
     private Boolean validateForm() {
         if (event.equals(getString(R.string.event_title))) {
             return false;
