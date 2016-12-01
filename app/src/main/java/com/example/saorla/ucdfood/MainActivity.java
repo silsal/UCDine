@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         if(v.getId()== R.id.Blogin){
 
             EditText a = (EditText)findViewById(R.id.TFusername);
-            String str = a.getText().toString();
+            String str = a.getText().toString().trim();
             EditText b = (EditText)findViewById(R.id.TFpassword);
             String pass = b.getText().toString();
 

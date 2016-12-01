@@ -2,8 +2,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@mipmap/background">
+    android:layout_height="match_parent">
+    <!--android:background="@mipmap/background">-->
 
 <ScrollView
     android:id="@+id/ap_main_scroll"
@@ -61,8 +61,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/border_profile">
+                android:layout_marginRight="10dp">
+                <!--android:background="@drawable/border_profile">-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -92,8 +92,9 @@
                         android:layout_weight="1"
                         android:layout_height="match_parent"
                         android:paddingRight="40dp"
-                        android:src="@drawable/profile_edit_icon2"
                         style="@style/icon_margins"/>
+                        <!--android:src="@drawable/profile_edit_icon2"-->
+
                 </LinearLayout>
 
                 <!--Lin Layout for Profile Information Row 1-->
@@ -127,8 +128,9 @@
                             android:padding="5dp"
                             android:cropToPadding="true"
                             android:background="@drawable/border_background_reverse"
-                            android:src="@mipmap/profile_image_default"
                             android:scaleType="centerCrop"/>
+                            <!--android:src="@mipmap/profile_image_default"-->
+
 
                         <Button
                             android:id="@+id/ap_buttonUpdate"

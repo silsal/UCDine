@@ -17,8 +17,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -28,160 +31,72 @@ import java.util.List;
 import static com.example.saorla.ucdfood.R.layout.activity_eventlist;
 
 
-public class EventList extends AppCompatActivity {
-
-
+public class EventList extends AppCompatActivity implements AsyncResponse{
+    private final String EL_LOG = "PLEASE WORK!";
+    private ArrayAdapter<String> eventAdapter;
     public final static String EXTRA_MESSAGE = "com.example.saorla.ucdfood.MESSAGE";
-    public String[] stringArray(String string_name){
-        String[] strArray = string_name.split(" ");
-        return strArray;
-    }
-    String strName = "name this tune";
-    String name = stringArray(strName)[0];
-    String user_name = name;
-
     MyDBHandler helper = new MyDBHandler(this);
-    String table_events = "TABLE_EVENTS";
-    String[] columnNames = {"COLUMN_HOST_ID",
-            "COLUMN_INVITE_NUM",
-            "COLUMN_EVENT_NAME",
-            "COLUMN_ADDRESS",
-            "COLUMN_DESCRIPTION",
-            "COLUMN_TIME",
-            "COLUMN_DATE"};
-    private TextView Textdate,
-            Texthour,
-            Textevent,
-            TextHost,
-            Textlocation,
-            TextNoPeople,
-            Textdescription;
-    private String date,
-            hour,
-            event,
-            location,
-    //                    noPeople,
-    description;
-    int noPeople;
-    int host;
-    MyDBHandler helperevent = new MyDBHandler(this);
-    private DatePickerDialog datePicker;
-    private SimpleDateFormat dateFormatter;
-    private int  mHour,mMinute;
-    private TimePickerDialog timePicker;
-
-
+    ListView lv;
     public final static String DETAILS_MESSAGE = "event_details";
     public final static String TITLE_MESSAGE = "event_title";
     public final static String HOST_MESSAGE = "host_details";
-    ListView lv;
-
-
-
-    private void findViewsById() {
-        Textevent = (TextView) findViewById(R.id.eventTextView);
-        TextHost = (TextView) findViewById(R.id.hostTextVIew);
-        Textdescription = (TextView) findViewById(R.id.description);
-    }
-    public String getIdfromSharedPrefernece(){
-        SharedPreferences prefs = getSharedPreferences("_eid",0);
-        String extractedText =  prefs.getString("shared_ref_id","No ID found");
-
-        return extractedText;
-    }
-
-    // Store form values into corresponding variables
-    private void getFormValues(){
-        event = Textevent.getText().toString();
-        host = Integer.parseInt(TextHost.getText().toString());
-    }
+    public final static String TIME_MESSAGE = "time";
+    public final static String DATE_MESSAGE = "date";
+    public final static String ADDRESS_MESSAGE = "address";
+    public final static String IS_ATTENDING_MESSAGE = "is_attending";
+    public final static String CAN_ATTEND_MESSAGE = "can_attend";
+    String[] host;
+    String[] time;
+    String[] title;
+    String[] description;
+    String[] is_attending;
+    String[] can_attend;
+    String[] points;
+    String[] address;
+    String[] date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        GetEvents getEvents = new GetEvents();
         super.onCreate(savedInstanceState);
-        setContentView(activity_eventlist);
+        setContentView(R.layout.activity_eventlist);
+        eventAdapter = new ArrayAdapter<String>(this, R.layout.custom_event_layout, R.id.eventTextView);
+
+
+
+//        responseView = (TextView) findViewById(R.id.responseView);
+//        Button recipeButton = (Button) findViewById(R.id.recipeButton);
         lv = (ListView) findViewById(R.id.eventList);
-        new GetEvents().execute();
-
-
-
+        lv.setAdapter(eventAdapter);
+//        new GetEvents().execute();
+        getEvents.delegate = this;
+        getEvents.execute();
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
 //                Toast.makeText(getApplicationContext(), eventDetailList[pos], Toast.LENGTH_LONG).show();
-                
-
                 Intent intent = new Intent(getApplicationContext(), EventDetail.class);
-                intent.putExtra(TITLE_MESSAGE, events[pos]);
-                intent.putExtra(HOST_MESSAGE, hosts[pos]);
-                intent.putExtra(DETAILS_MESSAGE, details[pos]);
+                intent.putExtra(TITLE_MESSAGE, host[pos]);
+                intent.putExtra(HOST_MESSAGE,title[pos]);
+                intent.putExtra(DETAILS_MESSAGE, description[pos]);
+                intent.putExtra(DETAILS_MESSAGE, date[pos]);
+                intent.putExtra(DETAILS_MESSAGE, address[pos]);
+                intent.putExtra(DETAILS_MESSAGE, is_attending[pos]);
+                intent.putExtra(DETAILS_MESSAGE, can_attend[pos]);
+                intent.putExtra(DETAILS_MESSAGE, points[pos]);
                 startActivity(intent);
-
             }
         });
-        }
+
+    }
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.event_list_menu, menu);
-        return true;
-    }
-    /** Called when the user clicks the Profile quick-link */
-    public void goToProfile() {
-        Intent intent = new Intent(this, ProfileActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, user_name);
-        startActivity(intent);
-    }
-
-    /** Called when the user clicks the Create Events quick-link */
-    public void goToCreate() {
-        Intent intent = new Intent(this, CreateEvent.class);
-        intent.putExtra(EXTRA_MESSAGE, user_name);
-        startActivity(intent);
-        finish();
-    }
-
-    /** Called when the user clicks the Search Recipe quick-link */
-    public void goToRecipe() {
-        Intent intent = new Intent(this, RecipeFinder.class);
-        intent.putExtra(EXTRA_MESSAGE, user_name);
-        startActivity(intent);
-        finish();
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        //action when corresponding action-bar item is clicked
-        switch(item.getItemId()) {
-
-            case R.id.create_events_ql:
-                goToCreate();
-                return true;
-
-            case R.id.profile_ql:
-                goToProfile();
-                return true;
-
-            case R.id.search_recipe_ql:
-                goToRecipe();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-//    public void DBcall(String[] events,String[] time,String[]hosts, String[] details) {
-//        lv = (ListView) findViewById(R.id.eventList);
-//
-//        events = helper.selectEventNames();
-//        time = helper.selectEventTime();
-//        hosts = helper.selectHostName();
-//        details = helper.selectEventDetails();
-//    }
-//    public void createAdapter(List<String>events,List<String>time,List<String>hosts,List<String>details){
-//        EventAdapter adapter = new EventAdapter(this, events, time, hosts);
-//        lv.setAdapter(adapter);
-//    }
-
+    public ArrayList<String[]> processFinish(ArrayList<String[]> output){return output;}
 
     class GetEvents extends AsyncTask<Void, Void, ArrayList<String[]>> {
         private Exception exception;
+
+        public AsyncResponse delegate = null;
 
         @Override
         protected void onPreExecute() {
@@ -192,35 +107,70 @@ public class EventList extends AppCompatActivity {
 
         @Override
         protected ArrayList<String[]> doInBackground(Void...params) {
+//            List<List> eventinfo = helper.eventinfo();
+            ArrayList<String[]> eventsString = helper.eventinfostr();
 
 
-            String[] events = helper.selectEventNames();
-            String[] time = helper.selectEventTime();
-            String[] host = helper.selectHostName();
-            String[] description = helper.selectEventDetails();
+//            String[] events = eventsString.get(0);
+//            String[] time = eventsString.get(2);
+//            String[] host = eventsString.get(1);
+//            String[] description = eventsString.get(5);
+//
+//            ArrayList<String[]> eventstuff = new ArrayList<>();
+//
+//            eventstuff.add(events);
+//            eventstuff.add(time);
+//            eventstuff.add(host);
+//            eventstuff.add(description);
 
-            ArrayList<String[]> eventstuff = new ArrayList<>();
 
-            eventstuff.add(events);
-            eventstuff.add(time);
-            eventstuff.add(host);
-            eventstuff.add(description);
-
-
-            return eventstuff;
-
+            return eventsString;
 
 
         }
 
         protected void onPostExecute(ArrayList<String[]> response) {
-//            EventAdapter adapter = new EventAdapter(this, time, host,description);
-            EventAdapter adapter = new EventAdapter(EventList.this,response.get(0), response.get(1), response.get(2));
-            lv.setAdapter(adapter);
+            int row_size = response.size();
+            int response_size = response.get(0).length;
+            Log.i(EL_LOG, response_size+" THIS IS THE SIZE");
 
+            host = new String[response_size];
+            time = new String[response_size];
+            title = new String[response_size];
+            description = new String[response_size];
+            date= new String[response_size];
+            can_attend = new String[response_size];
+            is_attending = new String[response_size];
+            points = new String[response_size];
+            address = new String[response_size];
 
+            for (int i=0; i<response_size; i++) {
+                title[i] = (response.get(0)[i]);
+                time[i] = (response.get(1)[i]);
+                host[i] = (response.get(2)[i]);
+                description[i] = (response.get(3)[i]);
+                date[i] = (response.get(4)[i]);
+                address[i] = (response.get(5)[i]);
+                can_attend[i] = (response.get(6)[i]);
+                is_attending[i] = (response.get(7)[i]);
+//                points[i] = (response.get(8)[i]);
+
+                Log.i(EL_LOG, response.get(0)[i]);
+                Log.i(EL_LOG, response.get(1)[i]);
+                Log.i(EL_LOG, response.get(2)[i]);
+
+//                String title_what = response.get(0)[i];
+                eventAdapter.add(title[i]);
+            }
+
+            Log.i(EL_LOG, "EVENTADAPTER IS "+eventAdapter);
+            Log.i(EL_LOG, "IN ON POST ***********");
+//            delegate.processFinish(response);
         }
     }
 
 }
 
+interface AsyncResponse{
+    ArrayList<String[]> processFinish(ArrayList<String[]> output);
+}

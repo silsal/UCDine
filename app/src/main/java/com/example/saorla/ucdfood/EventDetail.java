@@ -35,10 +35,14 @@ public class EventDetail extends AppCompatActivity {
     String user_name = name;
 
     private static Button button_attend;
-    public final static String PICTURE_MESSAGE = "event_pic";
-    public final static String TITLE_MESSAGE = "event_title";
-    public final static String HOST_MESSAGE = "event_host";
     public final static String DETAILS_MESSAGE = "event_details";
+    public final static String TITLE_MESSAGE = "event_title";
+    public final static String HOST_MESSAGE = "host_details";
+    public final static String TIME_MESSAGE = "time";
+    public final static String DATE_MESSAGE = "date";
+    public final static String ADDRESS_MESSAGE = "address";
+    public final static String IS_ATTENDING_MESSAGE = "is_attending";
+    public final static String CAN_ATTEND_MESSAGE = "can_attend";
     public int points = 3;
 
 
@@ -160,3 +164,4 @@ public class EventDetail extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+

@@ -5,7 +5,9 @@
     android:paddingLeft="1dp"
     android:paddingRight="1dp"
     android:paddingBottom="3dp"
-    android:background="@drawable/border_profile"
+    tools:context="com.example.saorla.ucdfood.FragmentReviewsStats"
+    >
+    <!--android:background="@drawable/border_profile"-->
     tools:context="com.example.saorla.ucdfood.FragmentReviewsStats"
     >
 
@@ -42,7 +44,8 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:paddingRight="40dp"
-                android:src="@drawable/attend_icon"
+                style="@style/icon_margins"/>
+                <!--android:src="@drawable/attend_icon"-->
                 style="@style/icon_margins"/>
         </LinearLayout>
 
