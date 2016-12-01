@@ -5,9 +5,10 @@
     android:paddingLeft="1dp"
     android:paddingRight="1dp"
     android:paddingBottom="3dp"
-    android:background="@drawable/border_profile"
     tools:context="com.example.saorla.ucdfood.FragmentActivityStats"
     >
+    <!--android:background="@drawable/border_profile"-->
+
 
     <LinearLayout
         android:layout_width="match_parent"

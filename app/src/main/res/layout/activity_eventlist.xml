@@ -17,5 +17,16 @@
         android:layout_alignParentLeft = "true"
         android:layout_alignParentTop = "true"
         >
+        <TextView
+            android:id="@+id/eventTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:padding="2dp"
+            android:textColor="#33CC33" />
     </ListView>
+
 </RelativeLayout>

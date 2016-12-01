@@ -41,14 +41,6 @@ import java.util.ArrayList;
 
 //This class is for the RecipeFinder activity. It sends HTTP requests to an external API and returns the results in JSON format
 public class RecipeFinder extends AppCompatActivity {
-    public final static String EXTRA_MESSAGE = "com.example.saorla.ucdfood.MESSAGE";
-    public String[] stringArray(String string_name){
-        String[] strArray = string_name.split(" ");
-        return strArray;
-    }
-    String strName = "name this tune";
-    String name = stringArray(strName)[0];
-    String user_name = name;
 
     //initialise variables, views and other components which will be required
     private final String APP_LOG = "Saorla's message!";
@@ -292,7 +284,6 @@ public class RecipeFinder extends AppCompatActivity {
     /** Called when the user clicks the Search Events quick-link */
     public void goToProfile() {
         Intent intent = new Intent(this, ProfileActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, user_name);
         startActivity(intent);
         finish();
     }
@@ -300,7 +291,6 @@ public class RecipeFinder extends AppCompatActivity {
     /** Called when the user clicks the Create Events quick-link */
     public void goToCreate() {
         Intent intent = new Intent(this, CreateEvent.class);
-        intent.putExtra(EXTRA_MESSAGE, user_name);
         startActivity(intent);
         finish();
     }
@@ -308,7 +298,6 @@ public class RecipeFinder extends AppCompatActivity {
     /** Called when the user clicks the Search Recipe quick-link */
     public void goToEvents() {
         Intent intent = new Intent(this, EventList.class);
-        intent.putExtra(EXTRA_MESSAGE, user_name);
         startActivity(intent);
         finish();
     }

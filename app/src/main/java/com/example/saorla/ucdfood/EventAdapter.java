@@ -43,7 +43,7 @@ public class EventAdapter extends ArrayAdapter<String> {
     }
 
     //    class which holds the view for each row
-    public class viewHolder {
+    public static class viewHolder {
         TextView titleTV;
         TextView hostTV;
         TextView timeTV;

@@ -38,9 +38,9 @@ import android.widget.ImageButton;
 import android.widget.TimePicker;
 import java.util.UUID;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
+//import com.google.android.gms.appindexing.Action;
+//import com.google.android.gms.appindexing.AppIndex;
+//import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.Collections;
 import java.util.List;
