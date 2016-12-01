@@ -277,8 +277,7 @@
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:background="@color/colorPrimaryDark"
-            android:textSize="20sp"
-            android:textColor="@color/white"
+            style = "@style/ButtonFont"
             android:text="@string/formbutton"
             android:onClick="sendEvent" />
     </LinearLayout>

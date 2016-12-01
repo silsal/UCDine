@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="colorPrimary">#ffd402</color>
     <color name="colorPrimaryDark">#ff6202</color>
     <color name="colorAccent">#FF4081</color>
@@ -12,9 +13,12 @@
     <color name="colorTextEditable2">#ff9102</color>
     <color name="colorText">#4b4949</color>
     <color name="sectionText">#888888</color>
+    <color name="colorTextLabel">@color/white</color>
+    <color name="colorTextButton">@color/white</color>
 
     <color name="background">#C0C0C0</color>
     <color name="section_background">#f0e7ba</color>
+    <color name="backgroud_main">#fafafa</color>
     <color name="popups">#AFAFAF</color>
 
 

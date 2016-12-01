@@ -141,7 +141,8 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginEnd="5dp"
                             android:layout_marginRight="5dp"
-                            style="@style/profile_button"
+                            style="@style/ButtonFont"
+                            android:textSize="15sp"
                             android:text="@string/edit_profile"
                             android:onClick="editProfile"/>
                         <!--End Layout for Prof Pic & Edit Button-->
