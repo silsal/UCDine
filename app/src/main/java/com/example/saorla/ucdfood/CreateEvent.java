@@ -1,5 +1,6 @@
 package com.example.saorla.ucdfood;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,6 +24,7 @@ import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,6 +38,8 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageButton;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
 import java.util.UUID;
 
 //import com.google.android.gms.appindexing.Action;
@@ -51,32 +55,36 @@ import java.util.List;
  */
 public class CreateEvent extends AppCompatActivity implements View.OnClickListener {
     public final static String EXTRA_MESSAGE = "com.example.saorla.ucdfood.MESSAGE";
-    public String[] stringArray(String string_name){
+
+    public String[] stringArray(String string_name) {
         String[] strArray = string_name.split(" ");
         return strArray;
     }
+
     String strName = "name this tune";
     String name = stringArray(strName)[0];
     String user_name = name;
 
     private final String EV_LOG = "Silvia's message!";
     private EditText Textdate,
-                     Texthour,
-                     Textevent,
-                     Textlocation,
-                     TextNoPeople,
-                     Textdescription;
+            Texthour,
+            Textevent,
+            Textlocation,
+            TextNoPeople,
+            Textdescription;
     private String date,
-                   hour,
-                   event,
-                   location,
-                   description;
-
-    int noPeople;
+            hour,
+            event,
+            location,
+            description,
+            noPeople,
+            picture;
+    //    byte[] byteArray;
+//    int noPeople;
     MyDBHandler helperevent = new MyDBHandler(this);
     private DatePickerDialog datePicker;
     private SimpleDateFormat dateFormatter;
-    private int  mHour,mMinute;
+    private int mHour, mMinute;
     private TimePickerDialog timePicker;
     private ImageButton addImage;
 
@@ -90,7 +98,7 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
         setDateField();
         setTimeField();
 
-        final String[] option = new String[] {"Take Photo", "Gallery Upload"};
+        final String[] option = new String[]{"Take Photo", "Gallery Upload"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.select_dialog_item, option);
 
@@ -131,7 +139,6 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
     private static final int REQUEST_IMAGE_CAPTURE = 1;
 
 
-
     public void takePicture(View view) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -145,7 +152,8 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
 //        }
     }
 
-    private int PICK_IMAGE_REQUEST = 1;
+    private int PICK_IMAGE_REQUEST = 2;
+
     public void pickGallery(View view) {
         Intent intent = new Intent();
         // Show only images, no videos or anything else
@@ -162,64 +170,53 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             //get the photo
             Bundle extras = data.getExtras();
-            Bitmap photo = (Bitmap)extras.get("data");
-            saveToInternalStorage(photo);
+            Bitmap photo = (Bitmap) extras.get("data");
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            photo.compress(Bitmap.CompressFormat.JPEG, 10, stream);
+            byte[] byteArray = stream.toByteArray();
+            picture = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+//            picture= saveToInternalStorage(photo);
         }
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
 
             Uri uri = data.getData();
-
-//            try {
-//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-//                // Log.d(TAG, String.valueOf(bitmap));
-//
-////                ImageView imageView = (ImageView) findViewById(R.id.aep_insert_image);
-////                imageView.setImageBitmap(bitmap);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-        }
-    }
-    private String saveToInternalStorage(Bitmap bitmapImage){
-        ContextWrapper cw = new ContextWrapper(getApplicationContext());
-        // path to /data/data/yourapp/app_data/imageDir
-        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-        // Create imageDir
-
-        File mypath=new File(directory,UUID.randomUUID().toString()+".jpg");
-
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(mypath);
-            // Use the compress method on the BitMap object to write image to the OutputStream
-            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
             try {
-                fos.close();
+                Bitmap gallery = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                gallery.compress(Bitmap.CompressFormat.JPEG, 10, stream);
+                byte[] byteArray = stream.toByteArray();
+                picture = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        return directory.getAbsolutePath();
     }
-//    public final static String EVENT_TITLE = "com.example.saorla.ucdfood.MESSAGE";
-
-    /**
-     * Called when the user clicks the Send button
-     */
-//    public void sendMessage(View view) {
-//        Intent intent = new Intent(this, printEventFields.class);
-//        EditText editText = (EditText) findViewById(R.id.eventTitle);
-////        transform the message to string
-//        String message = editText.getText().toString();
-////        adds the EditText's value to the intent. An Intent can carry data types as key-value pairs called extras.
-//// Your key is a public constant EXTRA_MESSAGE because the next activity uses the key to retrive the text value.
-//        intent.putExtra(EVENT_TITLE, message);
-//        startActivity(intent);
+//    private String saveToInternalStorage(Bitmap bitmapImage){
+//        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+//        // path to /data/data/yourapp/app_data/imageDir
+//        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+//        // Create imageDir
+//
+//        File mypath=new File(directory, UUID.randomUUID().toString()+".jpg");
+//
+//        FileOutputStream fos = null;
+//        try {
+//            fos = new FileOutputStream(mypath);
+//            // Use the compress method on the BitMap object to write image to the OutputStream
+//            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                fos.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return directory.getAbsolutePath();
 //    }
-
 
 
     private void findViewsById() {
@@ -240,18 +237,19 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
     }
 
     // Store form values into corresponding variables
-    private void getFormValues(){
-        Log.i(EV_LOG,"getting form values");
+    private void getFormValues() {
+        Log.i(EV_LOG, "getting form values");
         date = Textdate.getText().toString();
         hour = Texthour.getText().toString();
         event = Textevent.getText().toString();
         location = Textlocation.getText().toString();
-        noPeople = Integer.parseInt(TextNoPeople.getText().toString());
+        noPeople = TextNoPeople.getText().toString();
+//        noPeoplecheck= TextNoPeople.getText().toString();
         description = Textdescription.getText().toString();
     }
 
-        //clear fields
-    public void clearFields(){
+    //clear fields
+    public void clearFields() {
         Textdate.getText().clear();
         Texthour.getText().clear();
         Textevent.getText().clear();
@@ -270,9 +268,11 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
             case R.id.hour:
                 timePicker.show();
                 break;
+
 //
         }
     }
+
     public void setDateField() {
         Textdate.setOnClickListener(this);
 
@@ -283,12 +283,12 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
                 newDate.set(year, monthOfYear, dayOfMonth);
                 Textdate.setText(dateFormatter.format(newDate.getTime()));
             }
-        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
     }
 
 
-    public void setTimeField(){
+    public void setTimeField() {
 
         Texthour.setOnClickListener(this);
         // Process to get Current Time
@@ -297,64 +297,192 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
         mMinute = c.get(Calendar.MINUTE);
 
         timePicker = new TimePickerDialog(this, new OnTimeSetListener() {
-            public void onTimeSet(TimePicker view, int hourOfDay,int minutes) {
+            public void onTimeSet(TimePicker view, int hourOfDay, int minutes) {
                 // Display Selected time in textbox
                 Texthour.setText(hourOfDay + ":" + minutes);
             }
-        }, mHour, mMinute, false);}
+        }, mHour, mMinute, false);
+    }
 
-        public void onAddEventClicked(View view){
-            Log.i(EV_LOG,"I am here!");
-            Intent intent = new Intent(Intent.ACTION_INSERT);
-            intent.setType("vnd.android.cursor.item/event");
+    public void onAddEventClicked(View view) {
+        Log.i(EV_LOG, "I am here!");
+        try {
+            if (validateForm()) {
+                Intent intent = new Intent(Intent.ACTION_INSERT);
+                intent.setType("vnd.android.cursor.item/event");
+                getFormValues();
+                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, date);
+                intent.putExtra(CalendarContract.Events.DTSTART, hour);
+                intent.putExtra(CalendarContract.Events.TITLE, event);
+                intent.putExtra(CalendarContract.Events.DESCRIPTION, description);
+                intent.putExtra(CalendarContract.Events.EVENT_LOCATION, location);
+                startActivity(intent);
+            }
+        }catch (Exception e) {
+            Log.i(EV_LOG, e.getMessage(), e);
+            Toast.makeText(getBaseContext(), "Fill all the field in the form, please!", Toast.LENGTH_LONG).show();
+        }
+    }
 
+
+    public String getIdfromSharedPreference() {
+        SharedPreferences prefs = getSharedPreferences("User_Id", 0);
+        String extractedText = prefs.getString("shared_ref_id", "No ID found");
+
+        return extractedText;
+    }
+
+    public void sendEvent(View v) {
+        try {
             getFormValues();
-//            long startTime = hour.toString().getTimeInMillis();
-//
+            if (validateForm()) {
+                String user = getIdfromSharedPreference();
+                int id = Integer.parseInt(user);
 
-            intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,date);
-            intent.putExtra(CalendarContract.Events.DTSTART,hour);
+                Events e = new Events();
 
-
-            intent.putExtra(CalendarContract.Events.TITLE, event);
-            intent.putExtra(CalendarContract.Events.DESCRIPTION,  description);
-            intent.putExtra(CalendarContract.Events.EVENT_LOCATION, location);
-
-
-            startActivity(intent);
+                e.set_hid(id);
+                e.setInvite_num(Integer.parseInt(noPeople));
+                e.setAvailable_num(Integer.parseInt(noPeople));
+                e.setEvent_name(event);
+                e.setAddress(location);
+                e.setDescription(description);
+                e.setTime(hour);
+                e.setDate(date);
+                e.setEvent_pic(picture);
+                helperevent.addEvent(e);
+                helperevent.getPoints(id);
+                AlertDialog.Builder myAlert = new AlertDialog.Builder(this);
+                myAlert.setTitle("Your event has been created!")
+                        .setIcon(R.drawable.star)
+                        .setMessage("You earned 3 points! :)")
+                        .setPositiveButton("OK!", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .create();
+                myAlert.show();
+                clearFields();
+            }
+        } catch (Exception e) {
+            Log.i(EV_LOG, e.getMessage(), e);
+            Toast.makeText(getBaseContext(), "Fill all the field in the form, please!", Toast.LENGTH_LONG).show();
         }
 
-
-        public String getIdfromSharedPreference(){
-            SharedPreferences prefs = getSharedPreferences("User_Id",0);
-            String extractedText =  prefs.getString("shared_ref_id","No ID found");
-
-            return extractedText;
-        }
-
-    public void sendEvent(View v){
-
-        getFormValues();
 
         //insert the details into db
 //        SharedPreferences prefs = getSharedPreferences("User_Id",0);
-        String user = getIdfromSharedPreference();
-        int id = Integer.parseInt(user);
+//            String user = getIdfromSharedPreference();
+//            int id = Integer.parseInt(user);
+//
+//            Events e = new Events();
+//
+//            e.set_hid(id);
+//            e.setInvite_num(noPeople);
+//            e.setAvailable_num(noPeople);
+//            e.setEvent_name(event);
+//            e.setAddress(location);
+//            e.setDescription(description);
+//            e.setTime(hour);
+//            e.setDate(date);
+//            e.setEvent_pic(picture);
+//            helperevent.addEvent(e);
+//            helperevent.getPoints(id);
+//            AlertDialog.Builder myAlert = new AlertDialog.Builder(this);
+//            myAlert.setTitle("Your event has been created!")
+//                    .setIcon(R.drawable.star)
+//                    .setMessage("You earned 3 points! :)")
+//                    .setPositiveButton("OK!", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            dialog.dismiss();
+//                        }
+//                    })
+//                    .create();
+//            myAlert.show();
+//            clearFields();
 
-        Events e = new Events();
-
-        e.set_hid(id);
-        e.setInvite_num(noPeople);
-        e.setAvailable_num(noPeople);
-        e.setEvent_name(event);
-        e.setAddress(location);
-        e.setDescription(description);
-        e.setTime(hour);
-        e.setDate(date);
-//        e.setEvent_pic();
-        helperevent.addEvent(e);
-        helperevent.getPoints(id);
     }
+
+
+
+
+
+    //Check that all the fields have been filled
+    private Boolean validateForm() {
+        if (event.equals(getString(R.string.event_title))) {
+            return false;
+        }
+        if (location.trim().equals(getString(R.string.location))) {
+            return false;
+        }
+        if (date.equals(getString(R.string.date))) {
+            return false;
+        }
+        if (noPeople.equals(getString(R.string.people))) {
+            return false;
+        }
+        if (hour.equals(getString(R.string.hour))) {
+            return false;
+        }
+        if (description.equals(getString(R.string.description))) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
+
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu){
+//        getMenuInflater().inflate(R.menu.event_list_menu, menu);
+//        return true;
+//    }
+//    /** Called when the user clicks the Profile quick-link */
+//    public void goToProfile() {
+//        Intent intent = new Intent(this, ProfileActivity.class);
+//        intent.putExtra(EXTRA_MESSAGE, user_name);
+//        startActivity(intent);
+//    }
+//
+//    /** Called when the user clicks the Search Recipe quick-link */
+//    public void goToEvents() {
+//        Intent intent = new Intent(this, EventList.class);
+//        intent.putExtra(EXTRA_MESSAGE, user_name);
+//        startActivity(intent);
+//        finish();
+//    }
+//
+//    /** Called when the user clicks the Search Recipe quick-link */
+//    public void goToRecipe() {
+//        Intent intent = new Intent(this, RecipeFinder.class);
+//        intent.putExtra(EXTRA_MESSAGE, user_name);
+//        startActivity(intent);
+//        finish();
+//    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item){
+//        //action when corresponding action-bar item is clicked
+//        switch(item.getItemId()) {
+//
+//            case R.id.search_events_ql:
+//                goToEvents();
+//                return true;
+//
+//            case R.id.profile_ql:
+//                goToProfile();
+//                return true;
+//
+//            case R.id.search_recipe_ql:
+//                goToRecipe();
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
