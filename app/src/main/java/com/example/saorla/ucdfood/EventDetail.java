@@ -2,6 +2,7 @@ package com.example.saorla.ucdfood;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -43,23 +44,47 @@ public class EventDetail extends AppCompatActivity {
     public final static String ADDRESS_MESSAGE = "address";
     public final static String IS_ATTENDING_MESSAGE = "is_attending";
     public final static String CAN_ATTEND_MESSAGE = "can_attend";
-    public int points = 3;
+    public final static String POINTS_MESSAGE = "points";
+    public final static String EID_MESSAGE = "eid";
+    int int_is_attending;
+    int int_can_attend;
+    int int_points;
 
+    String title ="";
+    String host = "";
+    String details="";
+    String time="";
+    String date="";
+    String address="";
+    String is_attending="";
+    String can_attend="";
+    String points="";
+    String eid="";
+
+    MyDBHandler helperevent = new MyDBHandler(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_detail);
         onButtonClickListener();
-        String title ="";
-        String host = "";
-        String details="";
         Intent intent = getIntent();
         if (null != intent) {
             title = intent.getStringExtra(EventList.TITLE_MESSAGE);
             host = intent.getStringExtra(EventList.HOST_MESSAGE);
             details = intent.getStringExtra(EventList.DETAILS_MESSAGE);
+            time = intent.getStringExtra(EventList.TIME_MESSAGE);
+            date = intent.getStringExtra(EventList.DATE_MESSAGE);
+            address = intent.getStringExtra(EventList.ADDRESS_MESSAGE);
+            is_attending = intent.getStringExtra(EventList.IS_ATTENDING_MESSAGE);
+           can_attend = intent.getStringExtra(EventList.CAN_ATTEND_MESSAGE);
+            points = intent.getStringExtra(EventList.POINTS_MESSAGE);
+            eid = intent.getStringExtra(EventList.EID_MESSAGE);
         }
+        int_is_attending = Integer.parseInt(is_attending);
+        int_can_attend =  Integer.parseInt(can_attend);
+        int_points = Integer.parseInt(points);
+
 
         TextView titleTxt = (TextView) findViewById(R.id.title);
         titleTxt.setText(title);
@@ -67,8 +92,17 @@ public class EventDetail extends AppCompatActivity {
         TextView hostTxt = (TextView) findViewById(R.id.host);
         hostTxt.setText(host);
 
+        TextView timeTxt = (TextView) findViewById(R.id.time);
+        timeTxt.setText(time);
+
         TextView descriptionTxt = (TextView) findViewById(R.id.description);
         descriptionTxt.setText(details);
+
+        TextView dateTxt = (TextView) findViewById(R.id.date);
+        dateTxt.setText(date);
+
+        TextView addressTxt = (TextView) findViewById(R.id.address);
+        addressTxt.setText(address);
 
 
 // confirmation alert box
@@ -84,13 +118,21 @@ public class EventDetail extends AppCompatActivity {
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        if (points < 1){
-                                            Toast.makeText(getApplicationContext(), "Sorry, you dont have any points left on your account, try hosting an event to earn points!", Toast.LENGTH_LONG).show();
-                                        }else {
-                                            points -= 1;
-                                            Toast.makeText(getApplicationContext(), "One point has been deducted from your account", Toast.LENGTH_LONG).show();
-                                            dialog.cancel();
-                                        }}
+                                        String user = getIdfromSharedPreference();
+                                        int id = Integer.parseInt(user);
+                                        int int_eid = Integer.parseInt(eid);
+//                                        if (int_is_attending >=1) {
+                                            if (int_points <1) {
+                                                Toast.makeText(getApplicationContext(), "Sorry, you dont have any points left on your account, try hosting an event to earn points!", Toast.LENGTH_LONG).show();
+                                            } else {
+                                                helperevent.reducePoints(id);
+                                                helperevent.reduceAvailableNumber(int_eid);
+                                                Toast.makeText(getApplicationContext(), "One point has been deducted from your account", Toast.LENGTH_LONG).show();
+                                                dialog.cancel();
+                                                int_points --;
+                                            }
+//                                        }
+                                    }
                                 })
                                 .setNegativeButton("No",new DialogInterface.OnClickListener(){
                                     @Override
@@ -103,9 +145,15 @@ public class EventDetail extends AppCompatActivity {
                         alert.show();
                     }
                 }
-        );
+        );}
+    public String getIdfromSharedPreference() {
+        SharedPreferences prefs = getSharedPreferences("User_Id", 0);
+        String extractedText = prefs.getString("shared_ref_id", "No ID found");
 
+        return extractedText;
     }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.event_detail_main, menu);

@@ -243,7 +243,12 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
     }
 
-
+    public void  reduceAvailableNumber(int eventid) {
+        db = this.getWritableDatabase();
+        int reduce_attending = 1;
+        db.execSQL("update " + TABLE_EVENTS + " set available_num = available_num -" + reduce_attending + " where _eid =" + eventid+";");
+        db.close();
+    }
     public int EventSize() {
         db = this.getReadableDatabase();
         String query = "select * from "+TABLE_EVENTS;
@@ -313,8 +318,9 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
         String[] invite_num = new String[i];
         String[] avail_num = new String[i];
+        String[] eid = new String[i];
 
-        String query = "select event_name, time, date, description, address, invite_num, available_num from "+TABLE_EVENTS;
+        String query = "select event_name, time, date, description, address, invite_num, available_num, _eid from "+TABLE_EVENTS;
         Cursor result = db.rawQuery(query,null);
         int count = 0;
         if (result.moveToFirst()){
@@ -326,6 +332,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
                 event_address[count]=result.getString(result.getColumnIndex("address"));
                 invite_num[count]= Integer.toString(result.getInt(result.getColumnIndex("invite_num")));
                 avail_num[count]= Integer.toString(result.getInt(result.getColumnIndex("available_num")));
+                eid[count]= Integer.toString(result.getInt(result.getColumnIndex("_eid")));
 
 
                 count++;
@@ -343,6 +350,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         eventinfoString.add(event_address);
         eventinfoString.add(invite_num);
         eventinfoString.add(avail_num);
+        eventinfoString.add(eid);
         //avail points
         eventinfoString.add(userDetails.get(1));
 

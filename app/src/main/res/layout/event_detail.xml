@@ -18,6 +18,19 @@
         android:text="TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/time"
+        android:paddingLeft="20dp" />
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/date"
+        android:paddingLeft="20dp" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/host"
         android:paddingLeft="20dp" />
 
@@ -31,6 +44,12 @@
         android:padding="15dp"
         android:textColor="@android:color/black"
         android:textSize="18sp" />
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/address"
+        android:paddingLeft="20dp" />
 
     <Button
         android:text="Attend"

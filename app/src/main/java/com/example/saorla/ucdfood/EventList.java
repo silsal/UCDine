@@ -45,6 +45,8 @@ public class EventList extends AppCompatActivity implements AsyncResponse{
     public final static String ADDRESS_MESSAGE = "address";
     public final static String IS_ATTENDING_MESSAGE = "is_attending";
     public final static String CAN_ATTEND_MESSAGE = "can_attend";
+    public final static String POINTS_MESSAGE = "points";
+    public final static String EID_MESSAGE = "eid";
     String[] host;
     String[] time;
     String[] title;
@@ -54,6 +56,7 @@ public class EventList extends AppCompatActivity implements AsyncResponse{
     String[] points;
     String[] address;
     String[] date;
+    String[] eid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,14 +79,16 @@ public class EventList extends AppCompatActivity implements AsyncResponse{
             public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
 //                Toast.makeText(getApplicationContext(), eventDetailList[pos], Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getApplicationContext(), EventDetail.class);
-                intent.putExtra(TITLE_MESSAGE, host[pos]);
-                intent.putExtra(HOST_MESSAGE,title[pos]);
+                intent.putExtra(TITLE_MESSAGE, title[pos]);
+                intent.putExtra(HOST_MESSAGE,host[pos]);
                 intent.putExtra(DETAILS_MESSAGE, description[pos]);
-                intent.putExtra(DETAILS_MESSAGE, date[pos]);
-                intent.putExtra(DETAILS_MESSAGE, address[pos]);
-                intent.putExtra(DETAILS_MESSAGE, is_attending[pos]);
-                intent.putExtra(DETAILS_MESSAGE, can_attend[pos]);
-                intent.putExtra(DETAILS_MESSAGE, points[pos]);
+                intent.putExtra(DATE_MESSAGE, date[pos]);
+                intent.putExtra(TIME_MESSAGE, time[pos]);
+                intent.putExtra(ADDRESS_MESSAGE, address[pos]);
+                intent.putExtra(IS_ATTENDING_MESSAGE, is_attending[pos]);
+                intent.putExtra(CAN_ATTEND_MESSAGE, can_attend[pos]);
+                intent.putExtra(POINTS_MESSAGE, points[pos]);
+                intent.putExtra(EID_MESSAGE, eid[pos]);
                 startActivity(intent);
             }
         });
@@ -111,19 +116,6 @@ public class EventList extends AppCompatActivity implements AsyncResponse{
             ArrayList<String[]> eventsString = helper.eventinfostr();
 
 
-//            String[] events = eventsString.get(0);
-//            String[] time = eventsString.get(2);
-//            String[] host = eventsString.get(1);
-//            String[] description = eventsString.get(5);
-//
-//            ArrayList<String[]> eventstuff = new ArrayList<>();
-//
-//            eventstuff.add(events);
-//            eventstuff.add(time);
-//            eventstuff.add(host);
-//            eventstuff.add(description);
-
-
             return eventsString;
 
 
@@ -143,28 +135,24 @@ public class EventList extends AppCompatActivity implements AsyncResponse{
             is_attending = new String[response_size];
             points = new String[response_size];
             address = new String[response_size];
-
+            eid = new String[response_size];
             for (int i=0; i<response_size; i++) {
                 title[i] = (response.get(0)[i]);
-                time[i] = (response.get(1)[i]);
-                host[i] = (response.get(2)[i]);
-                description[i] = (response.get(3)[i]);
-                date[i] = (response.get(4)[i]);
+                time[i] = (response.get(2)[i]);
+                host[i] = (response.get(1)[i]);
+                description[i] = (response.get(4)[i]);
+                date[i] = (response.get(3)[i]);
                 address[i] = (response.get(5)[i]);
-                can_attend[i] = (response.get(6)[i]);
-                is_attending[i] = (response.get(7)[i]);
-//                points[i] = (response.get(8)[i]);
-
-                Log.i(EL_LOG, response.get(0)[i]);
-                Log.i(EL_LOG, response.get(1)[i]);
-                Log.i(EL_LOG, response.get(2)[i]);
-
-//                String title_what = response.get(0)[i];
+                can_attend[i] = (response.get(7)[i]);
+                is_attending[i] = (response.get(6)[i]);
+                eid[i] = (response.get(8)[i]);
+                points[i] = (response.get(9)[i]);
                 eventAdapter.add(title[i]);
             }
 
             Log.i(EL_LOG, "EVENTADAPTER IS "+eventAdapter);
-            Log.i(EL_LOG, "IN ON POST ***********");
+            Log.i(EL_LOG, "EID"+response.get(8)[0]);
+            Log.i(EL_LOG, "points"+response.get(9));
 //            delegate.processFinish(response);
         }
     }
