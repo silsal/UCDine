@@ -2,11 +2,14 @@ package com.example.saorla.ucdfood;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -25,6 +28,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
+
+    /**
+        Method to animate logo on click &
+        Produce 'Baaa' sound
+     */
+    public void baaflash(View v) {
+        //Set up animation
+        final Animation animation = new AlphaAnimation(1, 0);
+        animation.setDuration(300);
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setRepeatCount(5);
+        animation.setRepeatMode(Animation.REVERSE);
+
+        //Set up media player
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.sheep);
+
+        if(v.getId()==R.id.WelcomeSheep){
+            mp.start();
+            v.startAnimation(animation);
+            Toast.makeText(getBaseContext(), "Baaaa, welcome!", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
 
     /**
      Method to sign in
@@ -56,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast temp = Toast.makeText(MainActivity.this, "Username and password don't match!",Toast.LENGTH_SHORT);
                 temp.show();
             }
-
 
         }
         if(v.getId()==R.id.Bsignup){

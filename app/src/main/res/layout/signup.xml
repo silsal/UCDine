@@ -36,7 +36,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:inputType="textPersonName"
+                android:inputType="textCapWords|textCapSentences"
                 android:ems="10"
                 android:id="@+id/TFname"
                 android:background="@color/white" />
@@ -52,7 +52,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:inputType="textPersonName"
+                android:inputType="textCapWords|textCapSentences"
                 android:ems="10"
                 android:id="@+id/TFsurname"
                 android:background="@color/white" />
@@ -84,10 +84,11 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:inputType="textPersonName"
+                android:inputType="textEmailAddress"
                 android:ems="10"
                 android:id="@+id/TFemail"
-                android:background="@color/white" />
+                android:background="@color/white"
+                />
 
             <TextView
                 android:text="Password"

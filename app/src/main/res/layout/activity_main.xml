@@ -9,19 +9,22 @@
     android:paddingRight="0dp"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
+    android:gravity="center"
     tools:context="com.example.saorla.ucdfood.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="218dp">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:src="@drawable/logo"
-            android:id="@+id/imageView"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="0.45" />
-
+        android:layout_height="231dp"
+        android:weightSum="0.45"
+        android:baselineAligned="false"
+        android:gravity="center"
+        android:orientation="vertical">
+        <Button
+            android:layout_width="190dp"
+            android:layout_height="190dp"
+            android:background="@drawable/logo"
+            android:id="@+id/WelcomeSheep"
+            android:onClick="baaflash" />
 
 
     </LinearLayout>

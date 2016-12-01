@@ -132,7 +132,10 @@ public class MyDBHandler extends SQLiteOpenHelper{
         this.onCreate(db);
     }
 
-    //add user to users table
+    /**
+     * Method to insert user object into database
+     * this method is promted by signin.java
+     */
     public void insertUsers(Users u){
         db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -154,6 +157,10 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.close();
     }
 
+    /**
+     * Method to return password from database
+     * given a username
+     */
     public String searchPass(String uname){
         db = this.getReadableDatabase();
         String query = "select uname, pass from "+TABLE_USERS;
@@ -163,8 +170,6 @@ public class MyDBHandler extends SQLiteOpenHelper{
         if (cursor.moveToFirst()){
             do{
                 a = cursor.getString(0);
-
-
                 if (a.equals(uname)){
                     b = cursor.getString(1);
                     break;
@@ -172,8 +177,14 @@ public class MyDBHandler extends SQLiteOpenHelper{
             }
             while(cursor.moveToNext());
         }
+        db.close();
         return b;
     }
+
+    /**
+     * Method to return user_id from database
+     * given a username
+     */
     public String searchId(String uname) {
         db = this.getReadableDatabase();
         String query = "select uname, _uid from " + TABLE_USERS;
@@ -183,8 +194,6 @@ public class MyDBHandler extends SQLiteOpenHelper{
         if (cursor.moveToFirst()) {
             do {
                 a = cursor.getString(0);
-
-
                 if (a.equals(uname)) {
                     b = cursor.getString(1);
                     break;
@@ -192,7 +201,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
             }
             while (cursor.moveToNext());
         }
-
+        db.close();
         return b;
     }
 

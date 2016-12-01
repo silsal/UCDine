@@ -50,7 +50,8 @@
             android:configChanges="orientation|screenSize" />
         <activity android:name=".CreateEvent" />
         <activity android:name=".Display" />
-        <activity android:name=".SignUp" />
+        <activity android:name=".SignUp"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ProfileActivity"
             android:label="@string/profile"

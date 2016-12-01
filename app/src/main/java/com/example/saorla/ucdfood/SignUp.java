@@ -8,7 +8,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 /**
- * Created by user on 09/11/2016.
+    Activity to register new users
+    Taking in fields for firstname, lastname, username and password
+    Inserts users to database on click
+
  */
 
 public class SignUp extends Activity {
@@ -19,6 +22,12 @@ public class SignUp extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup);
     }
+
+    /**
+        Method which takes user textfield values and inserts into database on button click
+        Checks to make sure password is typed correctly twice
+        Uses database insert user method insert
+     */
     public void onSignUpClick(View v){
         if (v.getId()==R.id.Bsignupbutton){
             EditText fname = (EditText)findViewById(R.id.TFname);

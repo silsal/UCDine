@@ -1,6 +1,7 @@
 package com.example.saorla.ucdfood;
 /**
- * Created by user on 09/11/2016.
+ * This file contains the user class which creates
+ * instances of user in the user table for the database
  */
 
 public class Users {
@@ -17,8 +18,6 @@ public class Users {
     private String course;
     private String bio;
     private String user_pic;
-
-
 
     //Methods to set attributes
 

@@ -62,7 +62,7 @@ public class FragmentEventsStats extends Fragment{
 //        //Hosted
         String[] h_titles = setInputs(populateEventDetails(TABLE_EVENTS, COLUMN_EVENT_NAME, COLUMN_HOST_ID, userID));
         String[] h_dates = setInputs(populateEventDetails(TABLE_EVENTS, COLUMN_DATE, COLUMN_HOST_ID, userID));
-//        String[] h_guests = setInputs(populateEventDetails(TABLE_EVENTS, COLUMN_INVITE_NUM, COLUMN_HOST_ID, userID));
+        String[] h_guests = setInputs(populateEventDetails(TABLE_EVENTS, COLUMN_INVITE_NUM, COLUMN_HOST_ID, userID));
 
 //            String[] h_titles = new String[] {"Burger Bash", "Pasta Party", "French Flair"};
 //
@@ -74,16 +74,16 @@ public class FragmentEventsStats extends Fragment{
 
 
         String[] hostEventArray = {
-                "T - 2\nTitle: "+ h_titles[0] +"\n"+ h_dates[0] +"\nGuests: 5",
-                "T - 4\nTitle: "+ h_titles[1] +"\nFriday 21st Oct\nGuests: 4",
-                "T - 6\nTitle: Pasta Party\nSunday 23th Oct\nGuests: 5",
+                ""+ h_titles[0] +"\n\n"+ h_dates[0] +"\n\nGuests: "+ h_guests[0] + "",
+                ""+ h_titles[1] +"\n\n"+ h_dates[1] +"\n\nGuests: "+ h_guests[1] + "",
+                ""+ h_titles[2] +"\n\n"+ h_dates[2] +"\n\nGuests: "+ h_guests[2] + "",
         };
 
         //Create Placeholder ATTENDING Data
         String[] attendEventArray = {
-                "T - 1\nTitle: BBQ Blitz\nTuesday 18th Oct\nGuests: 3",
-                "T - 3\nTitle: Spaintastic\nThursday 20th Oct\nGuests: 2",
-                "T - 6\nTitle: Bit of Ita\nSunday 23th Oct\nGuests: 5",
+                "BBQ Blitz\n\nTuesday 18th Oct\n\nGuests: 3",
+                "Spaintastic\n\nThursday 20th Oct\n\nGuests: 2",
+                "Bit of Ita\n\nSunday 23th Oct\n\nGuests: 5",
         };
 
         //Convert the String array into a ListArray

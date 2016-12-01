@@ -31,7 +31,7 @@ import java.util.List;
 import static com.example.saorla.ucdfood.R.layout.activity_eventlist;
 
 
-public class EventList extends AppCompatActivity implements AsyncResponse{
+public class EventList extends AppCompatActivity{
     private final String EL_LOG = "PLEASE WORK!";
     private ArrayAdapter<String> eventAdapter;
     public final static String EXTRA_MESSAGE = "com.example.saorla.ucdfood.MESSAGE";
@@ -72,7 +72,7 @@ public class EventList extends AppCompatActivity implements AsyncResponse{
         lv = (ListView) findViewById(R.id.eventList);
         lv.setAdapter(eventAdapter);
 //        new GetEvents().execute();
-        getEvents.delegate = this;
+
         getEvents.execute();
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -95,13 +95,12 @@ public class EventList extends AppCompatActivity implements AsyncResponse{
 
     }
 
-    @Override
-    public ArrayList<String[]> processFinish(ArrayList<String[]> output){return output;}
+
 
     class GetEvents extends AsyncTask<Void, Void, ArrayList<String[]>> {
         private Exception exception;
 
-        public AsyncResponse delegate = null;
+
 
         @Override
         protected void onPreExecute() {
@@ -150,15 +149,12 @@ public class EventList extends AppCompatActivity implements AsyncResponse{
                 eventAdapter.add(title[i]);
             }
 
-            Log.i(EL_LOG, "EVENTADAPTER IS "+eventAdapter);
-            Log.i(EL_LOG, "EID"+response.get(8)[0]);
-            Log.i(EL_LOG, "points"+response.get(9));
-//            delegate.processFinish(response);
+//            Log.i(EL_LOG, "EVENTADAPTER IS "+eventAdapter);
+//            Log.i(EL_LOG, "EID"+response.get(8)[0]);
+//            Log.i(EL_LOG, "points"+response.get(9));
+////            delegate.processFinish(response);
         }
     }
 
 }
 
-interface AsyncResponse{
-    ArrayList<String[]> processFinish(ArrayList<String[]> output);
-}
