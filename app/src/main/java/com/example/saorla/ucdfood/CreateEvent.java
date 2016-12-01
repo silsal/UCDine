@@ -1,35 +1,25 @@
 package com.example.saorla.ucdfood;
-
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
-
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.v7.app.AlertDialog;
-import android.text.InputType;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -40,30 +30,14 @@ import android.widget.ImageButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.util.UUID;
-
-//import com.google.android.gms.appindexing.Action;
-//import com.google.android.gms.appindexing.AppIndex;
-//import com.google.android.gms.common.api.GoogleApiClient;
-
-import java.util.Collections;
-import java.util.List;
-
 
 /**
- * Created by Cometa on 06/11/2016.
+ * This activity will display a form that allows the user to create an event to his/her local calendar and to the local database.
+ * When the user hits submit 3 points are going to be added to the his/her points. If the form is not completed a Toast prevents the
+ *
  */
 public class CreateEvent extends AppCompatActivity implements View.OnClickListener {
-    public final static String EXTRA_MESSAGE = "com.example.saorla.ucdfood.MESSAGE";
 
-    public String[] stringArray(String string_name) {
-        String[] strArray = string_name.split(" ");
-        return strArray;
-    }
-
-    String strName = "name this tune";
-    String name = stringArray(strName)[0];
-    String user_name = name;
 
     private final String EV_LOG = "Silvia's message!";
     private EditText Textdate,
@@ -79,12 +53,11 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
             description,
             noPeople,
             picture;
-    //    byte[] byteArray;
-//    int noPeople;
+
     MyDBHandler helperevent = new MyDBHandler(this);
     private DatePickerDialog datePicker;
     private SimpleDateFormat dateFormatter;
-    private int mHour, mMinute;
+
     private TimePickerDialog timePicker;
     private ImageButton addImage;
 
@@ -251,8 +224,8 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
         Texthour.setOnClickListener(this);
         // Process to get Current Time
         final Calendar c = Calendar.getInstance();
-        mHour = c.get(Calendar.HOUR_OF_DAY);
-        mMinute = c.get(Calendar.MINUTE);
+        int mHour = c.get(Calendar.HOUR_OF_DAY);
+        int mMinute = c.get(Calendar.MINUTE);
 
         timePicker = new TimePickerDialog(this, new OnTimeSetListener() {
             public void onTimeSet(TimePicker view, int hourOfDay, int minutes) {
@@ -369,14 +342,12 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
     /** Called when the user clicks the Profile quick-link */
     public void goToProfile() {
         Intent intent = new Intent(this, ProfileActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, user_name);
         startActivity(intent);
     }
 
     /** Called when the user clicks the Search Recipe quick-link */
     public void goToEvents() {
         Intent intent = new Intent(this, EventList.class);
-        intent.putExtra(EXTRA_MESSAGE, user_name);
         startActivity(intent);
         finish();
     }
@@ -384,7 +355,6 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
     /** Called when the user clicks the Search Recipe quick-link */
     public void goToRecipe() {
         Intent intent = new Intent(this, RecipeFinder.class);
-        intent.putExtra(EXTRA_MESSAGE, user_name);
         startActivity(intent);
         finish();
     }
