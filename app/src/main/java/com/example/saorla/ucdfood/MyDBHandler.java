@@ -404,23 +404,33 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
     //Specific "Select" multiples into Array function
     public String[] databaseSelectByIDToArray(String TableName, String ColumnNameSelect, String ColumnNameEquals,int WhereValueEquals){
-        String[] dbString = {};
-        SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT " + ColumnNameSelect +" FROM " + TableName + " WHERE " + ColumnNameEquals +" == " + WhereValueEquals + ";";
 
-        Cursor cursor = db.rawQuery(query, null);
-        //get first row in the results
-        cursor.moveToFirst();
+
+//        String[] dbString = {};
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + ColumnNameSelect +" FROM " + TableName + " WHERE " + ColumnNameEquals +" = " + WhereValueEquals + ";";
+
+        Cursor resultRows = db.rawQuery(query, null);
+        //Find the number of rows in result
+        resultRows.moveToLast();
+        int len = resultRows.getPosition();
+
+        //Create empty array of length same as number rows
+        String [] dbString = new String[len+1];
+
+        //move to first row in the results
+        resultRows.moveToFirst();
+
+        //Set Counter
         int pos = 0;
-        //move through the whole table
-        while(!cursor.isAfterLast()){
-            if(cursor.getString(pos)!=null){
-                dbString[0] = cursor.getString(pos);
-                pos +=1;
+        if (resultRows.moveToFirst()){
+            do{
+                dbString[pos] = resultRows.getString(0);
+//            dbString[pos] = "7";
+                pos ++;
             }
-            cursor.moveToNext();
+            while (resultRows.moveToNext());
         }
-
         db.close();
         return dbString;
     }

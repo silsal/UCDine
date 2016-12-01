@@ -87,7 +87,7 @@ public class ProfileActivity extends AppCompatActivity {
         Resources res = getResources();
         dbHandler = new MyDBHandler(this);
         userID = Integer.parseInt(getIdfromSharedPreference());
-
+        Toast.makeText(this,""+userID,Toast.LENGTH_LONG).show();
         //FIND VIEWS
         //In row 2 of Profile Layout
         userDeetsEmail = (TextView) findViewById(R.id.ap_user_email);
