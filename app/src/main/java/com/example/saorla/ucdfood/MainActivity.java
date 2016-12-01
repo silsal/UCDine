@@ -9,9 +9,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+    Opening activity java file
+    Includes:
+    Sign in method
+    Link to sign up activity
+    Shared preference method to store user id
+ */
 public class MainActivity extends AppCompatActivity {
-
-
+    //Initialise database helper
     MyDBHandler helper = new MyDBHandler(this);
 
     @Override
@@ -20,7 +26,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-
+    /**
+     Method to sign in
+     Check if username and password match and also exist in database
+     If not flags users using toast
+     Stores user id so other activities can access specific user's information
+     */
     public void onButtonClick(View v){
         if(v.getId()== R.id.Blogin){
 
@@ -32,18 +43,15 @@ public class MainActivity extends AppCompatActivity {
             String password = helper.searchPass(str);
             String id = helper.searchId(str);
 
-            //Store Value into shared preference!!
+            //Store Value into shared preference
             storeIdToSharedPreference(id);
-//            getIdfromSharedPrefernece();
 
-//            displayUserId();
-
-
+            //Check if credentials match bring to menu page
             if(pass.equals(password)){
-            Intent i = new Intent(MainActivity.this, Display.class);
-            i.putExtra("Username",str);
-            startActivity(i);
-            finish();
+                Intent i = new Intent(MainActivity.this, Display.class);
+                startActivity(i);
+                finish();
+            //Else alert user with toast
             }else{
                 Toast temp = Toast.makeText(MainActivity.this, "Username and password don't match!",Toast.LENGTH_SHORT);
                 temp.show();
@@ -58,19 +66,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-//    /
 
+    /**
+     Shared preference that stores user id
+     */
     public void storeIdToSharedPreference(String id){
         SharedPreferences prefs = getSharedPreferences("User_Id",0);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("shared_ref_id",id);
         editor.commit();
     }
-//    public String getIdfromSharedPrefernece(){
-//        SharedPreferences prefs = getSharedPreferences(SHAREDPREF_SET,0);
-//        String extractedText =  prefs.getString(SHAREDPREF_USERID,"No ID found");
-//
-//        return extractedText;
-//    }
+
 
 }
