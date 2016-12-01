@@ -20,13 +20,14 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:src="@drawable/logo"
-            android:id="@+id/imageView"
+        <Button
+            android:layout_width="190dp"
+            android:layout_height="190dp"
+            android:background="@drawable/logo"
+            android:id="@+id/BSheep"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="0.45" />
+            android:layout_weight="0.08"
+            android:onClick="flash"/>
     </LinearLayout>
 
     <LinearLayout
