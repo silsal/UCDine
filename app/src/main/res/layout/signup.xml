@@ -1,92 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="fill_parent"
 
-    <TextView
-        android:text=" First Name"
-        android:layout_width="118dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView5" />
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:background="@color/colorPrimaryDark">
 
-    <EditText
+    <ScrollView android:id="@+id/ap_main_scroll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/TFname" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:text="Surname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView6" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/TFsurname" />
 
-    <TextView
-        android:text="Username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView7" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/TFusername" />
+            <TextView
+                android:layout_marginTop="15dp"
+                android:text=" First Name"
+                android:layout_width="118dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView5" />
 
-    <TextView
-        android:text="Email Address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView8" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/TFname"
+                android:background="@color/white" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/TFemail" />
+            <TextView
+                android:text="Surname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView6" />
 
-    <TextView
-        android:text="Password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView9" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="39dp"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/TFsurname"
+                android:background="@color/white" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/TFpass1" />
+            <TextView
+                android:text="Username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView7" />
 
-    <TextView
-        android:text="Confirm Password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView10" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="39dp"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/TFusername"
+                android:background="@color/white" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/TFpass2" />
+            <TextView
+                android:text="Email Address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView8" />
 
-    <Button
-        android:text="Sign Up"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/Bsignupbutton"
-        android:onClick="onSignUpClick" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/TFemail"
+                android:background="@color/white" />
 
+            <TextView
+                android:text="Password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView9" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/TFpass1"
+                android:background="@color/white" />
+
+            <TextView
+                android:text="Confirm Password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView10" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/TFpass2"
+                android:background="@color/white"
+                android:layout_marginBottom="20dp"/>
+
+            <Button
+                android:text="Sign Up"
+                android:layout_width="299dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/Bsignupbutton"
+                android:onClick="onSignUpClick"
+                android:background="@color/colorPrimary" />
+
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

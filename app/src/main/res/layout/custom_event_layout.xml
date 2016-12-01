@@ -4,49 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal" >
-    <Button
-        android:id="@+id/BMap"
-        android:layout_width="0dp"
-        android:layout_height="140dp"
-        android:drawableTop="@drawable/menu"
-        android:text="See address"
-        android:background="@color/colorPrimaryDark"
-        android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
-        android:textSize="20dp"
-        android:padding="10dp"
-        android:gravity="center"
-        android:layout_weight="1"
-        android:onClick="showMapActivity"
-        android:textColor="@color/white" />
 
-
-    <LinearLayout android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/eventTextView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:padding="2dp"
+        android:textColor="#33CC33" />
 
-        <TextView
-            android:id="@+id/eventTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:padding="2dp"
-            android:textColor="#33CC33" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/hostTextVIew"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Small Text"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/timeTextVIew"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textSize="10sp" />
-    </LinearLayout>
 </LinearLayout>

@@ -14,6 +14,8 @@ import java.util.List;
 //This class is responsible for creating the database
 
 public class MyDBHandler extends SQLiteOpenHelper{
+    private final String EV_LOG = "YOU CAN DO IT!";
+
     private static final String DB_TAG = "Please work!";
     //Name and version of db
     private static final int DATABASE_VERSION = 1;
@@ -22,8 +24,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public static final String TABLE_USERS = "users";
     public static final String TABLE_EVENTS = "events";
     public static final String TABLE_MY_EVENTS = "my_events";
-//    public static final String TABLE_FRIENDS = "friends";
-//    public static final String TABLE_FAVOURITERECIPES = "favouriterecipes";
+
     //common column names
     public static final String COLUMN_USER_ID = "_uid";
     //users table column names
@@ -51,11 +52,6 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public static final String COLUMN_TIME = "time";
     public static final String COLUMN_DATE = "date";
     public static final String COLUMN_EVENT_PIC = "event_pic";
-    //friends table column names
-//    public static final String COLUMN_FRIEND_ID = "_friendid";
-    //favourite recipes column names
-//    public static final String COLUMN_RECIPE_ID = "_recipeid";
-//    public static final String COLUMN_RECIPE_URL = "recipe_url";
 
     //My events table column names
     public static final String COLUMN_MY_EVENT_ID = "_myeid";
@@ -106,24 +102,10 @@ public class MyDBHandler extends SQLiteOpenHelper{
                 " );";
 
 
-
-//        String query3 = "CREATE TABLE " + TABLE_FRIENDS + " ( " +
-//                COLUMN_USER_ID + " INTEGER NOT NULL," +
-//                COLUMN_FRIEND_ID + " INTEGER NOT NULL," +
-//                "PRIMARY KEY" + "(" + COLUMN_USER_ID + ", " + COLUMN_FRIEND_ID + ")" +
-//                " );";
-
-//        String query4 = "CREATE TABLE " + TABLE_FAVOURITERECIPES + " ( " +
-//                COLUMN_RECIPE_ID + " INTEGER PRIMARY KEY," +
-//                COLUMN_USERNAME + " INTEGER NOT NULL," +
-//                COLUMN_RECIPE_URL + " TEXT" +
-//                " );";
-
         //create the required tables
         db.execSQL(query1);
         db.execSQL(query2);
         db.execSQL(query3);
-//        db.execSQL(query4);
 
 
         this.db = db;
@@ -134,7 +116,6 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MY_EVENTS);
-//        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FAVOURITERECIPES);
         this.onCreate(db);
     }
 
@@ -154,7 +135,6 @@ public class MyDBHandler extends SQLiteOpenHelper{
         values.put(COLUMN_LOCATION, u.getLocation());
         values.put(COLUMN_EMAIL, u.getEmail());
         values.put(COLUMN_PASS,u.getPass());
-//        values.put(COLUMN_HOST_SCORE,"5");
         values.put(COLUMN_COURSE,"CompSci");
         values.put(COLUMN_BIO,"Tell the UCDine world a little bit about yourself");
         db.insert(TABLE_USERS, null, values);
@@ -204,14 +184,6 @@ public class MyDBHandler extends SQLiteOpenHelper{
     }
 
 
-        //delete user from users table
-    public void deleteUser(String username){
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM " + TABLE_USERS + " WHERE " + COLUMN_USERNAME + "=\"" + username + "\";");
-    }
-
-
-
     //add event to Events table
     public void addEvent(Events events){
         db = this.getWritableDatabase();
@@ -236,7 +208,6 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.insert(TABLE_EVENTS, null, values);
         db.close();
     }
-    private final String EV_LOG = "YOU CAN DO IT!";
 
     public void  getPoints(int userid) {
         db = this.getWritableDatabase();
@@ -246,8 +217,6 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
 
         db.close();
-
-
 
     }
     public void  reducePoints(int userid) {
@@ -259,58 +228,9 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
         db.close();
 
-
-
     }
 
 
-
-    //delete event from Events table
-    public void deleteEvent(){
-
-    }
-
-    //add friend to Friends table
-    public void addFriend(){
-
-    }
-
-    //delete friend from Friends table
-    public void deleteFriend(){
-
-    }
-
-    //add recipe to FavouriteRecipes table
-    public void addRecipe(){
-
-    }
-
-    //delete recipe from FavouriteRecipes table
-    public void deleteRecipe(){
-
-    }
-
-    //test database by printing to string
-    public String databaseToString(){
-        String dbString = "";
-        SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_USERS + ";";
-
-        //cursor
-        Cursor cursor = db.rawQuery(query, null);
-        //get first row in the results
-        cursor.moveToFirst();
-        //move through the whole table
-        while(!cursor.isAfterLast()){
-            if(cursor.getString(cursor.getColumnIndex("username"))!=null){
-                dbString += cursor.getString(cursor.getColumnIndex("username"));
-                dbString += "\n";
-            }
-            cursor.moveToNext();
-        }
-        db.close();
-        return dbString;
-    }
     public int EventSize() {
         db = this.getReadableDatabase();
         String query = "select * from "+TABLE_EVENTS;
@@ -320,90 +240,16 @@ public class MyDBHandler extends SQLiteOpenHelper{
         return cnt;
 
     }
-    public String[]selectEventNames(){
+    //method which joins the Users table and Events table on userid
+    public ArrayList<String[]> selectHostName(){
         db = this.getReadableDatabase();
-        String query = "select event_name from "+TABLE_EVENTS+";";
-        Cursor result = db.rawQuery(query,null);
-        int count = 0;
-        String [] events = new String[EventSize()];
-//        List<String> events = new ArrayList<String>();
-        if (result.moveToFirst()){
-            do{
-                events[count]=result.getString(result.getColumnIndex("event_name"));
-                count++;
-            }while (result.moveToNext());
-        }
-//            result.moveToNext();
-        db.close();
-        Log.i(EV_LOG, "Event name");
-//        Log.i(EV_LOG, Arrays.toString(events));
-        return events;
-
-    }
-    //    public int[] selectEventID(){
-//        db = this.getReadableDatabase();
-//        String query = "select _eid from "+TABLE_EVENTS+";";
-//        Cursor result = db.rawQuery(query,null);
-//        int count = 0;
-//        String [] events = new String[EventSize()];
-//        if (result.moveToFirst()){
-//            events[count]=(result.getString(result.getColumnIndex("_eid")));
-//            count++;
-//        }
-//        result.moveToNext();
-//        result.close();
-//        Log.i(EV_LOG, "Event name");
-//        Log.i(EV_LOG, Arrays.toString(events));
-//        return events;
-//
-//    }
-    public String[]  selectEventTime(){
-        db = this.getReadableDatabase();
-        String query = "select time from "+TABLE_EVENTS+";";
-        Cursor result = db.rawQuery(query,null);
-        int count = 0;
-        String [] time = new String[EventSize()];
-//        List<String> time = new ArrayList<String>();
-        if (result.moveToFirst()){
-            do{
-                time[count]=result.getString(result.getColumnIndex("time"));
-                count++;
-            }while(result.moveToNext());
-
-        }
-        db.close();
-//        Log.i(EV_LOG, Arrays.toString(time));
-
-        return time;
-    }
-    public String[] selectEventDetails(){
-        db = this.getReadableDatabase();
-        String query = "select description from "+TABLE_EVENTS+";";
-        Cursor des = db.rawQuery(query,null);
-        int count = 0;
-        String [] descrip = new String[EventSize()];
-//        List<String> descrip = new ArrayList<String>();
-        if (des.moveToFirst()){
-            do{
-                descrip[count]=des.getString(des.getColumnIndex("description"));
-                count++;
-            }while(des.moveToNext());
-
-        }
-        db.close();
-//        Log.i(EV_LOG, Arrays.toString(descrip));
-
-        return descrip;
-    }
-
-    public String[] selectHostName(){
-        db = this.getReadableDatabase();
+        //get the host id from Events
         String query = "select _hid from "+TABLE_EVENTS+";";
-//        String query2= "select uname from "+TABLE_USERS+ " where"
+        //get the number of events in the database
+        int s = EventSize();
         Cursor c = db.rawQuery(query,null);
         int count = 0;
-        String [] hid = new String[EventSize()];
-//        List<String> hid = new ArrayList<String>();
+        String [] hid = new String[s];
         if (c.moveToFirst()){
             do{
                 hid[count]=c.getString(c.getColumnIndex("_hid"));
@@ -411,38 +257,84 @@ public class MyDBHandler extends SQLiteOpenHelper{
             }while(c.moveToNext());
 
         }
-        String [] unames = new String [EventSize()];
-//        List<String> unames = new ArrayList<String>();
+        String [] unames = new String [s];
+        String [] avail_points = new String [s];
         int cnt =0;
+        //find the userid in the Users table which matches the host id from the Events table
         for(int i=0;i<hid.length;i++){
-            String query2= "select uname from "+TABLE_USERS+ " where _uid == "+hid[i];
+            String query2= "select uname, available_points from "+TABLE_USERS+ " where _uid == "+hid[i];
             Cursor c2 = db.rawQuery(query2,null);
 
             if(c2.moveToFirst()){
                 do{
                     unames[cnt]=(c2.getString(c2.getColumnIndex("uname")));
+                    avail_points[cnt]=Integer.toString(c2.getInt(c2.getColumnIndex("available_points")));
                     cnt++;
                 }while(c2.moveToNext());
 
             }
         }
 
-
         db.close();
         Log.i(EV_LOG, "Usernames");
-//        Log.i(EV_LOG, unames[1]+"");
-//        Log.i(EV_LOG, Arrays.toString(unames));
-
-        return unames;
+        ArrayList<String[]> userDetails = new ArrayList<String[]>();
+        userDetails.add(unames);
+        userDetails.add(avail_points);
+        return userDetails;
 
     }
-//    public void insertNewEvent(String TableName, String[] ColumnNames, String[] values){
-//        Log.i(DB_TAG, "inserting");
-//        SQLiteDatabase db = getWritableDatabase();
-//        String query = "INSERT INTO "+ TableName + " ("+ ColumnNames + ") VALUES (%1$d,%2$d,%3$s,%4$s,%5$s,%6$t,%7$t"+values + ");";
-//        db.execSQL(query);
-//        db.close();
-//    }
+
+    //method which returns the details of each event from the Events table in arrays
+    public ArrayList<String[]>  eventinfostr(){
+        db = this.getReadableDatabase();
+        int i = EventSize();
+
+        ArrayList<String[]> eventinfoString = new ArrayList<String[]>();
+
+        String [] event_name = new String[i];
+//        String [] host_name = new String[i];
+        String [] event_time = new String[i];
+        String [] event_date = new String[i];
+        String [] event_description = new String[i];
+        String [] event_address = new String[i];
+
+        String[] invite_num = new String[i];
+        String[] avail_num = new String[i];
+
+        String query = "select event_name, time, date, description, address, invite_num, available_num from "+TABLE_EVENTS;
+        Cursor result = db.rawQuery(query,null);
+        int count = 0;
+        if (result.moveToFirst()){
+            do{
+                event_name[count]=result.getString(result.getColumnIndex("event_name"));
+                event_time[count]=result.getString(result.getColumnIndex("time"));
+                event_date[count]=result.getString(result.getColumnIndex("date"));
+                event_description[count]=result.getString(result.getColumnIndex("description"));
+                event_address[count]=result.getString(result.getColumnIndex("address"));
+                invite_num[count]= Integer.toString(result.getInt(result.getColumnIndex("invite_num")));
+                avail_num[count]= Integer.toString(result.getInt(result.getColumnIndex("available_num")));
+
+
+                count++;
+            }while (result.moveToNext());
+        }
+        db.close();
+        ArrayList<String[]> userDetails = selectHostName();
+
+        eventinfoString.add(event_name);
+        //host name
+        eventinfoString.add(userDetails.get(0));
+        eventinfoString.add(event_time);
+        eventinfoString.add(event_date);
+        eventinfoString.add(event_description);
+        eventinfoString.add(event_address);
+        eventinfoString.add(invite_num);
+        eventinfoString.add(avail_num);
+        //avail points
+        eventinfoString.add(userDetails.get(1));
+
+        return eventinfoString;
+    }
 
     //General "Select" fuunction
     public String databaseSelectByIDToString(String TableName, String ColumnName, int WhereValueEquals){

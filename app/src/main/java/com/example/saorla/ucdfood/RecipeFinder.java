@@ -1,26 +1,24 @@
-/*This file contains.... Parts of the code have been adapted from David Coyle's Sunshine Starter and various tutorials
-*Code to show/hide keyboard from http://stackoverflow.com/questions/1109022/close-hide-the-android-soft-keyboard
-*
+/*This file contains the code to create the RecipeFinder activity.
+
+Parts of the code have been adapted from David Coyle's Sunshine Starter and various tutorials
+Code to show/hide keyboard from http://stackoverflow.com/questions/1109022/close-hide-the-android-soft-keyboard
+
 * */
 
 package com.example.saorla.ucdfood;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.util.Linkify;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.ProgressBar;
 
 
@@ -41,44 +39,45 @@ import java.util.ArrayList;
 
 //This class is for the RecipeFinder activity. It sends HTTP requests to an external API and returns the results in JSON format
 public class RecipeFinder extends AppCompatActivity {
-
-    //initialise variables, views and other components which will be required
+    //initialise variables, views and other components which will be required later
     private final String APP_LOG = "Saorla's message!";
     private static final String RECIPE_RESPONSE = "RECIPE_RESPONSE";
     private ListView listview;
     private ArrayAdapter<String> recipeAdapter;
     ProgressBar progressBar;
-
     EditText dishName;
-    //    TextView responseView;
-    //set variables for the API and API key
+
+    //set variables for the food2fork API link and our API key
     private static final String API_KEY = "1ab4790ba9350f1af172e0146399d0c9";
     static final String API_URL = "http://food2fork.com/api/search?key=";
 
+    //method to create the activity onload
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_finder);
-        //set up
+        //create an array adapter to store the API response in later
         recipeAdapter = new ArrayAdapter<String>(this, R.layout.recipe_item_finder, R.id.recipe_item_finder_textview, new ArrayList<String>());
         listview = (ListView) findViewById(R.id.recipe_list_view);
+        //set the adapter to the listview
         listview.setAdapter(recipeAdapter);
         dishName = (EditText) findViewById(R.id.dishName);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 //        responseView = (TextView) findViewById(R.id.responseView);
         Button recipeButton = (Button) findViewById(R.id.recipeButton);
-        //when recipe button is clicked, call AsyncTask to send API request
+        //when recipe button is clicked, call AsyncTask QueryRecipeAPI to send API request
         Log.i(APP_LOG, "Calling Async");
         recipeButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
 
-                // Check if no view has focus and hide keyboard:
+                // Check if view has focus and hide keyboard if so
                 View view = getCurrentFocus();
                 if (view != null) {
                     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
+                //send the user input to the AsyncTask
                 new QueryRecipeAPI().execute(dishName.getText().toString());
             }
         });
@@ -93,7 +92,7 @@ public class RecipeFinder extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            //make progress bar visible
+            //make progress bar visible when
             progressBar.setVisibility(View.VISIBLE);
         }
 
@@ -168,13 +167,17 @@ public class RecipeFinder extends AppCompatActivity {
 
         protected void onPostExecute(String[] response) {
             Log.i(APP_LOG, "response is "+response);
+            progressBar.setVisibility(View.GONE);
+            recipeAdapter.clear();
             //if the server has not responded or there was an error parsing the recipes, print a message for the user
             if (response == null) {
-                progressBar.setVisibility(View.GONE);
                 recipeAdapter.add("An error has occurred; no recipes have been found. Please try again later!\n\n - The UCDine Team");
             }
-            else {
-                progressBar.setVisibility(View.GONE);
+            //if the app user has sent a bad request to the api
+            else if(response[0] == "400"){
+                recipeAdapter.add("Invalid search parameters - please try again!");
+            }
+            else{
                 Log.i(APP_LOG, "This is the response!" + response[1]);
                 //if there were already recipes in the textview, clear them
                 recipeAdapter.clear();
@@ -227,6 +230,10 @@ public class RecipeFinder extends AppCompatActivity {
 
         //find the number of recipes which were returned
         int recipeCount = recipeJSON.getInt(LIST_NUM);
+        if (recipeCount == 0){
+            String [] bad_request = new String[]{"400"};
+            return bad_request;
+        }
         //create a string array of this size
         String[] recipeResults = new String[recipeCount];
         //go through array of results
@@ -276,55 +283,6 @@ public class RecipeFinder extends AppCompatActivity {
         super.onStop();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.recipe_finder_menu, menu);
-        return true;
-    }
-    /** Called when the user clicks the Search Events quick-link */
-    public void goToProfile() {
-        Intent intent = new Intent(this, ProfileActivity.class);
-        startActivity(intent);
-        finish();
-    }
 
-    /** Called when the user clicks the Create Events quick-link */
-    public void goToCreate() {
-        Intent intent = new Intent(this, CreateEvent.class);
-        startActivity(intent);
-        finish();
-    }
-
-    /** Called when the user clicks the Search Recipe quick-link */
-    public void goToEvents() {
-        Intent intent = new Intent(this, EventList.class);
-        startActivity(intent);
-        finish();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        //action when corresponding action-bar item is clicked
-        switch(item.getItemId()) {
-
-            case R.id.create_events_ql:
-                goToCreate();
-                return true;
-
-            case R.id.profile_ql:
-                goToProfile();
-                return true;
-
-            case R.id.search_events_ql:
-                goToEvents();
-                return true;
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
 }
-
-
-
-
