@@ -15,6 +15,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 
 /**
  * Created by user on 09/11/2016.
@@ -41,6 +42,7 @@ public class Display extends AppCompatActivity {
             if(v.getId()==R.id.BSheep){
                 mp.start();
                 v.startAnimation(animation);
+                Toast.makeText(getBaseContext(), "Baaaa, welcome!", Toast.LENGTH_LONG).show();
             }
 
         }

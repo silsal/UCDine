@@ -2,9 +2,13 @@ package com.example.saorla.ucdfood;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +29,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
+
+    public void baaflash(View v) {
+        final Animation animation = new AlphaAnimation(1, 0); // Change alpha from fully visible to invisible
+        animation.setDuration(300); // duration - half a second
+        animation.setInterpolator(new LinearInterpolator()); // do not alter animation rate
+        animation.setRepeatCount(5); // Repeat animation infinitely
+        animation.setRepeatMode(Animation.REVERSE);
+
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.sheep);
+
+        if(v.getId()==R.id.WelcomeSheep){
+            mp.start();
+            v.startAnimation(animation);
+            Toast.makeText(getBaseContext(), "Baaaa, welcome!", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
 
     /**
      Method to sign in
