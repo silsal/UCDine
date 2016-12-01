@@ -175,8 +175,6 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
             photo.compress(Bitmap.CompressFormat.JPEG, 10, stream);
             byte[] byteArray = stream.toByteArray();
             picture = Base64.encodeToString(byteArray, Base64.DEFAULT);
-
-//            picture= saveToInternalStorage(photo);
         }
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
 
@@ -193,43 +191,15 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
             }
         }
     }
-//    private String saveToInternalStorage(Bitmap bitmapImage){
-//        ContextWrapper cw = new ContextWrapper(getApplicationContext());
-//        // path to /data/data/yourapp/app_data/imageDir
-//        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-//        // Create imageDir
-//
-//        File mypath=new File(directory, UUID.randomUUID().toString()+".jpg");
-//
-//        FileOutputStream fos = null;
-//        try {
-//            fos = new FileOutputStream(mypath);
-//            // Use the compress method on the BitMap object to write image to the OutputStream
-//            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                fos.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return directory.getAbsolutePath();
-//    }
-
 
     private void findViewsById() {
 
         Textdate = (EditText) findViewById(R.id.date);
         Textdate.requestFocus();
         Textdate.setTextIsSelectable(true);
-//        dateText.setInputType(InputType.TYPE_NULL);
-
         Texthour = (EditText) findViewById(R.id.hour);
         Texthour.requestFocus();
         Texthour.setTextIsSelectable(true);
-
         Textevent = (EditText) findViewById(R.id.eventTitle);
         Textlocation = (EditText) findViewById(R.id.location);
         TextNoPeople = (EditText) findViewById(R.id.people);
@@ -244,7 +214,6 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
         event = Textevent.getText().toString();
         location = Textlocation.getText().toString();
         noPeople = TextNoPeople.getText().toString();
-//        noPeoplecheck= TextNoPeople.getText().toString();
         description = Textdescription.getText().toString();
     }
 
