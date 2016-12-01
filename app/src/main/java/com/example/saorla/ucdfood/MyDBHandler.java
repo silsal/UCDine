@@ -106,7 +106,20 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.execSQL(query1);
         db.execSQL(query2);
         db.execSQL(query3);
-
+        //some default users for the prototype
+        String user1 = "Insert into users(_uid,uname,fname,sname,email,pass) values(1, 'coffeeman','david', 'coyle', 'davo@ucdconnect.ie', 'iloveandroid')";
+        String user2 = "Insert into users(_uid,uname,fname,sname,email,pass) values(2, 'tragedy','silvia', 'saloni', 'saloni@ucdconnect.ie', 'anotherknife')";
+        db.execSQL(user1);
+        db.execSQL(user2);
+        //some default events for the prototype
+        String event1 = "Insert into events(_eid, _hid, invite_num, available_num, address, event_name, time, date, description) values(1,1,5,5,'31 Stillorgan Road', 'Italian Pizza Night','20:00','2016-12-02', 'It''s the end of term, and I feel like celebrating! Come join myself and my roommates for some homemade Italian pizzas - meat eaters and vegetarians welcome!')";
+        String event2 = "Insert into events(_eid, _hid, invite_num, available_num, address, event_name, time, date, description) values(2,2,10,7,'18 Pearse Square, Dublin 2', 'It''s Thai Time','19:30','2016-12-03', 'So, my roommate is about to sit his culinary final exam, and needs some guinea pigs. On Friday he will be making a load of test dishes, and anyone who wants to help us eat them is welcome.')";
+        String event3 = "Insert into events(_eid, _hid, invite_num, available_num, address, event_name, time, date, description) values(3,1,6,3,'31 Stillorgan Road', 'Feeling Dessert-ed','21:00','2016-12-13', 'Nearly all of my roommates have gone home for Christmas, and the fridge is full of eggs and milk, which can only mean one thing - cake time! Come join the last two standing for an evening of pancakes, lemon drizzle and tiramisu!')";
+        String event4 = "Insert into events(_eid, _hid, invite_num, available_num, address, event_name, time, date, description) values(4,2,4,4,'18 Pearse Square, Dublin 2', 'Sunday Roast', '15:00','2016-12-04', 'Ever since moving out from my parents house, I''ve missed the proper Sunday dinner. So, this week I''m going to host my own! If you''re around, come on over for turkey, veggies, and all the stuffing you can eat!')";
+        db.execSQL(event1);
+        db.execSQL(event2);
+        db.execSQL(event3);
+        db.execSQL(event4);
 
         this.db = db;
     }
@@ -126,8 +139,8 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
         String query = "select * from users";
         Cursor cursor = db.rawQuery(query,null);
-        int count  = cursor.getCount();
-
+        int count  = cursor.getCount() + 1;
+        Log.i(DB_TAG, "THIS IS THE COUNTER "+count);
         values.put(COLUMN_USER_ID, count);
         values.put(COLUMN_FIRST_NAME, u.getFname());
         values.put(COLUMN_SURNAME, u.getSname());
@@ -191,7 +204,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
         String queryEvents = "select * from events";
         Cursor cursor = db.rawQuery(queryEvents,null);
-        int countevent  = cursor.getCount();
+        int countevent  = cursor.getCount() + 1;
 
         values.put(COLUMN_EVENT_ID, countevent);
         values.put(COLUMN_HOST_ID, events.get_hid());

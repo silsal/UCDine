@@ -71,8 +71,7 @@
                 android:inputType="textPersonName"
                 android:ems="10"
                 android:id="@+id/TFusername"
-                android:background="@color/white"
-                android:textColor="@color/white" />
+                android:background="@color/white" />
 
             <TextView
                 android:text="Email Address"
