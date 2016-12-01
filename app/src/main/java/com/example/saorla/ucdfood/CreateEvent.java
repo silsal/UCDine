@@ -132,13 +132,7 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
         });
     }
 
-    /**
-     * Called when the user clicks the Send button
-     */
-
     private static final int REQUEST_IMAGE_CAPTURE = 1;
-
-
     public void takePicture(View view) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -146,12 +140,7 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
 
         }
-//        else {
-//            Toast.makeText(getActivity(), "This device does not have a camera.", Toast.LENGTH_SHORT)
-//                    .show();
-//        }
     }
-
     private int PICK_IMAGE_REQUEST = 2;
 
     public void pickGallery(View view) {
@@ -276,16 +265,18 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
     public void onAddEventClicked(View view) {
         Log.i(EV_LOG, "I am here!");
         try {
+            getFormValues();
             if (validateForm()) {
                 Intent intent = new Intent(Intent.ACTION_INSERT);
                 intent.setType("vnd.android.cursor.item/event");
-                getFormValues();
                 intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, date);
                 intent.putExtra(CalendarContract.Events.DTSTART, hour);
                 intent.putExtra(CalendarContract.Events.TITLE, event);
                 intent.putExtra(CalendarContract.Events.DESCRIPTION, description);
                 intent.putExtra(CalendarContract.Events.EVENT_LOCATION, location);
                 startActivity(intent);
+            }else{
+                Toast.makeText(getBaseContext(), "Fill all the field in the form, please!", Toast.LENGTH_LONG).show();
             }
         }catch (Exception e) {
             Log.i(EV_LOG, e.getMessage(), e);
@@ -339,40 +330,6 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
             Log.i(EV_LOG, e.getMessage(), e);
             Toast.makeText(getBaseContext(), "Fill all the field in the form, please!", Toast.LENGTH_LONG).show();
         }
-
-
-        //insert the details into db
-//        SharedPreferences prefs = getSharedPreferences("User_Id",0);
-//            String user = getIdfromSharedPreference();
-//            int id = Integer.parseInt(user);
-//
-//            Events e = new Events();
-//
-//            e.set_hid(id);
-//            e.setInvite_num(noPeople);
-//            e.setAvailable_num(noPeople);
-//            e.setEvent_name(event);
-//            e.setAddress(location);
-//            e.setDescription(description);
-//            e.setTime(hour);
-//            e.setDate(date);
-//            e.setEvent_pic(picture);
-//            helperevent.addEvent(e);
-//            helperevent.getPoints(id);
-//            AlertDialog.Builder myAlert = new AlertDialog.Builder(this);
-//            myAlert.setTitle("Your event has been created!")
-//                    .setIcon(R.drawable.star)
-//                    .setMessage("You earned 3 points! :)")
-//                    .setPositiveButton("OK!", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            dialog.dismiss();
-//                        }
-//                    })
-//                    .create();
-//            myAlert.show();
-//            clearFields();
-
     }
 
 
@@ -403,55 +360,6 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-
-
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu){
-//        getMenuInflater().inflate(R.menu.event_list_menu, menu);
-//        return true;
-//    }
-//    /** Called when the user clicks the Profile quick-link */
-//    public void goToProfile() {
-//        Intent intent = new Intent(this, ProfileActivity.class);
-//        intent.putExtra(EXTRA_MESSAGE, user_name);
-//        startActivity(intent);
-//    }
-//
-//    /** Called when the user clicks the Search Recipe quick-link */
-//    public void goToEvents() {
-//        Intent intent = new Intent(this, EventList.class);
-//        intent.putExtra(EXTRA_MESSAGE, user_name);
-//        startActivity(intent);
-//        finish();
-//    }
-//
-//    /** Called when the user clicks the Search Recipe quick-link */
-//    public void goToRecipe() {
-//        Intent intent = new Intent(this, RecipeFinder.class);
-//        intent.putExtra(EXTRA_MESSAGE, user_name);
-//        startActivity(intent);
-//        finish();
-//    }
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item){
-//        //action when corresponding action-bar item is clicked
-//        switch(item.getItemId()) {
-//
-//            case R.id.search_events_ql:
-//                goToEvents();
-//                return true;
-//
-//            case R.id.profile_ql:
-//                goToProfile();
-//                return true;
-//
-//            case R.id.search_recipe_ql:
-//                goToRecipe();
-//                return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
