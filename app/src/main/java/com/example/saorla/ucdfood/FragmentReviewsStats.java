@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +15,9 @@ import java.util.List;
 /**
  * Created by Paudi on 09/11/2016.
  */
+//This Class constructs the Reviews Stats Fragment.
+//Data is hardcoded until the system goes "live"
+
 
 public class FragmentReviewsStats extends Fragment{
     public  FragmentReviewsStats(){
@@ -26,6 +28,8 @@ public class FragmentReviewsStats extends Fragment{
 
         View rootViewReviews = inflater.inflate(R.layout.fragment_view_reviews_stats, container, false);
         Resources res = getResources();
+
+        //Set defaault reviews (until system goes live)
         String review_1 = String.format(res.getString(R.string.review_text_1));
         String review_2 = String.format(res.getString(R.string.review_text_2));
         String review_3 = String.format(res.getString(R.string.review_text_3));

@@ -5,8 +5,7 @@ package com.example.saorla.ucdfood;
  * REf http://stackoverflow.com/questions/17519198/how-to-get-the-current-location-latitude-and-longitude-in-android
  */
 
-
-
+//This Class is a helper class that carries out functionality relating to the GPS system
 
 import java.io.IOException;
 import java.util.List;
@@ -89,7 +88,7 @@ public class GpsHandler extends Service implements LocationListener {
             //getting GPS status
             isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
-//            //getting network status
+//            //getting network status (disabled intentionally)
 //            isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
             // Try to get location if you GPS Service is enabled
@@ -108,7 +107,7 @@ public class GpsHandler extends Service implements LocationListener {
 
 //            }
 
-
+//                Disabled intentionally
 //            else if (isNetworkEnabled) { // Try to get location if you Network Service is enabled
 //                this.isGPSTrackingEnabled = true;
 //

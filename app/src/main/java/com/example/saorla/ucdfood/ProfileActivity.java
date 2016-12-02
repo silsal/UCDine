@@ -1,51 +1,34 @@
 package com.example.saorla.ucdfood;
 
-/**
- * Created by Paudi on 09/11/2016.
- */
+//Created by Paudi on 09/11/2016.
+
+//This Class constructs the Profile Activity, making calls to the database to retrieve values to be populated in relevant text and image views
+//It incorporates a number of fragments for different same sections of information, "Events" Activities" and "Reviews".
+//A on-click button allows the user transition to "Edit Profile" Activity.
+//The action Bar has a number of "quick-links" that scroll the view to the relevant information section.
+//The action-bar also has a "drop-down" menu to access the other activities in the app
 
 import android.content.res.Resources;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.NavUtils;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Base64;
-import android.util.LogPrinter;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Context;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.inputmethod.InputMethodManager;
 import android.content.SharedPreferences;
 //For camera
 import android.widget.ImageView;
-import android.widget.Button;
 import android.graphics.Bitmap;
-import android.provider.MediaStore;
-import android.widget.ViewFlipper;
-
-import static android.R.attr.cursorVisible;
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
-import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_ATTENDEE_POINTS;
+//From Database Handler
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_AVAILABLE_POINTS;
-//import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_COURSE;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_BIO;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_COURSE;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_EMAIL;
@@ -54,15 +37,14 @@ import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_HOST_SCORE;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_MY_EVENT_ID;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_PROFILE_PIC;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_USERNAME;
-import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_USER_ID;
 import static com.example.saorla.ucdfood.MyDBHandler.TABLE_EVENTS;
 import static com.example.saorla.ucdfood.MyDBHandler.TABLE_MY_EVENTS;
 import static com.example.saorla.ucdfood.MyDBHandler.TABLE_USERS;
-import android.content.Intent;
 
 
 public class ProfileActivity extends AppCompatActivity {
-    public final static String EXTRA_MESSAGE = "com.example.saorla.ucdfood.MESSAGE";
+    //Initialise Variables
+    //Views
     private int userID;
     ImageView userDeetsPic;
     TextView userDeetsName;
@@ -72,7 +54,7 @@ public class ProfileActivity extends AppCompatActivity {
     TextView userDeetsEvents;
     TextView userDeetsRanking;
     TextView userDeetsBio;
-
+    //Values
     String user_name;
     String user_email;
     String user_course;
@@ -81,47 +63,43 @@ public class ProfileActivity extends AppCompatActivity {
     String user_ranking;
     String user_bio;
 
-    TextView userWelcome;
+    //Database Helper
     MyDBHandler dbHandler;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Create the activity view
         setContentView(R.layout.activity_profile);
+        //Describe the transitions when entering / exiting activity view
         overridePendingTransition(R.anim.slide_in_profile, R.anim.slide_out_profile);
 
+        //Assign a Resources variable
         Resources res = getResources();
+        //Assign a DB helper
         dbHandler = new MyDBHandler(this);
+
+        //Assign the current User ID to a variable via use of Shared Preference
         userID = Integer.parseInt(getIdfromSharedPreference());
-//        Toast.makeText(this,""+userID,Toast.LENGTH_LONG).show();
-        //FIND VIEWS
+
+        //FIND VIEWS and assign to variables
         userDeetsPic = (ImageView) findViewById(R.id.ap_profile_image);
         userDeetsEmail = (TextView) findViewById(R.id.ap_user_email);
         userDeetsCourse = (TextView) findViewById(R.id.ap_user_course);
         userDeetsPoints = (TextView) findViewById(R.id.ap_user_points);
         userDeetsEvents = (TextView) findViewById(R.id.ap_user_events);
-        //In row 3 of Profile Layout
         userDeetsName = (TextView) findViewById(R.id.ap_user_name);
         userDeetsRanking = (TextView) findViewById(R.id.ap_user_rating);
-        //In row 3 of Profile Layout
         userDeetsBio = (TextView) findViewById(R.id.ap_user_about);
-        //Welcome Note
-        //userWelcome = (TextView) findViewById(R.id.ap_welcome_note);
+
 
         //GET VALUES FROM DATABASE
-        //user_name = stringArray(db_response_userTable)[3];
         user_name = populateDetails(TABLE_USERS, COLUMN_USERNAME,userID);
-        //user_name = getIdfromSharedPrefernece();
-        //user_email = stringArray(db_response_userTable)[4];
         user_email = populateDetails(TABLE_USERS, COLUMN_EMAIL,userID);
-        //user_course = stringArray(db_response_userTable)[5];
         user_course = populateDetails(TABLE_USERS, COLUMN_COURSE,userID);
-        //user_points = stringArray(db_response_userTable)[6];
         user_points = populateDetails(TABLE_USERS, COLUMN_AVAILABLE_POINTS,userID);
-        //user_events = Integer.toString(stringArray(db_response_eventTable).length);
         user_events = String.valueOf(Integer.parseInt(populateCountDetails(TABLE_EVENTS, COLUMN_HOST_ID, COLUMN_HOST_ID, "=", userID))+Integer.parseInt(populateCountDetails(TABLE_MY_EVENTS, COLUMN_MY_EVENT_ID, COLUMN_MY_EVENT_ID, ">=", 0)));
-        //user_ranking = stringArray(db_response_userTable)[7];
         user_ranking = populateDetails(TABLE_USERS, COLUMN_HOST_SCORE, userID);
         user_bio = populateDetails(TABLE_USERS, COLUMN_BIO, userID);
 
@@ -137,15 +115,9 @@ public class ProfileActivity extends AppCompatActivity {
         //Ranking
         String user_ranking_combined = String.format(res.getString(R.string.user_rating), user_ranking);
 
-
-        //Welcome Note
-        String welcome_note = String.format(res.getString(R.string.welcome3), user_name);
-
         //ASSIGN IMAGE TO PROFILE PIC
-
-        //userDeetsPic.setImageBitmap(StringToBitMap(dbHandler.databaseSelectByIDToString(TABLE_USERS, COLUMN_PROFILE_PIC, userID)));
         setProfileImage(userDeetsPic);
-//        Log.d("********PRof Img", dbHandler.databaseSelectByIDToString(TABLE_USERS, COLUMN_PROFILE_PIC, userID));
+
         //ASSIGN TEXT STRINGS TO VIEWS IN LAYOUTS
         userDeetsName.setText(user_name);
         userDeetsEmail.setText(user_email_combined);
@@ -154,7 +126,6 @@ public class ProfileActivity extends AppCompatActivity {
         userDeetsRanking.setText(user_ranking_combined);
         userDeetsPoints.setText(user_points_combined);
         userDeetsEvents.setText(user_events_combined);
-        //userWelcome.setText(welcome_note);
 
         //End of ON CREATE
     }
@@ -276,14 +247,15 @@ public class ProfileActivity extends AppCompatActivity {
         return dbHandler.databaseCountByIDToString(Table, CountColumnName, WhereColumnName, EqualityMeasure, WhereEqualsValue);
     }
 
+    //Function to Select the User Profile Pic byte-string from DB and set into Profile Picture ImageView
     public void setProfileImage(ImageView image) {
         String imgInDB = dbHandler.databaseSelectByIDToString(TABLE_USERS, COLUMN_PROFILE_PIC, userID);
         if(imgInDB.length() > 1) {
             image.setImageBitmap(StringToBitMap(imgInDB));
-//            Toast.makeText(this, "DB Image", Toast.LENGTH_LONG).show();
         }
     }
 
+    //Function to convert a Byte String to a Bitmap
     public Bitmap StringToBitMap(String encodedString){
         try {
             byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
@@ -300,6 +272,7 @@ public class ProfileActivity extends AppCompatActivity {
     //GENERAL HELPER FUNCTIONS
     //**************************
 
+    //Function that retrieves the Shared Preference for the current User ID
     public String getIdfromSharedPreference(){
         SharedPreferences prefs = getSharedPreferences("User_Id",0);
         String extractedText =  prefs.getString("shared_ref_id","No ID found");
@@ -307,6 +280,7 @@ public class ProfileActivity extends AppCompatActivity {
         return extractedText;
     }
 
+    //Function that calls a "test" toast for use in debugging.
     public void testToast(){
         //Crete Toast;
         Context context = getApplicationContext();
@@ -323,35 +297,5 @@ public class ProfileActivity extends AppCompatActivity {
         toast_set.show();
     }
 
-
-
-//        if (toast_msg_course.isEmpty()){toast_msg_course = "Course Empty!";}
-//
-//        //Crete Toast
-//        Context context = getApplicationContext();
-//        CharSequence text = ("Profile Successfully Updated!" +
-//                "\nName:\t").concat(toast_msg_name)
-//                .concat("\nEmail:\t").concat(toast_msg_email)
-//                .concat("\nCourse:\t").concat(toast_msg_course);
-//        int duration = Toast.LENGTH_SHORT;
-//
-//        Toast toast_update = Toast.makeText(context, text, duration);
-//        toast_update.setGravity(Gravity.TOP, 0, 200);
-//
-//        View toast_view = toast_update.getView();
-//        toast_view.setBackgroundResource(R.drawable.border_background_reverse);
-//        toast_update.setView(toast_view);
-//
-//
-//        toast_update.show();
-//
-//        //Make keyboard disappear onclick
-//        // Check if no view has focus:
-//        View profile_view = this.getCurrentFocus();
-//        if (profile_view != null) {
-//            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-//            imm.hideSoftInputFromWindow(profile_view.getWindowToken(), 0);
-//            //imm.setCursorVisible(false);
-//        }
-//    }
+    //End Class
 }

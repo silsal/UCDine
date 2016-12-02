@@ -4,6 +4,10 @@ package com.example.saorla.ucdfood;
  * Created by Paudi on 18/11/2016.
  */
 
+
+//This Class constructs the Activity Stats Fragment.
+//Makes calls to the database to populate the relevant fields in the fragment
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -38,22 +42,19 @@ public class FragmentActivityStats extends Fragment{
 
         View rootViewActivity = inflater.inflate(R.layout.fragment_view_activity_stats, container, false);
 
-//        userID = getPreferenceFunction();
         userID = Integer.parseInt(getIdfromSharedPreference());
         dbHandler = new MyDBHandler(getActivity().getApplicationContext());
 
         //Get values from database to populate the arrays
         //Hosted
         String hosted = populateCountDetails(TABLE_EVENTS, COLUMN_HOST_ID, COLUMN_HOST_ID, "=", userID);
-        String h_rating = populateDetails(TABLE_USERS, COLUMN_HOST_SCORE, userID);
-        //String h_reviews = populateCountDetails(TABLE_REVIEWS, COLUMN_HOST_ID, COLUMN_HOST_ID, "=", userID);
+        //Hardcoded in the absence of this  information (system not live)
+        String h_rating = "5";
         String h_reviews = "3";
 
         //Attended
         String attended = String.valueOf(populateEventAttdDetail(TABLE_EVENTS, COLUMN_EVENT_NAME, TABLE_MY_EVENTS, COLUMN_EVENT_ID, COLUMN_EVENT_ATTENDED_ID).length);
-//        String a_rating = populateDetails(TABLE_USERS, COLUMN_GUEST_SCORE, userID);
-//        String a_reviews = populateCountDetails(TABLE_REVIEWS, COLUMN_GUEST_ID, COLUMN_GUEST_ID, "=", userID);
-        //String attended = "4";
+        //Hardcoded in the absence of this  information (system not live)
         String a_rating = "7";
         String a_reviews = "1";
 
@@ -100,21 +101,25 @@ public class FragmentActivityStats extends Fragment{
     }
 
 
+//    *************************
+//    Database Functions
+//    *************************
+
+    //Function that Takes a count from DB and returns String for use in view
     public String populateCountDetails(String Table, String CountColumnName, String WhereColumnName, String EqualityMeasure, int WhereEqualsValue){
         return dbHandler.databaseCountByIDToString(Table, CountColumnName, WhereColumnName, EqualityMeasure, WhereEqualsValue);
     }
 
-    public String populateDetails(String Table, String Column, int ID){
-        return dbHandler.databaseSelectByIDToString(Table, Column, ID);
-    }
-
+    //Function that gets attend event info from DB
     public String[] populateEventAttdDetail(String Table_1_Name, String ColumnNameSelect, String Table_2_Name, String Column_1_NameEquals, String Column_2_NameEquals){
         return dbHandler.databaseSelectJoinByIDToArray(Table_1_Name, ColumnNameSelect, Table_2_Name, Column_1_NameEquals, Column_2_NameEquals);
     }
+
     //**************************
     //GENERAL HELPER FUNCTIONS
     //**************************
 
+    //Find shared preference for USer ID
     public String getIdfromSharedPreference(){
         SharedPreferences prefs = getActivity().getApplicationContext().getSharedPreferences("User_Id",0);
         String extractedText =  prefs.getString("shared_ref_id","No ID found");

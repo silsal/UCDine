@@ -4,9 +4,14 @@ package com.example.saorla.ucdfood;
  * Created by Paudi on 09/11/2016.
  */
 
+//This Class constructs the Edit Profile Activity, making calls to the database to retrieve values to be populated in relevant hint & text
+//Allows the user to input new values and save to DB
+//Allows user to update profile picture by accessing camera and gallery
+//Allows user to update their GPS location by accessing the gps system
+//The action-bar also has a "drop-down" menu to access the other activities in the app
+
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,7 +22,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.os.Environment;
 import android.os.Looper;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -26,29 +30,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-
-import static android.widget.Toast.LENGTH_SHORT;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_BIO;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_COURSE;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_EMAIL;
@@ -56,43 +50,46 @@ import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_LOCATION;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_PROFILE_PIC;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_USERNAME;
 import static com.example.saorla.ucdfood.MyDBHandler.TABLE_USERS;
-//import static android.provider.AlarmClock.EXTRA_MESSAGE;
+
 
 public class ProfileEditActivity extends AppCompatActivity {
-
+    //Initialise Variables
     private int userID;
     EditText userName;
     EditText userEmail;
     EditText userCourse;
     EditText userBio;
-    EditText userDeetsInput;
-    TextView userDeets;
     String updateMsg = "Updated: ";
-    public ImageView mImageView;
-    //MyDBHandler dbHandler;
-    private File output=null;
     ImageButton addImage;
     ImageView getGPS;
     ImageButton profileImage;
     ImageButton profileImage2;
+    //String for writing images to the DB
     String bitmapString;
-    //String path = getFilesDir().getAbsolutePath();
+    //Database Helper
     MyDBHandler dbHandler;
     int checkForGps;
     private Thread thread = new ThreadClass();
     private static Looper threadLooper = null;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Create the Activity View
         setContentView(R.layout.activity_edit_profile);
+        //Set the transition effect
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 
-
+        //Assign a Resources variable
         Resources res = getResources();
+        //Assign a DB helper
         dbHandler = new MyDBHandler(this);
+
+        //Assign the current User ID to a variable via use of Shared Preference
         userID = Integer.parseInt(getIdfromSharedPreference());
+
+        //Control to check if user has visited GPS settings
         checkForGps = 0;
 
         //Get the views
@@ -106,9 +103,6 @@ public class ProfileEditActivity extends AppCompatActivity {
         setViewHint(TABLE_USERS, COLUMN_EMAIL, userEmail,  String.format(res.getString(R.string.user_email),"email?"));
         setViewHint(TABLE_USERS, COLUMN_COURSE, userCourse,  String.format(res.getString(R.string.user_course),"course?"));
         setViewHint(TABLE_USERS, COLUMN_BIO, userBio,  String.format(res.getString(R.string.user_bio)));
-
-        //Set the transition effect
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 
         profileImage = (ImageButton) findViewById(R.id.aep_behindImageButton);
         profileImage2 = (ImageButton) findViewById(R.id.aep_updateImageButton);
@@ -132,7 +126,6 @@ public class ProfileEditActivity extends AppCompatActivity {
                 if (which == 1) {
                     //Call the go-to-gallery fucntion
                     pickGallery(null);
-//                    Toast.makeText(getApplicationContext(),"Gallery" , LENGTH_SHORT);
                 }
             }
         });
@@ -141,9 +134,8 @@ public class ProfileEditActivity extends AppCompatActivity {
         final AlertDialog dialog = builder.create();
 
         //Disable the button if the device has no camera
-        addImage = (ImageButton) findViewById(R.id.aep_behindImageButton);
         if(!hasCamera()){
-            addImage.setEnabled(false);
+            profileImage.setEnabled(false);
             Toast.makeText(this,"Feature not available: NO DEVICE CAMERA",Toast.LENGTH_LONG).show();
         }
 
@@ -155,11 +147,11 @@ public class ProfileEditActivity extends AppCompatActivity {
         });
 
 
-//********************
-// GPS BUTTON LISTENER
-//********************
+        //********************
+        // GPS BUTTON LISTENER
+        //********************
 
-        //Disable the button if the device has no camera
+        //Get GPS Logo Image view
         getGPS = (ImageView) findViewById(R.id.aep_maps_icon);
 
         //Add a listener for on-click on the button
@@ -172,6 +164,7 @@ public class ProfileEditActivity extends AppCompatActivity {
 
         //End of "On Create"
     }
+
 
     //*****************************
     //  On resume from Changing GPS Setting
@@ -402,6 +395,7 @@ public class ProfileEditActivity extends AppCompatActivity {
     //CAMERA & GALLERY FUNCTIONS
     //**************************
 
+    //Function that compresses and converts a bitmap to a string of byte-array
     public String BitMapToString(Bitmap bitmap){
         ByteArrayOutputStream baos=new  ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG,5, baos);
@@ -410,6 +404,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         return temp;
     }
 
+    //Function that retrieves a string of byte-array and converts to a bitmap
     public Bitmap StringToBitMap(String encodedString){
         try {
             byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
@@ -421,14 +416,15 @@ public class ProfileEditActivity extends AppCompatActivity {
         }
     }
 
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 5, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
-    }
 
-    public Uri imageToUploadUri;
+//    public Uri getImageUri(Context inContext, Bitmap inImage) {
+//        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+//        inImage.compress(Bitmap.CompressFormat.JPEG, 5, bytes);
+//        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+//        return Uri.parse(path);
+//    }
+
+//    public Uri imageToUploadUri;
 
     //Selecting From Gallery
     private int PICK_IMAGE_REQUEST = 1;
@@ -445,13 +441,6 @@ public class ProfileEditActivity extends AppCompatActivity {
     private int CAMERA_REQUEST = 11;
     public void updateProfilePic(View view) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        File f = new File(Environment.getExternalStorageDirectory(), "PROFILE_IMAGE.jpg");
-//        File f = new File(getApplicationContext().getFilesDir(), "PROFILE_IMAGE.jpg");
-
-//        File f = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
-//        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-//
-//        imageToUploadUri = Uri.fromFile(f);
 
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, CAMERA_REQUEST);
@@ -469,30 +458,20 @@ public class ProfileEditActivity extends AppCompatActivity {
             Uri uri = data.getData();
 
             try {
-
-
+                //Get the bitmap
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-
+                //Resize the bitmap
                 Bitmap resized = Bitmap.createScaledBitmap(bitmap,(int)(bitmap.getWidth()*0.5), (int)(bitmap.getHeight()*0.5), true);
 
-                //Compress & Convert Bitmap to String
-//                bitmapString = BitMapToString(bitmap);
-                //Assign the String to the variable for inclusion in DB.
+                //Compress & Convert Bitmap to String & Assign the String to the variable for inclusion in DB.
                 bitmapString = BitMapToString(resized);
-                //Save String in DB
-                //updateUserPic();
-
-                //Retrieve String from DB
-                //String from_db = dbHandler.databaseSelectByIDToString(TABLE_USERS, COLUMN_PROFILE_PIC, userID);
 
                 //Convert String to Bitmap
-                //Bitmap db_bitmap = StringToBitMap(from_db);
                 Bitmap db_bitmap = StringToBitMap(bitmapString);
 
                 //Set Bitmap into ButtonImage Profile Pic
                 profileImage.setImageBitmap(db_bitmap);
                 profileImage.setAlpha((float) 1);
-
                 Toast.makeText(this, "Image Inserted", Toast.LENGTH_LONG).show();
 
             } catch (IOException e) {
@@ -505,68 +484,37 @@ public class ProfileEditActivity extends AppCompatActivity {
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
             Toast.makeText(this,"Camera Request/Response Successful",Toast.LENGTH_SHORT).show();
 
+//            **** INTENTIONALLY OMITTED ****
+//            Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
+
+            //Get the path the picture is saved to
             Uri selectedImageUri = data.getData();
             String selectedImagePath = getRealPathFromURI(selectedImageUri);
-            Log.d("********Img Path", selectedImagePath);
+            //Log.d("********Img Path", selectedImagePath);
 
+            //Advise the user that the image is too large to handle but its saved in gallery
             Toast.makeText(this, "Image not Inserted due to Memory Limitations.\n\nFile stored at Location:\n "+ selectedImagePath+"\n\nUse \"Gallery Upload\" to se this image as your Profile Picture.", Toast.LENGTH_LONG).show();
             File imgFile = new  File(selectedImagePath);
+
+            //**** THIS SECTION IS INTENTIONALLY DISABLED DUE TO MEMORY CAPABILITIES ISSUES *********************
             if(imgFile.exists()){
+                //Convert the file path to a bitmap
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                //Drawable d = new BitmapDrawable(getResources(), myBitmap);
-                Bitmap resized1 = Bitmap.createScaledBitmap(myBitmap,(int)(myBitmap.getWidth()*0.05), (int)(myBitmap.getHeight()*0.05), true);
+
+                //Resize the bitmap & Convert to String to save in DB
+                //Bitmap resized1 = Bitmap.createScaledBitmap(myBitmap,(int)(myBitmap.getWidth()*0.05), (int)(myBitmap.getHeight()*0.05), true);
 //                bitmapString = BitMapToString(resized1);
 //                Bitmap db_bitmap = StringToBitMap(bitmapString);
-//
+                //Set the image into the image-view
 //                profileImage.setImageBitmap(db_bitmap);
-//                ImageView myImage = (ImageView) findViewById(R.id.imageviewTest);
-//                myImage.setImageBitmap(myBitmap);
-
             }
-
-//            Bitmap resized = Bitmap.createScaledBitmap(bitmap,(int)(bitmap.getWidth()*0.5), (int)(bitmap.getHeight()*0.5), true);
-//
-//
-//
-//
-//
-//            Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
-//
-//            Bitmap resized = Bitmap.createScaledBitmap(imageBitmap,(int)(imageBitmap.getWidth()*0.01), (int)(imageBitmap.getHeight()*0.01), true);
-//            // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
-//            //Uri tempUri = getImageUri(getApplicationContext(), imageBitmap);
-////            ImageView test = (ImageView) findViewById(R.id.testIMG);
-////            test.setImageBitmap(resized);
-//            profileImage.setImageBitmap(resized);
-//            //Compress & Convert Bitmap to String
-//            //bitmapString = BitMapToString(imageBitmap);
-//            bitmapString = BitMapToString(resized);
-//
-//
-//            //Convert String to Bitmap
-//            Bitmap db_bitmap = StringToBitMap(bitmapString);
-//            Toast.makeText(this, ""+bitmapString, Toast.LENGTH_LONG).show();
-//
-//
-//            try {
-//                //Set Bitmap into ButtonImage Profile Pic
-////                ImageView test = (ImageView) findViewById(R.id.testIMG);
-////                test.setImageBitmap(db_bitmap);
-////              profileImage.setImageBitmap(db_bitmap);
-//                profileImage.setAlpha((float) 1 );
-//                Toast.makeText(this, "Image Inserted", Toast.LENGTH_LONG).show();
-//
-//            }
-//            catch (Exception e){
-//                Toast.makeText(this,"Insert Failed",Toast.LENGTH_LONG).show();
-//            }
         }
     }
 
     //----------------------------------------
     /**
      * This method is used to get real path of file from from uri
-     *
+     * (FROM STACKOVERFLOW)
      * @param contentUri
      * @return String
      */
@@ -587,143 +535,11 @@ public class ProfileEditActivity extends AppCompatActivity {
         }
     }
 
-
-
-    private Bitmap loadImage(String imgPath) {
-        BitmapFactory.Options options;
-        try {
-            options = new BitmapFactory.Options();
-            options.inSampleSize = 4;// 1/4 of origin image size from width and height
-            Bitmap bitmap = BitmapFactory.decodeFile(imgPath, options);
-            return bitmap;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private String saveToInternalStorage(Bitmap bitmapImage){
-        ContextWrapper cw = new ContextWrapper(getApplicationContext());
-        // path to /data/data/yourapp/app_data/imageDir
-        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-        // Create imageDir
-        File mypath=new File(directory,"profile.jpg");
-
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(mypath);
-            // Use the compress method on the BitMap object to write image to the OutputStream
-            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                fos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return directory.getAbsolutePath();
-    }
-
-
-    private Bitmap getBitmap(String path) {
-
-        Uri uri = Uri.fromFile(new File(path));
-        InputStream in = null;
-        try {
-            final int IMAGE_MAX_SIZE = 1200000; // 1.2MP
-            in = getContentResolver().openInputStream(uri);
-
-            // Decode image size
-            BitmapFactory.Options o = new BitmapFactory.Options();
-            o.inJustDecodeBounds = true;
-            BitmapFactory.decodeStream(in, null, o);
-            in.close();
-
-
-            int scale = 1;
-            while ((o.outWidth * o.outHeight) * (1 / Math.pow(scale, 2)) >
-                    IMAGE_MAX_SIZE) {
-                scale++;
-            }
-            Log.d("", "scale = " + scale + ", orig-width: " + o.outWidth + ", orig-height: " + o.outHeight);
-
-            Bitmap b = null;
-            in = getContentResolver().openInputStream(uri);
-            if (scale > 1) {
-                scale--;
-                // scale to max possible inSampleSize that still yields an image
-                // larger than target
-                o = new BitmapFactory.Options();
-                o.inSampleSize = scale;
-                b = BitmapFactory.decodeStream(in, null, o);
-
-                // resize to desired dimensions
-                int height = b.getHeight();
-                int width = b.getWidth();
-                Log.d("", "1th scale operation dimenions - width: " + width + ", height: " + height);
-
-                double y = Math.sqrt(IMAGE_MAX_SIZE
-                        / (((double) width) / height));
-                double x = (y / height) * width;
-
-                Bitmap scaledBitmap = Bitmap.createScaledBitmap(b, (int) x,
-                        (int) y, true);
-                b.recycle();
-                b = scaledBitmap;
-
-                System.gc();
-            } else {
-                b = BitmapFactory.decodeStream(in);
-            }
-            in.close();
-
-            Log.d("", "bitmap size - width: " + b.getWidth() + ", height: " +
-                    b.getHeight());
-            return b;
-        } catch (IOException e) {
-            Log.e("", e.getMessage(), e);
-            return null;
-        }
-    }
-
-
-
-//    ****
-    //@Override
-    //protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    //    // TODO Auto-generated method stub
-    //    super.onActivityResult(requestCode, resultCode, data);
-
-    //    if (resultCode == RESULT_OK){
-    //        Uri targetUri = data.getData();
-    //        textTargetUri.setText(targetUri.toString());
-    //        Bitmap bitmap;
-    //        try {
-    //            bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
-    //            targetImage.setImageBitmap(bitmap);
-    //        } catch (FileNotFoundException e) {
-    //            // TODO Auto-generated catch block
-    //            e.printStackTrace();
-    //        }
-    //    }
-    //}
-
-    //private ImageView myImage = (ImageView)findViewById(R.id.imageViewCamera);
-    //@Override
-    //protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    //  if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
-    //    Bundle extras = data.getExtras();
-    //  Bitmap imageBitmap = (Bitmap) extras.get("data");
-    //myImage.setImageBitmap(imageBitmap);
-    //}
-    //}
-
-//*************************
-    // GPS
+    //*************************
+    // GPS RELATED FUNCTIONS
     //*************************
 
+    //Function to check if GPS is enabled
     private boolean isGSPEnabled(){
         final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
         if (manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ){
@@ -732,6 +548,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         else{return false;}
     }
 
+    //Function to allow user to enable GPS - Calls POP-UP Dialog box
     private void EnableGPSIfPossible() {
         if ( !isGSPEnabled() ) {
             buildAlertMessageNoGps();
@@ -741,7 +558,7 @@ public class ProfileEditActivity extends AppCompatActivity {
             thread.start();}
     }
 
-
+//    Function to build the pop-up alert for enable gps
     private  void buildAlertMessageNoGps() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
@@ -763,13 +580,8 @@ public class ProfileEditActivity extends AppCompatActivity {
         alert.show();
     }
 
-//    protected void createLocationRequest() {
-//        LocationRequest mLocationRequest = new LocationRequest();
-//        mLocationRequest.setInterval(10000);
-//        mLocationRequest.setFastestInterval(5000);
-//        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-//    }
 
+    //Function that extracts the gps co-ordinates from the gps system (Ref. Stackoverflow)
     protected void getGpsCoords(){
 
         GpsHandler gpsTracker = new GpsHandler(this);
@@ -777,28 +589,16 @@ public class ProfileEditActivity extends AppCompatActivity {
         if (gpsTracker.getIsGPSTrackingEnabled())
         {
             String stringLatitude = String.valueOf(gpsTracker.latitude);
-//        textview = (TextView)findViewById(R.id.fieldLatitude);
-//        textview.setText(stringLatitude);
 
             String stringLongitude = String.valueOf(gpsTracker.longitude);
-//        textview = (TextView)findViewById(R.id.fieldLongitude);
-//        textview.setText(stringLongitude);
 
             String country = gpsTracker.getCountryName(this);
-//        textview = (TextView)findViewById(R.id.fieldCountry);
-//        textview.setText(country);
 
             String city = gpsTracker.getLocality(this);
-//        textview = (TextView)findViewById(R.id.fieldCity);
-//        textview.setText(city);
 
             String postalCode = gpsTracker.getPostalCode(this);
-//        textview = (TextView)findViewById(R.id.fieldPostalCode);
-//        textview.setText(postalCode);
 
             String addressLine = gpsTracker.getAddressLine(this);
-//        textview = (TextView)findViewById(R.id.fieldAddressLine);
-//        textview.setText(addressLine);
 
             if (stringLatitude == "0.0" && stringLongitude == "0.0"){
                 Toast.makeText(this, "Searching for GPS!\nMove to another position & try again" , Toast.LENGTH_LONG).show();

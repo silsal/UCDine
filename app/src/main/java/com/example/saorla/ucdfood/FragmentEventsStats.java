@@ -1,43 +1,30 @@
 package com.example.saorla.ucdfood;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import android.app.ListFragment;
-
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_DATE;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_EVENT_ATTENDED_ID;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_EVENT_ID;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_EVENT_NAME;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_HOST_ID;
-import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_HOST_SCORE;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_INVITE_NUM;
 import static com.example.saorla.ucdfood.MyDBHandler.TABLE_EVENTS;
 import static com.example.saorla.ucdfood.MyDBHandler.TABLE_MY_EVENTS;
-import static com.example.saorla.ucdfood.MyDBHandler.TABLE_USERS;
 
 /**
  * Created by Paudi on 09/11/2016.
  */
+//This Class constructs the Event Stats Fragment.
+//Makes calls to the database to populate the relevant fields in the fragment
 
 public class FragmentEventsStats extends Fragment{
 
@@ -49,14 +36,11 @@ public class FragmentEventsStats extends Fragment{
     int userID;
     MyDBHandler dbHandler;
 
-
-    ImageButton deleteImage;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootViewEvents = inflater.inflate(R.layout.fragment_view_events_stats, container, false);
 
-        //        userID = getPreferenceFunction();
         userID = Integer.parseInt(getIdfromSharedPreference());
         dbHandler = new MyDBHandler(getActivity().getApplicationContext());
 
@@ -66,14 +50,10 @@ public class FragmentEventsStats extends Fragment{
         String[] h_dates = setInputs(populateEventDetails(TABLE_EVENTS, COLUMN_DATE, COLUMN_HOST_ID, userID));
         String[] h_guests = setInputs(populateEventDetails(TABLE_EVENTS, COLUMN_INVITE_NUM, COLUMN_HOST_ID, userID));
 
-//            String[] h_titles = new String[] {"Burger Bash", "Pasta Party", "French Flair"};
-//
 //        //Attended
         String[] a_titles = setInputs(populateEventAttdDetail(TABLE_EVENTS, COLUMN_EVENT_NAME, TABLE_MY_EVENTS, COLUMN_EVENT_ID, COLUMN_EVENT_ATTENDED_ID));
         String[] a_dates = setInputs(populateEventAttdDetail(TABLE_EVENTS, COLUMN_DATE, TABLE_MY_EVENTS, COLUMN_EVENT_ID, COLUMN_EVENT_ATTENDED_ID));
         String[] a_guests = setInputs(populateEventAttdDetail(TABLE_EVENTS, COLUMN_INVITE_NUM, TABLE_MY_EVENTS, COLUMN_EVENT_ID, COLUMN_EVENT_ATTENDED_ID));
-
-
 
         String[] hostEventArray = {
                 ""+ h_titles[0] +"\n\n"+ h_dates[0] +"\n\nGuests: "+ h_guests[0] + "",
@@ -121,18 +101,21 @@ public class FragmentEventsStats extends Fragment{
 
 
 
-    public String populateCountDetails(String Table, String CountColumnName, String WhereColumnName, String EqualityMeasure, int WhereEqualsValue){
-        return dbHandler.databaseCountByIDToString(Table, CountColumnName, WhereColumnName, EqualityMeasure, WhereEqualsValue);
-    }
+//    *************************
+//    Database Functions
+//    *************************
 
+    //Function that gets attend event info from DB
     public String[] populateEventAttdDetail(String Table_1_Name, String ColumnNameSelect, String Table_2_Name, String Column_1_NameEquals, String Column_2_NameEquals){
         return dbHandler.databaseSelectJoinByIDToArray(Table_1_Name, ColumnNameSelect, Table_2_Name, Column_1_NameEquals, Column_2_NameEquals);
     }
 
+    //Function that gets host event info from DB
     public String[] populateEventDetails(String Table, String ColumnSelect, String ColumnEquals, int ID){
         return dbHandler.databaseSelectByIDToArray(Table, ColumnSelect, ColumnEquals, ID);
     }
 
+    //Function that presets an output of there are no events in the database
     public String[] setInputs(String[] strArray){
         int len = strArray.length;
         String[] strArrayOut = new String[3];
@@ -162,10 +145,11 @@ public class FragmentEventsStats extends Fragment{
         return strArrayOut;
     }
 
-//**************************
+    //**************************
     //GENERAL HELPER FUNCTIONS
     //**************************
 
+    //Get ID from shared preference
     public String getIdfromSharedPreference(){
         SharedPreferences prefs = getActivity().getApplicationContext().getSharedPreferences("User_Id",0);
         String extractedText =  prefs.getString("shared_ref_id","No ID found");
