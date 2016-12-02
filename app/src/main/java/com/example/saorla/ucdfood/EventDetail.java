@@ -60,6 +60,7 @@ public class EventDetail extends AppCompatActivity {
     //method to create the activity onload
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        overridePendingTransition(R.anim.slide_in_profile, R.anim.slide_out_profile);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_detail);
         onButtonClickListener();

@@ -53,6 +53,7 @@ public class EventList extends AppCompatActivity{
     //method to create the activity onload
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        overridePendingTransition(R.anim.slide_in_profile, R.anim.slide_out_profile);
         GetEvents getEvents = new GetEvents();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_eventlist);

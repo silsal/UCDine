@@ -59,6 +59,7 @@ public class RecipeFinder extends AppCompatActivity {
     //method to create the activity onload
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        overridePendingTransition(R.anim.slide_in_profile, R.anim.slide_out_profile);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_finder);
         //create an array adapter to store the API response in later

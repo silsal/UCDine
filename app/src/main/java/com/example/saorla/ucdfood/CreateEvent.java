@@ -64,6 +64,7 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        overridePendingTransition(R.anim.slide_in_profile, R.anim.slide_out_profile);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
         dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.UK);

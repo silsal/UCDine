@@ -19,6 +19,7 @@ public class SignUp extends Activity {
     MyDBHandler helper = new MyDBHandler(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        overridePendingTransition(R.anim.slide_in_profile, R.anim.slide_out_profile);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup);
     }
