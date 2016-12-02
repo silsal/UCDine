@@ -133,13 +133,17 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             //get the photo and compress it into a byte array
+            Toast.makeText(this,"Camera Request/Response Successful",Toast.LENGTH_SHORT).show();
             Bundle extras = data.getExtras();
             Bitmap photo = (Bitmap) extras.get("data");
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             photo.compress(Bitmap.CompressFormat.JPEG, 10, stream);
             byte[] byteArray = stream.toByteArray();
-            //transfor the byte array into a string for facilitating the storage into the database
-            picture = Base64.encodeToString(byteArray, Base64.DEFAULT);
+            //transform the byte array into a string for facilitating the storage into the database
+            ///!\ we intentionally commented this line to avoid that the app is crashing due to the high size of the picture
+//            picture = Base64.encodeToString(byteArray, Base64.DEFAULT);
+            Toast.makeText(this, "Image not Inserted due to Memory Limitations.\n\nFile stored in Storage\n\nUse Gallery Upload to see this image as your Profile Picture.", Toast.LENGTH_LONG).show();
+            picture = "";
         }
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             //do the same if the picture is taken from a gallery
