@@ -339,7 +339,7 @@ public class ProfileEditActivity extends AppCompatActivity {
     public void updateUserCourse() {
         String course_input = userCourse.getText().toString();
         if (course_input.length() >0){
-            dbHandler.databaseUpdateByIDToString(TABLE_USERS, COLUMN_EMAIL, course_input, userID);
+            dbHandler.databaseUpdateByIDToString(TABLE_USERS, COLUMN_COURSE, course_input, userID);
             updateMsg = (""+updateMsg).concat("User Course ");
         }
     }
@@ -348,7 +348,7 @@ public class ProfileEditActivity extends AppCompatActivity {
     public void updateUserBio() {
         String bio_input = userBio.getText().toString();
         if (bio_input.length() >0){
-            dbHandler.databaseUpdateByIDToString(TABLE_USERS, COLUMN_EMAIL, bio_input, userID);
+            dbHandler.databaseUpdateByIDToString(TABLE_USERS, COLUMN_BIO, bio_input, userID);
             updateMsg = (""+updateMsg).concat("User Bio ");
         }
     }
@@ -371,7 +371,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         if ((""+updateMsg).equals("Updated: ")){
             updateMsg = (""+updateMsg).concat("No Updates!");
         }
-        else {updateMsg = "Test";}
+        else {updateMsg = "Profile Updated";}
     }
 
 
