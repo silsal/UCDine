@@ -31,9 +31,14 @@ Buttons →  All Acticities incorporate button
 Lists →  Recipe Finder | Search Events | Profile
 Dialogues →  Create Events (select images) | Edit Profile (select images) | Search Events (SHAUNA)
 Action Bar →  All pages include drop-down. Profile also includes visible action-bar buttons.
-Toasts →  WHERE??
+Toasts →  On several activities when funtionality is implemented by user. E.g. On Camera Take Picture / On Attend Event Complete.
 
 
 Connect with two Sensors or Web Services:
 Sensor →  GPS →  Edit Profile (set location)
-API →  Food/Recipe →
+API →  Food/Recipe → Third Party Website
+
+Connect with one activity from another android application:
+Calendar --> Create Event
+Camera --> Create Event | Edit Profile
+Gallery --> Create Event | Edit Profile
