@@ -38,11 +38,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_BIO;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_COURSE;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_EMAIL;
@@ -55,20 +57,19 @@ import static com.example.saorla.ucdfood.MyDBHandler.TABLE_USERS;
 public class ProfileEditActivity extends AppCompatActivity {
     //Initialise Variables
     private int userID;
-    EditText userName;
-    EditText userEmail;
-    EditText userCourse;
-    EditText userBio;
-    String updateMsg = "Updated: ";
-    ImageButton addImage;
-    ImageView getGPS;
-    ImageButton profileImage;
-    ImageButton profileImage2;
+    private EditText userName;
+    private EditText userEmail;
+    private EditText userCourse;
+    private EditText userBio;
+    private String updateMsg = "Updated: ";
+    private ImageView getGPS;
+    private ImageButton profileImage;
+    private ImageButton profileImage2;
     //String for writing images to the DB
-    String bitmapString;
+    private String bitmapString ="";
     //Database Helper
-    MyDBHandler dbHandler;
-    int checkForGps;
+    private MyDBHandler dbHandler;
+    private int checkForGps;
     private Thread thread = new ThreadClass();
     private static Looper threadLooper = null;
 
@@ -140,7 +141,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         }
 
         //Add a listener for on-click on the button
-        addImage.setOnClickListener(new View.OnClickListener() {
+        profileImage.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.show();
             }
@@ -416,15 +417,6 @@ public class ProfileEditActivity extends AppCompatActivity {
         }
     }
 
-
-//    public Uri getImageUri(Context inContext, Bitmap inImage) {
-//        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-//        inImage.compress(Bitmap.CompressFormat.JPEG, 5, bytes);
-//        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-//        return Uri.parse(path);
-//    }
-
-//    public Uri imageToUploadUri;
 
     //Selecting From Gallery
     private int PICK_IMAGE_REQUEST = 1;

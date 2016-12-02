@@ -27,7 +27,7 @@ import android.content.SharedPreferences;
 //For camera
 import android.widget.ImageView;
 import android.graphics.Bitmap;
-//From Database Handler
+
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_AVAILABLE_POINTS;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_BIO;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_COURSE;
@@ -46,25 +46,25 @@ public class ProfileActivity extends AppCompatActivity {
     //Initialise Variables
     //Views
     private int userID;
-    ImageView userDeetsPic;
-    TextView userDeetsName;
-    TextView userDeetsEmail;
-    TextView userDeetsCourse;
-    TextView userDeetsPoints;
-    TextView userDeetsEvents;
-    TextView userDeetsRanking;
-    TextView userDeetsBio;
+    private ImageView userDeetsPic;
+    private TextView userDeetsName;
+    private TextView userDeetsEmail;
+    private TextView userDeetsCourse;
+    private TextView userDeetsPoints;
+    private TextView userDeetsEvents;
+    private TextView userDeetsRanking;
+    private TextView userDeetsBio;
     //Values
-    String user_name;
-    String user_email;
-    String user_course;
-    String user_points;
-    String user_events;
-    String user_ranking;
-    String user_bio;
+    private String user_name;
+    private String user_email;
+    private String user_course;
+    private String user_points;
+    private String user_events;
+    private String user_ranking;
+    private String user_bio;
 
     //Database Helper
-    MyDBHandler dbHandler;
+    private MyDBHandler dbHandler;
 
 
     @Override
