@@ -134,7 +134,7 @@ public class EventDetail extends AppCompatActivity {
                                                 helperevent.addToMyEvent(mev);//
                                                 Toast.makeText(getApplicationContext(), "One point has been deducted from your account", Toast.LENGTH_LONG).show();
                                                 dialog.cancel();
-                                                //decrement the points variable inside the page as this is not updated unless the database is called again
+                                                //decrement the points and is_attending variable inside the page as this is not updated unless the database is called again
                                                 points --;
                                                 int_is_attending --;
                                             }
@@ -154,7 +154,7 @@ public class EventDetail extends AppCompatActivity {
                     }
                 }
         );}
-    //function that retrive the id of the user
+    //function that retrieve the id of the user
     public String getIdfromSharedPreference() {
         SharedPreferences prefs = getSharedPreferences("User_Id", 0);
         String extractedText = prefs.getString("shared_ref_id", "No ID found");
