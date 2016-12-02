@@ -34,7 +34,7 @@ public class FragmentReviewsStats extends Fragment{
         String[] reviewInfoArray = {
                 "Review 1:\n".concat(review_1),
                 "Review 2:\n".concat(review_2),
-                "Review 3:\n ".concat(review_3),
+                "Review 3:\n".concat(review_3),
         };
 
         //Convert the String array into a ListArray

@@ -1,32 +1,45 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<!--<LinearLayout-->
+    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:id="@+id/aep_main_linear"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:layout_height="match_parent">
+    <!--android:fillViewport="true">-->
 
 
     <LinearLayout
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="400dp"
         android:orientation="vertical"
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
-        android:background="@drawable/border_profile"
+        android:background="@drawable/background_shadow"
         tools:context=".MainActivityFragment"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="125dp"
+            android:orientation="vertical"
+            android:background="@drawable/background_profile_header">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
             android:orientation="horizontal"
-            android:weightSum="3"
-            android:background="@color/colorPrimaryDark">
+            android:weightSum="3">
 
             <RelativeLayout
                 android:layout_width="0dp"
@@ -46,7 +59,7 @@
                     android:layout_marginEnd="0dp"
                     android:layout_marginRight="0dp"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/camera_icon"
+                    android:src="@mipmap/camera_icon"
                     android:onClick="updateProfilePic"
                     android:alpha="0.6"
                     android:cropToPadding="true"
@@ -100,10 +113,10 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="horizontal"
-            android:weightSum="3"
-            android:background="@color/colorPrimaryDark">
+            android:weightSum="3">
 
             <TextView
                 android:layout_width="0dp"
@@ -133,11 +146,11 @@
                 android:text="@string/set_loci"
                 style="@style/editProfileText2"/>
         </LinearLayout>
-
+</LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="350dp"
             >
 
             <EditText
@@ -261,3 +274,4 @@
 
     </LinearLayout>
 </ScrollView>
+<!--</LinearLayout>-->

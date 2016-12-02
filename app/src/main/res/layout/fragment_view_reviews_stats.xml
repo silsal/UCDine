@@ -32,7 +32,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:src="@drawable/host_icon"
+                android:src="@mipmap/host_icon"
                 android:paddingLeft="40dp"
                 style="@style/icon_margins"/>
 
@@ -49,7 +49,7 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:paddingRight="40dp"
-                android:src="@drawable/attend_icon"
+                android:src="@mipmap/attend_icon"
                 style="@style/icon_margins"/>
         </LinearLayout>
 

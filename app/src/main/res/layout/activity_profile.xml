@@ -75,7 +75,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="match_parent"
-                        android:src="@drawable/profile_icon"
+                        android:src="@mipmap/profile_icon"
                         android:paddingLeft="40dp"
                         style="@style/icon_margins"/>
 
@@ -92,7 +92,7 @@
                         android:layout_weight="1"
                         android:layout_height="match_parent"
                         android:paddingRight="40dp"
-                        android:src="@drawable/profile_edit_icon2"
+                        android:src="@mipmap/profile_edit_icon2"
                         style="@style/icon_margins"/>
                 </LinearLayout>
 
@@ -126,9 +126,10 @@
                             android:layout_marginRight="5dp"
                             android:padding="5dp"
                             android:cropToPadding="true"
-                            android:background="@drawable/background_profile_header"
                             android:src="@mipmap/profile_image_default"
+                            android:background="@drawable/background_profile_header"
                             android:scaleType="centerCrop"/>
+
 
                         <Button
                             android:id="@+id/ap_buttonUpdate"

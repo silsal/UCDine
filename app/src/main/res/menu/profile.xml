@@ -4,21 +4,21 @@
 
     <item
         android:id="@+id/profile_jump"
-        android:icon="@drawable/profile_icon"
+        android:icon="@mipmap/profile_icon"
         android:title="@string/profile"
         app:showAsAction="always"
         />
 
     <item
         android:id="@+id/events_jump"
-        android:icon="@drawable/calendar_icon_2"
+        android:icon="@mipmap/calendar_icon_2"
         android:title="@string/events"
         app:showAsAction="always"
         />
 
     <item
         android:id="@+id/reviews_jump"
-        android:icon="@drawable/cutlery_icon"
+        android:icon="@mipmap/cutlery_icon"
         android:title="@string/reviews"
         app:showAsAction="always"
         />

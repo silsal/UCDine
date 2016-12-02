@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.LocationManager;
@@ -472,9 +473,12 @@ public class ProfileEditActivity extends AppCompatActivity {
 
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
 
-                //Compress & Convert Bitmap to String
-                bitmapString = BitMapToString(bitmap);
+                Bitmap resized = Bitmap.createScaledBitmap(bitmap,(int)(bitmap.getWidth()*0.5), (int)(bitmap.getHeight()*0.5), true);
 
+                //Compress & Convert Bitmap to String
+//                bitmapString = BitMapToString(bitmap);
+                //Assign the String to the variable for inclusion in DB.
+                bitmapString = BitMapToString(resized);
                 //Save String in DB
                 //updateUserPic();
 
@@ -499,41 +503,91 @@ public class ProfileEditActivity extends AppCompatActivity {
 
         //IF CAMERA
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
-            Toast.makeText(this,"camera request ok",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Camera Request/Response Successful",Toast.LENGTH_SHORT).show();
 
+            Uri selectedImageUri = data.getData();
+            String selectedImagePath = getRealPathFromURI(selectedImageUri);
+            Log.d("********Img Path", selectedImagePath);
 
-            Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
-
-            Bitmap resized = Bitmap.createScaledBitmap(imageBitmap,(int)(imageBitmap.getWidth()*0.01), (int)(imageBitmap.getHeight()*0.01), true);
-            // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
-            //Uri tempUri = getImageUri(getApplicationContext(), imageBitmap);
-//            ImageView test = (ImageView) findViewById(R.id.testIMG);
-//            test.setImageBitmap(resized);
-            profileImage.setImageBitmap(resized);
-            //Compress & Convert Bitmap to String
-            //bitmapString = BitMapToString(imageBitmap);
-            bitmapString = BitMapToString(resized);
-
-
-            //Convert String to Bitmap
-            Bitmap db_bitmap = StringToBitMap(bitmapString);
-            Toast.makeText(this, ""+bitmapString, Toast.LENGTH_LONG).show();
-
-
-            try {
-                //Set Bitmap into ButtonImage Profile Pic
-//                ImageView test = (ImageView) findViewById(R.id.testIMG);
-//                test.setImageBitmap(db_bitmap);
-//              profileImage.setImageBitmap(db_bitmap);
-                profileImage.setAlpha((float) 1 );
-                Toast.makeText(this, "Image Inserted", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Image not Inserted due to Memory Limitations.\n\nFile stored at Location:\n "+ selectedImagePath+"\n\nUse \"Gallery Upload\" to se this image as your Profile Picture.", Toast.LENGTH_LONG).show();
+            File imgFile = new  File(selectedImagePath);
+            if(imgFile.exists()){
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                //Drawable d = new BitmapDrawable(getResources(), myBitmap);
+                Bitmap resized1 = Bitmap.createScaledBitmap(myBitmap,(int)(myBitmap.getWidth()*0.05), (int)(myBitmap.getHeight()*0.05), true);
+//                bitmapString = BitMapToString(resized1);
+//                Bitmap db_bitmap = StringToBitMap(bitmapString);
+//
+//                profileImage.setImageBitmap(db_bitmap);
+//                ImageView myImage = (ImageView) findViewById(R.id.imageviewTest);
+//                myImage.setImageBitmap(myBitmap);
 
             }
-            catch (Exception e){
-                Toast.makeText(this,"Insert Failed",Toast.LENGTH_LONG).show();
-            }
+
+//            Bitmap resized = Bitmap.createScaledBitmap(bitmap,(int)(bitmap.getWidth()*0.5), (int)(bitmap.getHeight()*0.5), true);
+//
+//
+//
+//
+//
+//            Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
+//
+//            Bitmap resized = Bitmap.createScaledBitmap(imageBitmap,(int)(imageBitmap.getWidth()*0.01), (int)(imageBitmap.getHeight()*0.01), true);
+//            // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
+//            //Uri tempUri = getImageUri(getApplicationContext(), imageBitmap);
+////            ImageView test = (ImageView) findViewById(R.id.testIMG);
+////            test.setImageBitmap(resized);
+//            profileImage.setImageBitmap(resized);
+//            //Compress & Convert Bitmap to String
+//            //bitmapString = BitMapToString(imageBitmap);
+//            bitmapString = BitMapToString(resized);
+//
+//
+//            //Convert String to Bitmap
+//            Bitmap db_bitmap = StringToBitMap(bitmapString);
+//            Toast.makeText(this, ""+bitmapString, Toast.LENGTH_LONG).show();
+//
+//
+//            try {
+//                //Set Bitmap into ButtonImage Profile Pic
+////                ImageView test = (ImageView) findViewById(R.id.testIMG);
+////                test.setImageBitmap(db_bitmap);
+////              profileImage.setImageBitmap(db_bitmap);
+//                profileImage.setAlpha((float) 1 );
+//                Toast.makeText(this, "Image Inserted", Toast.LENGTH_LONG).show();
+//
+//            }
+//            catch (Exception e){
+//                Toast.makeText(this,"Insert Failed",Toast.LENGTH_LONG).show();
+//            }
         }
     }
+
+    //----------------------------------------
+    /**
+     * This method is used to get real path of file from from uri
+     *
+     * @param contentUri
+     * @return String
+     */
+    //----------------------------------------
+    public String getRealPathFromURI(Uri contentUri)
+    {
+        try
+        {
+            String[] proj = {MediaStore.Images.Media.DATA};
+            Cursor cursor = managedQuery(contentUri, proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        }
+        catch (Exception e)
+        {
+            return contentUri.getPath();
+        }
+    }
+
+
 
     private Bitmap loadImage(String imgPath) {
         BitmapFactory.Options options;

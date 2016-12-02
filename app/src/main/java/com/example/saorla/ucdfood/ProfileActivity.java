@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.LogPrinter;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -139,7 +140,10 @@ public class ProfileActivity extends AppCompatActivity {
         String welcome_note = String.format(res.getString(R.string.welcome3), user_name);
 
         //ASSIGN IMAGE TO PROFILE PIC
+
+        //userDeetsPic.setImageBitmap(StringToBitMap(dbHandler.databaseSelectByIDToString(TABLE_USERS, COLUMN_PROFILE_PIC, userID)));
         setProfileImage(userDeetsPic);
+//        Log.d("********PRof Img", dbHandler.databaseSelectByIDToString(TABLE_USERS, COLUMN_PROFILE_PIC, userID));
         //ASSIGN TEXT STRINGS TO VIEWS IN LAYOUTS
         userDeetsName.setText(user_name);
         userDeetsEmail.setText(user_email_combined);
@@ -272,13 +276,10 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void setProfileImage(ImageView image) {
         String imgInDB = dbHandler.databaseSelectByIDToString(TABLE_USERS, COLUMN_PROFILE_PIC, userID);
-//        if(imgInDB.length() == 0) {
-//            Toast.makeText(this, "1" + imgInDB, Toast.LENGTH_LONG).show();
-//        }
-//        else{
+        if(imgInDB.length() > 1) {
             image.setImageBitmap(StringToBitMap(imgInDB));
-
-//        }
+//            Toast.makeText(this, "DB Image", Toast.LENGTH_LONG).show();
+        }
     }
 
     public Bitmap StringToBitMap(String encodedString){
