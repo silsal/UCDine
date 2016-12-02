@@ -49,14 +49,16 @@
         <activity
             android:name=".RecipeFinder"
             android:label="Recipe Finder"
-            android:configChanges="orientation|screenSize">
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="stateHidden">
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
             android:value=".Display" />
         </activity>
 
         <activity android:name=".CreateEvent"
-            android:label="Create Event" >
+            android:label="Create Event"
+            android:windowSoftInputMode="stateHidden">
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
             android:value=".Display" />
