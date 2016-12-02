@@ -70,8 +70,8 @@ public class FragmentEventsStats extends Fragment{
 //
 //        //Attended
         String[] a_titles = setInputs(populateEventAttdDetail(TABLE_EVENTS, COLUMN_EVENT_NAME, TABLE_MY_EVENTS, COLUMN_EVENT_ID, COLUMN_EVENT_ATTENDED_ID));
-//        String[] a_dates = setInputs(populateEventAttdDetail(TABLE_EVENTS, COLUMN_EVENT_NAME, TABLE_MY_EVENTS, COLUMN_EVENT_ID, COLUMN_EVENT_ATTENDED_ID));
-//        String[] a_guests = setInputs(populateEventAttdDetail(TABLE_EVENTS, COLUMN_EVENT_NAME, TABLE_MY_EVENTS, COLUMN_EVENT_ID, COLUMN_EVENT_ATTENDED_ID));
+        String[] a_dates = setInputs(populateEventAttdDetail(TABLE_EVENTS, COLUMN_DATE, TABLE_MY_EVENTS, COLUMN_EVENT_ID, COLUMN_EVENT_ATTENDED_ID));
+        String[] a_guests = setInputs(populateEventAttdDetail(TABLE_EVENTS, COLUMN_INVITE_NUM, TABLE_MY_EVENTS, COLUMN_EVENT_ID, COLUMN_EVENT_ATTENDED_ID));
 
 
 
@@ -83,16 +83,16 @@ public class FragmentEventsStats extends Fragment{
 
         //Create Placeholder ATTENDING Data
         String[] attendEventArray = {
-                ""+ a_titles[0] +"\n\nTuesday 18th Oct\n\nGuests: 3",
-                "Spaintastic\n\nThursday 20th Oct\n\nGuests: 2",
-                "Bit of Ita\n\nSunday 23th Oct\n\nGuests: 5",
+                ""+ a_titles[0] +"\n\n"+ a_dates[0] +"\n\nGuests: "+ a_guests[0] + "",
+                ""+ a_titles[1] +"\n\n"+ a_dates[1] +"\n\nGuests: "+ a_guests[1] + "",
+                ""+ a_titles[2] +"\n\n"+ a_dates[2] +"\n\nGuests: "+ a_guests[2] + "",
         };
 
         //Convert the String array into a ListArray
         List<String> hostEventStats = new ArrayList<String>(Arrays.asList(hostEventArray));
         List<String> attendEventStats = new ArrayList<String>(Arrays.asList(attendEventArray));
 
-        //Create an Array Addapter which is where the List Array will be bound to. Eg binding the list to another Activity(s)
+        //Create an Array Adapter which is where the List Array will be bound to. Eg binding the list to another Activity(s)
         ArrayAdapter<String> hostEventAdapter = new ArrayAdapter<String>(
                 getActivity(),
                 R.layout.fragment_view_events_stats_list, //name of xml file (Activity) that the <TextView> element is in
