@@ -34,4 +34,4 @@ Toasts →  WHERE??
 
 Connect with two Sensors or Web Services:
 Sensor →  GPS →  Edit Profile (set location)
-API →  Food/Recipe → 
+API →  Food/Recipe →

@@ -38,19 +38,22 @@
 
 
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
+
         </activity>
 
         <activity
             android:name=".RecipeFinder"
             android:label="Recipe Finder"
             android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait">
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
             android:value=".Display" />
@@ -65,9 +68,11 @@
         </activity>
 
 
-        <activity android:name=".Display" />
+        <activity android:name=".Display"
+            android:screenOrientation="portrait"/>
         <activity android:name=".SignUp"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ProfileActivity"
             android:label="@string/profile"
