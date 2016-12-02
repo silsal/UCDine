@@ -1,6 +1,8 @@
 package com.example.saorla.ucdfood;
 
-//Events table. This creates instances of Event, which can be added to the DB by all users.
+/*This class is used to create instances of Event, which are used to add rows to the events table in the database.
+It contains setter and getter methods for each column in the table.
+*/
 public class Events {
 
     private int _eid;
@@ -20,19 +22,6 @@ public class Events {
 
     }
 
-//    public Events(int _eid,int _hid,int invite_num,int available_num, String event_name,String address,String description, String time, String date, String event_pic) {
-//
-//        this._eid = _eid;
-//        this._hid = _hid;
-//        this.invite_num = invite_num;
-//        this.available_num = available_num;
-//        this.event_name = event_name;
-//        this.address = address;
-//        this.description = description;
-//        this.time = time;
-//        this.date = date;
-//        this.event_pic = event_pic;
-//    }
 
     // create setter for events
     public void set_eid(int _eid) {

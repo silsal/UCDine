@@ -1,8 +1,7 @@
 package com.example.saorla.ucdfood;
-/**
- * This file contains the user class which creates
- * instances of user in the user table for the database
- */
+/*This class is used to create instances of User, which are used to add new users to the users table in the database.
+It contains setter and getter methods for each column in the table.
+*/
 
 public class Users {
 
