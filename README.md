@@ -3,7 +3,9 @@
 Where to find the elements we were asked to implement in the project brief
 
 **********************************************************************************
-
+Default users:
+-username: neverland password: iloveandroid
+-username: sheep password: sheeppy
 
 
 Activities (minimum 5):
@@ -22,7 +24,7 @@ Local Database →  Name: "foodshareDB".
 Tables:
 "User" →  Contains details of the App Users.
 "My_Events" →  Contains details (Event ID) of the events that the current user has selected to attend.
-"Events" →  This would (in reality) be on a server-based database. It contains details of all events that have been created by all users. This is where any �Create New Events� are stored.
+"Events" →  This would (in reality) be on a server-based database. It contains details of all events that have been created by all users. This is where any "Create New Events" are stored.
 
 
 Buttons →  All Acticities incorporate button
