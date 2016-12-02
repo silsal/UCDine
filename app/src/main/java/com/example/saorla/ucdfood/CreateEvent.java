@@ -288,7 +288,7 @@ public class CreateEvent extends AppCompatActivity implements View.OnClickListen
                 e.setDate(date);
                 e.setEvent_pic(picture);
                 helperevent.addEvent(e);
-                helperevent.getPoints(id);
+                helperevent.upPoints(id);
                 AlertDialog.Builder myAlert = new AlertDialog.Builder(this);
                 myAlert.setTitle("Your event has been created!")
                         .setIcon(R.drawable.star)

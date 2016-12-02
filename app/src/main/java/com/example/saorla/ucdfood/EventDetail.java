@@ -114,10 +114,11 @@ public class EventDetail extends AppCompatActivity {
                                         String user = getIdfromSharedPreference();
                                         //cast as integers
                                         int id = Integer.parseInt(user);
+                                        int points = helperevent.getPoints(id);
                                         int int_eid = Integer.parseInt(eid);
                                         //condition to check if there are available positions to attend the event and then if the user has points
                                         if (int_is_attending >=1) {
-                                            if (int_points <1) {
+                                            if (points <1) {
                                                 Toast.makeText(getApplicationContext(), "Sorry, you dont have any points left on your account, try hosting an event to earn points!", Toast.LENGTH_LONG).show();
                                             } else {
                                                 //write to database to decrement users points and positions available to attend the event
@@ -126,7 +127,8 @@ public class EventDetail extends AppCompatActivity {
                                                 Toast.makeText(getApplicationContext(), "One point has been deducted from your account", Toast.LENGTH_LONG).show();
                                                 dialog.cancel();
                                                 //decrement the points variable inside the page as this is not updated unless the database is called again
-                                                int_points --;
+                                                points --;
+                                                int_is_attending --;
                                             }
                                         }
                                     }

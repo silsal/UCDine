@@ -234,7 +234,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.close();
     }
 
-    public void  getPoints(int userid) {
+    public void  upPoints(int userid) {
         db = this.getWritableDatabase();
 
         int new_score = 3;
@@ -254,6 +254,27 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.close();
 
     }
+
+    public int getPoints (int userid){
+        db = this.getReadableDatabase();
+        String query = "select available_points from " + TABLE_USERS;
+        Cursor cursor = db.rawQuery(query, null);
+        int a, b;
+        b = 0;
+        if (cursor.moveToFirst()) {
+            do {
+                a = cursor.getInt(0);
+                if (a == userid) {
+                    b = cursor.getInt(1);
+                    break;
+                }
+            }
+            while (cursor.moveToNext());
+        }
+        db.close();
+        return b;
+    }
+
 
     public void  reduceAvailableNumber(int eventid) {
         db = this.getWritableDatabase();
