@@ -17,40 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!--&lt;!&ndash;******** WELCOME NOTES ***********&ndash;&gt;-->
-
-            <!--&lt;!&ndash;&lt;!&ndash;Lin Layout for Welcome Notes&ndash;&gt;&ndash;&gt;-->
-            <!--<LinearLayout-->
-            <!--android:orientation="vertical"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_marginBottom="10dp"-->
-            <!--android:layout_marginStart="10dp"-->
-            <!--android:layout_marginLeft="10dp"-->
-            <!--android:layout_marginEnd="10dp"-->
-            <!--android:layout_marginRight="10dp"-->
-            <!--android:layout_height="100dp"-->
-            <!--android:weightSum="3">-->
-
-            <!--<TextView-->
-            <!--android:id="@+id/ap_welcome_note"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:layout_weight="2"-->
-            <!--style="@style/welcomeNoteText"-->
-            <!--android:text=""/>-->
-
-            <!--<TextView-->
-            <!--android:id="@+id/ap_activities"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:layout_weight="1"-->
-            <!--style="@style/welcomeNoteSubText"-->
-            <!--android:text="@string/my_activity"/>-->
-            <!--&lt;!&ndash;End Layout for Welcome Notes&ndash;&gt;-->
-            <!--</LinearLayout>-->
-
-            <!--android:textStyle="normal"-->
-
             <!--Lin Layout for All Profile Information-->
             <LinearLayout
                 android:id="@+id/ap_overall_profile_layout"
@@ -252,18 +218,6 @@
                     android:textColor="@color/colorText"
                     android:layout_gravity="center_vertical"
                     android:text="@string/about_me"/>
-
-                <!--&lt;!&ndash;Horizontal Divider Line&ndash;&gt;-->
-                <!--<View-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_marginTop="10dp"-->
-                    <!--android:layout_marginBottom="10dp"-->
-                    <!--android:layout_marginStart="10dp"-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:layout_marginEnd="10dp"-->
-                    <!--android:layout_marginRight="10dp"-->
-                    <!--android:layout_height="1dp"-->
-                    <!--android:background="@color/background" />-->
 
                 <!--END Layout for All Profile Information-->
             </LinearLayout>

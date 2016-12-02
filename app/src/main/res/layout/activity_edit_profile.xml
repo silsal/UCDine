@@ -1,17 +1,8 @@
-<!--<LinearLayout-->
-    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:id="@+id/aep_main_linear"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent">-->
-
-    <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <!--android:fillViewport="true">-->
-
 
     <LinearLayout
         android:focusable="true"
@@ -25,8 +16,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/background_shadow"
-        tools:context=".MainActivityFragment"
-        >
+        tools:context=".MainActivityFragment">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -82,7 +72,6 @@
                     android:alpha="0.5"
                     android:cropToPadding="true"
                     android:scaleType="centerCrop"/>
-                <!--android:scaleType="fitXY"-->
 
             </RelativeLayout>
 
@@ -274,4 +263,3 @@
 
     </LinearLayout>
 </ScrollView>
-<!--</LinearLayout>-->
