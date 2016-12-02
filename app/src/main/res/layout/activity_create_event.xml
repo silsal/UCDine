@@ -55,6 +55,7 @@
                 android:gravity="center_vertical"
                 android:textSize="16sp"
                 android:textColor="@color/colorPrimaryDark"
+                android:inputType="textCapWords|textCapSentences"
                 android:layout_toRightOf="@id/eventImageView" />
             <ImageButton
                 android:id="@+id/camera"
@@ -103,6 +104,7 @@
                 android:paddingLeft="10dp"
                 android:gravity="center_vertical"
                 android:textSize="16sp"
+                android:inputType="textCapWords|textCapSentences"
                 android:layout_toRightOf="@id/locationImageView"/>
         </LinearLayout>
         <LinearLayout
@@ -139,13 +141,14 @@
                 android:paddingLeft="10dp"
                 android:gravity="center_vertical"
                 android:textSize="16sp"
+                android:inputType="textCapWords|textCapSentences"
                 android:layout_toRightOf="@id/calendarImageView" />
             <ImageView
                 android:id="@+id/hourImageView"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_weight="0.1"
-                android:src="@drawable/clock_icon"
+                android:src="@mipmap/clock_icon"
                 android:scaleType="fitXY"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
@@ -167,6 +170,7 @@
                 android:gravity="center_vertical"
                 android:textSize="16sp"
                 android:layout_toRightOf="@id/hourImageView"
+                android:inputType="textCapWords|textCapSentences"
                 android:textColor="@color/colorPrimaryDark" />
         </LinearLayout>
 
@@ -202,6 +206,7 @@
                 android:gravity="center_vertical"
                 android:textSize="16sp"
                 android:layout_toRightOf="@id/peopleImageView"
+                android:inputType="textCapWords|textCapSentences"
                 android:textColor="@color/colorPrimaryDark" />
 
         </LinearLayout>
