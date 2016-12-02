@@ -257,7 +257,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
     public int getPoints (int userid){
         db = this.getReadableDatabase();
-        String query = "select available_points from " + TABLE_USERS;
+        String query = "select _uid, available_points from " + TABLE_USERS;
         Cursor cursor = db.rawQuery(query, null);
         int a, b;
         b = 0;
