@@ -62,14 +62,14 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/border_profile">
+                android:background="@drawable/background_shadow">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:orientation="horizontal"
                     android:weightSum="3"
-                    android:background="@color/colorPrimaryDark">
+                    android:background="@drawable/background_profile_header">
 
                     <ImageView
                         android:layout_width="0dp"
@@ -126,7 +126,7 @@
                             android:layout_marginRight="5dp"
                             android:padding="5dp"
                             android:cropToPadding="true"
-                            android:background="@drawable/border_background_reverse"
+                            android:background="@drawable/background_profile_header"
                             android:src="@mipmap/profile_image_default"
                             android:scaleType="centerCrop"/>
 
@@ -252,17 +252,17 @@
                     android:layout_gravity="center_vertical"
                     android:text="@string/about_me"/>
 
-                <!--Horizontal Divider Line-->
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_height="1dp"
-                    android:background="@color/background" />
+                <!--&lt;!&ndash;Horizontal Divider Line&ndash;&gt;-->
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:layout_marginBottom="10dp"-->
+                    <!--android:layout_marginStart="10dp"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:layout_marginEnd="10dp"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:background="@color/background" />-->
 
                 <!--END Layout for All Profile Information-->
             </LinearLayout>

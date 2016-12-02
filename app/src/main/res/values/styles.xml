@@ -32,7 +32,7 @@
     <style name = "ButtonFont" parent="MainFont">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/colorTextButton</item>
-        <item name="android:background">@drawable/border_button</item>
+        <item name="android:background">@drawable/button_shadow</item>
     </style>
 
 

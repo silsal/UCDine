@@ -5,9 +5,10 @@
     android:paddingLeft="1dp"
     android:paddingRight="1dp"
     android:paddingBottom="3dp"
-    android:background="@drawable/border_profile"
+    android:background="@drawable/background_shadow"
     tools:context="com.example.saorla.ucdfood.FragmentActivityStats"
     >
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +22,7 @@
             android:layout_height="50dp"
             android:orientation="horizontal"
             android:weightSum="3"
-            android:background="@color/colorPrimaryDark">
+            android:background="@drawable/background_profile_header">
 
             <ImageView
                 android:layout_width="0dp"
