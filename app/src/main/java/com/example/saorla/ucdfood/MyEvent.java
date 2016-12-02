@@ -1,8 +1,8 @@
 package com.example.saorla.ucdfood;
 
-/**
- * Created by Cometa on 29/11/2016.
- */
+/*This class is used to create instances of MyEvent, which are used to add rows to the personal events table in the database.
+It contains setter and getter methods for each column in the table.
+*/
 public class MyEvent {
 
     private int myeid;
