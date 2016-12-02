@@ -2,6 +2,10 @@ package com.example.saorla.ucdfood;
 
 /**
  * Created by shauna on 06/11/2016.
+ *
+ * Link to Event Detail activity
+ * passes information to the Event Detail activity through an intent
+ * Makes use of the Async Class to handle the data retrieval from the database and add the data to the list adapter
  */
 
 
@@ -54,8 +58,6 @@ public class EventList extends AppCompatActivity{
         setContentView(R.layout.activity_eventlist);
         //set up the adapter from the list view
         eventAdapter = new ArrayAdapter<String>(this, R.layout.custom_event_layout, R.id.eventTextView);
-
-
         lv = (ListView) findViewById(R.id.eventList);
         lv.setAdapter(eventAdapter);
         //calls the async class

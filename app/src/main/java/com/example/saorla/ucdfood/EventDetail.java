@@ -1,5 +1,15 @@
 package com.example.saorla.ucdfood;
 
+/**
+ * Created by shauna on 06/11/2016.
+ *
+ * Link to Event Detail activity
+ * retrieves information to the Event List activity through an intent
+ * Shared preference method to store user id
+ * Uses an alert dialog box to handle confirmation to attend events
+ * writes updates to the database if the user confirms attendance
+ */
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,11 +24,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-
-/**
- * Created by shauna on 16/11/2016.
- */
 
 //this class is for the EventDetail activity. It is passed data from the event list activity depending on which
 // event is clicked and displays the details of that event
