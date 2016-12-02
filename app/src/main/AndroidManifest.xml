@@ -48,13 +48,15 @@
 
         <activity
             android:name=".RecipeFinder"
+            android:label="Recipe Finder"
             android:configChanges="orientation|screenSize">
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
             android:value=".Display" />
         </activity>
 
-        <activity android:name=".CreateEvent">
+        <activity android:name=".CreateEvent"
+            android:label="Create Event" >
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
             android:value=".Display" />

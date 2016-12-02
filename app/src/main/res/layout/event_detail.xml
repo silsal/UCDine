@@ -210,12 +210,10 @@
                         >
                         <Button
                         android:text="Attend"
-                        android:layout_width="245dp"
-                        android:layout_height="wrap_content"
                         android:id="@+id/attend"
-                        android:background="?attr/colorPrimaryDark"
-                        android:layout_gravity="center_vertical|center_horizontal"
-                        android:elevation="23dp" />
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            style = "@style/ButtonFont"/>
                     </LinearLayout>
 
                 </LinearLayout>

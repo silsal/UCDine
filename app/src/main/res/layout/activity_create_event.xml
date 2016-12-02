@@ -258,10 +258,8 @@
         <Button
             android:id="@+id/submit_btn"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:background="@color/colorPrimaryDark"
-            android:textSize="20sp"
-            android:textColor="@color/white"
+            android:layout_height="60dp"
+            style = "@style/ButtonFont"
             android:text="@string/calendarbutton"
             android:onClick="onAddEventClicked" />
         </LinearLayout>
@@ -275,8 +273,7 @@
         <Button
             android:id="@+id/submit_toDb"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:background="@color/colorPrimaryDark"
+            android:layout_height="60dp"
             style = "@style/ButtonFont"
             android:text="@string/formbutton"
             android:onClick="sendEvent" />
