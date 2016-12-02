@@ -3,19 +3,14 @@ package com.example.saorla.ucdfood;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,15 +20,9 @@ import android.widget.Toast;
  * Created by shauna on 16/11/2016.
  */
 
+//this class is for the EventDetail activity. It is passed data from the event list activity depending on which
+// event is clicked and displays the details of that event
 public class EventDetail extends AppCompatActivity {
-    public final static String EXTRA_MESSAGE = "com.example.saorla.ucdfood.MESSAGE";
-    public String[] stringArray(String string_name){
-        String[] strArray = string_name.split(" ");
-        return strArray;
-    }
-    String strName = "name this tune";
-    String name = stringArray(strName)[0];
-    String user_name = name;
 
     private static Button button_attend;
     public final static String DETAILS_MESSAGE = "event_details";
@@ -63,6 +52,7 @@ public class EventDetail extends AppCompatActivity {
 
     MyDBHandler helperevent = new MyDBHandler(this);
 
+    //method to create the activity onload
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,24 +75,24 @@ public class EventDetail extends AppCompatActivity {
         int_can_attend =  Integer.parseInt(can_attend);
         int_points = Integer.parseInt(points);
 
-
+        //FIND VIEWS
         TextView titleTxt = (TextView) findViewById(R.id.title);
         titleTxt.setText(title);
 
         TextView hostTxt = (TextView) findViewById(R.id.host);
-        hostTxt.setText("Hosted by : "+host);
+        hostTxt.setText(host);
 
         TextView timeTxt = (TextView) findViewById(R.id.time);
-        timeTxt.setText("Time : "+time);
+        timeTxt.setText(time);
 
         TextView descriptionTxt = (TextView) findViewById(R.id.description);
         descriptionTxt.setText(details);
 
         TextView dateTxt = (TextView) findViewById(R.id.date);
-        dateTxt.setText("Date : "+date);
+        dateTxt.setText(date);
 
         TextView addressTxt = (TextView) findViewById(R.id.address);
-        addressTxt.setText("Event Address : "+address);
+        addressTxt.setText(address);
 
 
 // confirmation alert box
@@ -113,27 +103,35 @@ public class EventDetail extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //build alert dialog box and set the message you want to appear
                         AlertDialog.Builder a_builder = new AlertDialog.Builder(EventDetail.this);
                         a_builder.setMessage("Are you sure you want to attend this event? One point will be deducted from you").setCancelable(false)
+                                //if yes is selected
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+                                        //retrieve user id
                                         String user = getIdfromSharedPreference();
+                                        //cast as integers
                                         int id = Integer.parseInt(user);
                                         int int_eid = Integer.parseInt(eid);
-//                                        if (int_is_attending >=1) {
+                                        //condition to check if there are available positions to attend the event and then if the user has points
+                                        if (int_is_attending >=1) {
                                             if (int_points <1) {
                                                 Toast.makeText(getApplicationContext(), "Sorry, you dont have any points left on your account, try hosting an event to earn points!", Toast.LENGTH_LONG).show();
                                             } else {
+                                                //write to database to decrement users points and positions available to attend the event
                                                 helperevent.reducePoints(id);
                                                 helperevent.reduceAvailableNumber(int_eid);
                                                 Toast.makeText(getApplicationContext(), "One point has been deducted from your account", Toast.LENGTH_LONG).show();
                                                 dialog.cancel();
+                                                //decrement the points variable inside the page as this is not updated unless the database is called again
                                                 int_points --;
                                             }
-//                                        }
+                                        }
                                     }
                                 })
+                                //cancel dialog box if no selected
                                 .setNegativeButton("No",new DialogInterface.OnClickListener(){
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -141,11 +139,12 @@ public class EventDetail extends AppCompatActivity {
                                     }
                                 });
                         AlertDialog alert = a_builder.create();
-                        alert.setTitle("Confirmation");
+                        alert.setTitle("Confirm Attendance");
                         alert.show();
                     }
                 }
         );}
+    //function that retrive the id of the user
     public String getIdfromSharedPreference() {
         SharedPreferences prefs = getSharedPreferences("User_Id", 0);
         String extractedText = prefs.getString("shared_ref_id", "No ID found");
