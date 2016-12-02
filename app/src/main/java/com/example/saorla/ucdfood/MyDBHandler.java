@@ -255,6 +255,13 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
     }
 
+    public void  insertMyEvents(int eventid) {
+        db = this.getWritableDatabase();
+        db.execSQL("INSERT into " + TABLE_MY_EVENTS + "  ( " + COLUMN_EVENT_ATTENDED_ID + " ) VALUES ( " + eventid+" );");
+        db.close();
+
+    }
+
     public int getPoints (int userid){
         db = this.getReadableDatabase();
         String query = "select _uid, available_points from " + TABLE_USERS;

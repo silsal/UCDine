@@ -124,6 +124,7 @@ public class EventDetail extends AppCompatActivity {
                                                 //write to database to decrement users points and positions available to attend the event
                                                 helperevent.reducePoints(id);
                                                 helperevent.reduceAvailableNumber(int_eid);
+                                                helperevent.insertMyEvents(int_eid);
                                                 Toast.makeText(getApplicationContext(), "One point has been deducted from your account", Toast.LENGTH_LONG).show();
                                                 dialog.cancel();
                                                 //decrement the points variable inside the page as this is not updated unless the database is called again
