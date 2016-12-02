@@ -51,10 +51,12 @@ import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_COURSE;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_EMAIL;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_HOST_ID;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_HOST_SCORE;
+import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_MY_EVENT_ID;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_PROFILE_PIC;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_USERNAME;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_USER_ID;
 import static com.example.saorla.ucdfood.MyDBHandler.TABLE_EVENTS;
+import static com.example.saorla.ucdfood.MyDBHandler.TABLE_MY_EVENTS;
 import static com.example.saorla.ucdfood.MyDBHandler.TABLE_USERS;
 import android.content.Intent;
 
@@ -118,7 +120,7 @@ public class ProfileActivity extends AppCompatActivity {
         //user_points = stringArray(db_response_userTable)[6];
         user_points = populateDetails(TABLE_USERS, COLUMN_AVAILABLE_POINTS,userID);
         //user_events = Integer.toString(stringArray(db_response_eventTable).length);
-        user_events = populateCountDetails(TABLE_EVENTS, COLUMN_HOST_ID, COLUMN_HOST_ID, userID);
+        user_events = String.valueOf(Integer.parseInt(populateCountDetails(TABLE_EVENTS, COLUMN_HOST_ID, COLUMN_HOST_ID, "=", userID))+Integer.parseInt(populateCountDetails(TABLE_MY_EVENTS, COLUMN_MY_EVENT_ID, COLUMN_MY_EVENT_ID, ">=", 0)));
         //user_ranking = stringArray(db_response_userTable)[7];
         user_ranking = populateDetails(TABLE_USERS, COLUMN_HOST_SCORE, userID);
         user_bio = populateDetails(TABLE_USERS, COLUMN_BIO, userID);
@@ -270,8 +272,8 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     //Function to Select a count of Occurances from Database for input into a View
-    public String populateCountDetails(String Table, String CountColumnName, String WhereColumnName, int WhereEqualsValue){
-        return dbHandler.databaseCountByIDToString(Table, CountColumnName, WhereColumnName, WhereEqualsValue);
+    public String populateCountDetails(String Table, String CountColumnName, String WhereColumnName, String EqualityMeasure, int WhereEqualsValue){
+        return dbHandler.databaseCountByIDToString(Table, CountColumnName, WhereColumnName, EqualityMeasure, WhereEqualsValue);
     }
 
     public void setProfileImage(ImageView image) {

@@ -430,10 +430,10 @@ public class MyDBHandler extends SQLiteOpenHelper{
     }
 
     //General "Count" function
-    public String databaseCountByIDToString(String TableName, String CountColumnName, String WhereColumnName, int WhereEqualsValue){
+    public String databaseCountByIDToString(String TableName, String CountColumnName, String WhereColumnName, String EqualityMeasure, int WhereEqualsValue){
         String dbCountString = "";
         SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT count(" + CountColumnName + ") FROM " + TableName + " WHERE " + WhereColumnName + " = " + WhereEqualsValue + ";";
+        String query = "SELECT count(" + CountColumnName + ") FROM " + TableName + " WHERE " + WhereColumnName + " " + EqualityMeasure+ " " + WhereEqualsValue + ";";
 
         //cursor
         Cursor cursor = db.rawQuery(query, null);
@@ -485,23 +485,30 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
     //Specific "Select" multiples into Array function
     public String[] databaseSelectJoinByIDToArray(String Table_1_Name, String ColumnNameSelect, String Table_2_Name, String Column_1_NameEquals, String Column_2_NameEquals){
-        String[] dbString = {};
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT " + ColumnNameSelect +" FROM " + Table_1_Name + " INNER JOIN " + Table_2_Name + " ON " + Table_1_Name+ "." +Column_1_NameEquals +" == " + Table_2_Name+ "." +Column_2_NameEquals + ";";
 
-        Cursor cursor = db.rawQuery(query, null);
-        //get first row in the results
-        cursor.moveToFirst();
-        int pos = 0;
-        //move through the whole table
-        while(!cursor.isAfterLast()){
-            if(cursor.getString(pos)!=null){
-                dbString[0] = cursor.getString(pos);
-                pos +=1;
-            }
-            cursor.moveToNext();
-        }
+        Cursor resultRows = db.rawQuery(query, null);
+        //Find the number of rows in result
+        resultRows.moveToLast();
+        int len = resultRows.getPosition();
 
+        //Create empty array of length same as number rows
+        String [] dbString = new String[len+1];
+
+        //move to first row in the results
+        resultRows.moveToFirst();
+
+        //Set Counter
+        int pos = 0;
+        if (resultRows.moveToFirst()){
+            do{
+                dbString[pos] = resultRows.getString(0);
+//            dbString[pos] = "7";
+                pos ++;
+            }
+            while (resultRows.moveToNext());
+        }
         db.close();
         return dbString;
     }

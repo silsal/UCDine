@@ -17,6 +17,8 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -81,7 +83,7 @@ public class FragmentEventsStats extends Fragment{
 
         //Create Placeholder ATTENDING Data
         String[] attendEventArray = {
-                "BBQ Blitz\n\nTuesday 18th Oct\n\nGuests: 3",
+                ""+ a_titles[0] +"\n\nTuesday 18th Oct\n\nGuests: 3",
                 "Spaintastic\n\nThursday 20th Oct\n\nGuests: 2",
                 "Bit of Ita\n\nSunday 23th Oct\n\nGuests: 5",
         };
@@ -119,9 +121,8 @@ public class FragmentEventsStats extends Fragment{
 
 
 
-
-    public String populateCountDetails(String Table, String CountColumnName, String WhereColumnName, int WhereEqualsValue){
-        return dbHandler.databaseCountByIDToString(Table, CountColumnName, WhereColumnName, WhereEqualsValue);
+    public String populateCountDetails(String Table, String CountColumnName, String WhereColumnName, String EqualityMeasure, int WhereEqualsValue){
+        return dbHandler.databaseCountByIDToString(Table, CountColumnName, WhereColumnName, EqualityMeasure, WhereEqualsValue);
     }
 
     public String[] populateEventAttdDetail(String Table_1_Name, String ColumnNameSelect, String Table_2_Name, String Column_1_NameEquals, String Column_2_NameEquals){

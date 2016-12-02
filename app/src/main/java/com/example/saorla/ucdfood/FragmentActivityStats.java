@@ -17,9 +17,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_EVENT_ATTENDED_ID;
+import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_EVENT_ID;
+import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_EVENT_NAME;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_HOST_ID;
 import static com.example.saorla.ucdfood.MyDBHandler.COLUMN_HOST_SCORE;
 import static com.example.saorla.ucdfood.MyDBHandler.TABLE_EVENTS;
+import static com.example.saorla.ucdfood.MyDBHandler.TABLE_MY_EVENTS;
 import static com.example.saorla.ucdfood.MyDBHandler.TABLE_USERS;
 
 
@@ -40,16 +44,16 @@ public class FragmentActivityStats extends Fragment{
 
         //Get values from database to populate the arrays
         //Hosted
-        String hosted = populateCountDetails(TABLE_EVENTS, COLUMN_HOST_ID, COLUMN_HOST_ID, userID);
+        String hosted = populateCountDetails(TABLE_EVENTS, COLUMN_HOST_ID, COLUMN_HOST_ID, "=", userID);
         String h_rating = populateDetails(TABLE_USERS, COLUMN_HOST_SCORE, userID);
-        //String h_reviews = populateCountDetails(TABLE_REVIEWS, COLUMN_HOST_ID, COLUMN_HOST_ID, userID);
+        //String h_reviews = populateCountDetails(TABLE_REVIEWS, COLUMN_HOST_ID, COLUMN_HOST_ID, "=", userID);
         String h_reviews = "3";
 
         //Attended
-//        String attended = populateDetails(TABLE_USERS, COLUMN_ATTENDED, userID);
+        String attended = String.valueOf(populateEventAttdDetail(TABLE_EVENTS, COLUMN_EVENT_NAME, TABLE_MY_EVENTS, COLUMN_EVENT_ID, COLUMN_EVENT_ATTENDED_ID).length);
 //        String a_rating = populateDetails(TABLE_USERS, COLUMN_GUEST_SCORE, userID);
-//        String a_reviews = populateCountDetails(TABLE_REVIEWS, COLUMN_GUEST_ID, COLUMN_GUEST_ID, userID);
-        String attended = "4";
+//        String a_reviews = populateCountDetails(TABLE_REVIEWS, COLUMN_GUEST_ID, COLUMN_GUEST_ID, "=", userID);
+        //String attended = "4";
         String a_rating = "7";
         String a_reviews = "1";
 
@@ -96,14 +100,17 @@ public class FragmentActivityStats extends Fragment{
     }
 
 
-    public String populateCountDetails(String Table, String CountColumnName, String WhereColumnName, int WhereEqualsValue){
-        return dbHandler.databaseCountByIDToString(Table, CountColumnName, WhereColumnName, WhereEqualsValue);
+    public String populateCountDetails(String Table, String CountColumnName, String WhereColumnName, String EqualityMeasure, int WhereEqualsValue){
+        return dbHandler.databaseCountByIDToString(Table, CountColumnName, WhereColumnName, EqualityMeasure, WhereEqualsValue);
     }
 
     public String populateDetails(String Table, String Column, int ID){
         return dbHandler.databaseSelectByIDToString(Table, Column, ID);
     }
 
+    public String[] populateEventAttdDetail(String Table_1_Name, String ColumnNameSelect, String Table_2_Name, String Column_1_NameEquals, String Column_2_NameEquals){
+        return dbHandler.databaseSelectJoinByIDToArray(Table_1_Name, ColumnNameSelect, Table_2_Name, Column_1_NameEquals, Column_2_NameEquals);
+    }
     //**************************
     //GENERAL HELPER FUNCTIONS
     //**************************

@@ -55,6 +55,7 @@ public class Display extends AppCompatActivity {
     public void showCreateActivity (View view){
         Intent i = new Intent(this, CreateEvent.class);
         startActivity(i);
+
     }
 
     public void showProfileActivity (View view){
