@@ -121,10 +121,12 @@ public class EventDetail extends AppCompatActivity {
                                             if (points <1) {
                                                 Toast.makeText(getApplicationContext(), "Sorry, you dont have any points left on your account, try hosting an event to earn points!", Toast.LENGTH_LONG).show();
                                             } else {
-                                                //write to database to decrement users points and positions available to attend the event
+                                                MyEvent mev = new MyEvent();
+                                                mev.setMyaid(int_eid);
+                                                //write to database to decrement users points and positions available to attend the event & Update the "My Events" table with Event ID.
                                                 helperevent.reducePoints(id);
                                                 helperevent.reduceAvailableNumber(int_eid);
-                                                helperevent.insertMyEvents(int_eid);
+                                                helperevent.addToMyEvent(mev);//
                                                 Toast.makeText(getApplicationContext(), "One point has been deducted from your account", Toast.LENGTH_LONG).show();
                                                 dialog.cancel();
                                                 //decrement the points variable inside the page as this is not updated unless the database is called again

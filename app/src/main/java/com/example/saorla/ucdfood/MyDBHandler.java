@@ -234,6 +234,26 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.close();
     }
 
+    //add an attending event to My_Events table
+    public void addToMyEvent(MyEvent myEvent){
+        db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        String queryMyEvents = "select * from " + TABLE_MY_EVENTS+";";
+        Cursor cursor = db.rawQuery(queryMyEvents,null);
+        int countMyevent  = cursor.getCount() + 1;
+
+        values.put(COLUMN_MY_EVENT_ID, countMyevent);
+        values.put(COLUMN_EVENT_ATTENDED_ID, myEvent.getMyaid());
+
+
+        //SQLiteDatabase db = getWritableDatabase();
+        db.insert(TABLE_MY_EVENTS, null, values);
+        db.close();
+    }
+
+
+    //method to update the available points column of the user table to add 3 points
     public void  upPoints(int userid) {
         db = this.getWritableDatabase();
 
@@ -244,6 +264,8 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.close();
 
     }
+
+    //method to update the available points column of the user table to subtract 1 point
     public void  reducePoints(int userid) {
         db = this.getWritableDatabase();
 
@@ -255,13 +277,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
     }
 
-    public void  insertMyEvents(int eventid) {
-        db = this.getWritableDatabase();
-        db.execSQL("INSERT into " + TABLE_MY_EVENTS + "  ( " + COLUMN_EVENT_ATTENDED_ID + " ) VALUES ( " + eventid+" );");
-        db.close();
-
-    }
-
+    //method to retrieve the users points from the user table
     public int getPoints (int userid){
         db = this.getReadableDatabase();
         String query = "select _uid, available_points from " + TABLE_USERS;
@@ -282,13 +298,15 @@ public class MyDBHandler extends SQLiteOpenHelper{
         return b;
     }
 
-
+    //method to update the available number column of the event table to subtract 1 point
     public void  reduceAvailableNumber(int eventid) {
         db = this.getWritableDatabase();
         int reduce_attending = 1;
         db.execSQL("update " + TABLE_EVENTS + " set available_num = available_num -" + reduce_attending + " where _eid =" + eventid+";");
         db.close();
     }
+
+    //method to retrieve the size of the event table
     public int EventSize() {
         db = this.getReadableDatabase();
         String query = "select * from "+TABLE_EVENTS;
@@ -397,7 +415,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         return eventinfoString;
     }
 
-    //General "Select" fuunction
+    //General "Select" function
     public String databaseSelectByIDToString(String TableName, String ColumnName, int WhereValueEquals){
         String dbString = "";
         SQLiteDatabase db = getWritableDatabase();
