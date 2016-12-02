@@ -107,8 +107,8 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.execSQL(query2);
         db.execSQL(query3);
         //some default users for the prototype
-        String user1 = "Insert into users(_uid,uname,fname,sname,email,pass) values(1, 'coffeeman','david', 'coyle', 'davo@ucdconnect.ie', 'iloveandroid')";
-        String user2 = "Insert into users(_uid,uname,fname,sname,email,pass) values(2, 'tragedy','silvia', 'saloni', 'saloni@ucdconnect.ie', 'anotherknife')";
+        String user1 = "Insert into users(_uid,uname,fname,sname,email,pass) values(1, 'neverland','peter', 'pan', 'ppan@ucdconnect.ie', 'iloveandroid')";
+        String user2 = "Insert into users(_uid,uname,fname,sname,email,pass) values(2, 'sheep','sarah', 'oconnor', 'soconnor@ucdconnect.ie', 'sheeppy')";
         db.execSQL(user1);
         db.execSQL(user2);
         //some default events for the prototype
