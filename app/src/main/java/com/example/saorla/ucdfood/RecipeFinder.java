@@ -1,19 +1,21 @@
-/*This file contains the code to create the RecipeFinder activity.
-
-Parts of the code have been adapted from David Coyle's Sunshine Starter and various tutorials
-Code to show/hide keyboard from http://stackoverflow.com/questions/1109022/close-hide-the-android-soft-keyboard
-
-* */
 
 package com.example.saorla.ucdfood;
 
+/*This file contains the code to create the RecipeFinder activity in UCDine, which allows users to search for recipes through
+the food2fork web API. It makes use of the AsyncTask class to allow the API call to be performed on a background thread, and
+implements error handling to catch any exceptions thrown due to incorrect user input or an external server error.
+
+Parts of the code have been adapted from David Coyle's Sunshine Starter, in particular those for parsing JSON returned from the API
+Code to show/hide keyboard adapted from http://stackoverflow.com/questions/1109022/close-hide-the-android-soft-keyboard
+* */
+
+//imports for components
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.util.Linkify;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,7 +26,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-
 
 //imports for JSON parsing
 import org.json.JSONArray;
@@ -44,7 +45,7 @@ import java.util.ArrayList;
 //This class is for the RecipeFinder activity. It sends HTTP requests to an external API and returns the results in JSON format
 public class RecipeFinder extends AppCompatActivity {
     //initialise variables, views and other components which will be required later
-    private final String APP_LOG = "Saorla's message!";
+    private final String APP_LOG = "Test message!";
     private static final String RECIPE_RESPONSE = "RECIPE_RESPONSE";
     private ListView listview;
     private ArrayAdapter<String> recipeAdapter;
@@ -67,7 +68,6 @@ public class RecipeFinder extends AppCompatActivity {
         listview.setAdapter(recipeAdapter);
         dishName = (EditText) findViewById(R.id.dishName);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-//        responseView = (TextView) findViewById(R.id.responseView);
         Button recipeButton = (Button) findViewById(R.id.recipeButton);
         //when recipe button is clicked, call AsyncTask QueryRecipeAPI to send API request
         Log.i(APP_LOG, "Calling Async");
@@ -88,13 +88,14 @@ public class RecipeFinder extends AppCompatActivity {
 
     }
 
+    //method to create the options menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.recipe_finder_menu, menu);
         return true;
     }
 
-    //Function (Menu Options Click) that instructs operations to be performed on-click of Menu Options.
+    //method which instructs operations to be performed on-click of Menu Options.
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         //action when corresponding action-bar item is clicked
@@ -142,15 +143,13 @@ public class RecipeFinder extends AppCompatActivity {
     }
 
 
-
-    //subclass of RecipeFinder which handles HTTPConnection to the API
-    //returns a string array of recipe results
+    //Subclass of RecipeFinder which handles HTTPConnection to the API. Returns a string array of recipe results
     class QueryRecipeAPI extends AsyncTask<String, Void, String[]> {
         private Exception exception;
 
         @Override
         protected void onPreExecute() {
-            //make progress bar visible when
+            //make progress bar visible when asynctask is called
             progressBar.setVisibility(View.VISIBLE);
         }
 
@@ -169,16 +168,16 @@ public class RecipeFinder extends AppCompatActivity {
 
 
             try {
-                //create url and set up httpconnection. Must replace all blanks with %20 for the api
+                //create url and set up httpconnection. Must replace all blanks with %20 for the API
                 String temp = API_URL + API_KEY + "&q=" + dish;
                 temp = temp.replaceAll(" ", "%20");
                 URL url = new URL(temp);
-                Log.i(APP_LOG, temp + " is the url");
-//                    URL url = new URL(API_URL + API_KEY + "&q=" + dish);
+                //set up connection and open it
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
                 int responseCode = urlConnection.getResponseCode();
+                //if the server returns 200
                 if (responseCode == 200) {
                     Log.i(APP_LOG, "200 okay!");
                     //store input stream received
@@ -223,6 +222,7 @@ public class RecipeFinder extends AppCompatActivity {
             return null;
         }
 
+        //method called when the JSON string is returned from the background thread
         protected void onPostExecute(String[] response) {
             Log.i(APP_LOG, "response is "+response);
             progressBar.setVisibility(View.GONE);
@@ -236,11 +236,10 @@ public class RecipeFinder extends AppCompatActivity {
                 recipeAdapter.add("Invalid search parameters - please try again!");
             }
             else{
-                Log.i(APP_LOG, "This is the response!" + response[1]);
                 //if there were already recipes in the textview, clear them
                 recipeAdapter.clear();
 
-                //split up each string in the response into strings and URIs
+                //split up each string in the response into strings and URIs and pass them back to the arrayadapter
                 for (String nextRecipeStr : response) {
                     recipeAdapter.add(nextRecipeStr);
                 }
@@ -249,6 +248,7 @@ public class RecipeFinder extends AppCompatActivity {
         }
     }
 
+    //method which reads in the data input stream and handles exceptions
     private String readStream(InputStream in) {
         BufferedReader reader = null;
         StringBuffer data = new StringBuffer("");
@@ -272,6 +272,7 @@ public class RecipeFinder extends AppCompatActivity {
         return data.toString();
     }
 
+    //method which parses the input as a JSON object and extracts each recipe title and link
     private String[] getRecipesFromJson(String recipeJSONStr)
             throws JSONException {
 
@@ -283,8 +284,6 @@ public class RecipeFinder extends AppCompatActivity {
         //create new JSON object
         JSONObject recipeJSON = new JSONObject(recipeJSONStr);
         JSONArray recipeArray = recipeJSON.getJSONArray(RECIPES);
-        Log.i(APP_LOG, recipeJSON.toString(4));
-
 
         //find the number of recipes which were returned
         int recipeCount = recipeJSON.getInt(LIST_NUM);
@@ -304,10 +303,8 @@ public class RecipeFinder extends AppCompatActivity {
             //get the contents of each string we need
             title = currentRecipe.getString(TITLE);
             source = currentRecipe.getString(SOURCE);
-
+            //add each recipe string to the array
             recipeResults[i] = title + "\n" + source;
-            //this is working!
-            Log.i(APP_LOG, recipeResults[i]);
         }
         return recipeResults;
     }
@@ -333,7 +330,6 @@ public class RecipeFinder extends AppCompatActivity {
     @Override
     protected void onPause(){
         super.onPause();
-        //release something we don't need when paused
     }
 
     @Override
